@@ -2,14 +2,53 @@
 import NavMain from './components/NavMain.vue';
 import Upcoming from './views/Upcoming.vue';
 import ListAll from './components/ListAll.vue';
+import { ref } from 'vue';
+const menu = ref([
+  { name: "ALL", "path": "/", underline: false },
+  { name: "DETAIL", "path": "/about", underline: false },
+  { name: "TODAY", "path": "/", underline: false },
+  { name: "UPCOMING", "path": "/", underline: false },
+  { name: "PAST EVENTS", "path": "/", underline: false },
+])
+const btn = (index) => {
+  for (let i = 0; i < menu.value.length; i++) {
+    menu.value[i].underline = false
+  }
+  menu.value[index].underline = true
+}
 </script>
 
 <template>
-  <div class="parent md:h-screen md:grid md:grid-cols-7 bg-blackmain text-white">
+  <div class="parent md:h-screen md:grid bg-main text-white font-mono font-bold">
+    <main class="main ">
+      <NavMain />
+      <!-- <Upcoming /> -->
+      <div class="pl-10  text-2xl">
+        EVENTS
+      </div>
+      <div class="pt-5 pl-14 text-md">
+        <router-link :id="n.name" v-for="(n, index) in menu" :to="n.path" class="px-5 mr-10"
+          :class="{ 'border-b-2': n.underline }" @click="btn(index)">
+          {{
+              n.name
+          }}
+        </router-link>
+      </div>
+      <div class="p-10">
+        <router-view></router-view>
+        <ListAll />
+      </div>
+
+
+    </main>
+    <!-- <section class="rightbar bg-blacksection/30 md:col-span-2">Sidebar</section> -->
+  </div>
+
+  <!-- <div class="parent md:h-screen md:grid md:grid-cols-7 bg-zinc-900 text-white font-mono font-bold">
     <main class="main  md:col-span-5">
       <NavMain />
       <Upcoming />
-      <div class="pl-10 pt-10 text-2xl">
+      <div class="pl-10  text-2xl">
         EVENTS
       </div>
       <div class="pt-5 pl-14 text-md">
@@ -27,10 +66,12 @@ import ListAll from './components/ListAll.vue';
 
     </main>
     <section class="rightbar bg-blacksection/30 md:col-span-2">Sidebar</section>
-  </div>
-
+  </div> -->
 
 </template>
 
-<style scoped>
+<style >
+.bg-main {
+  background-color: #1C1C1E;
+}
 </style>
