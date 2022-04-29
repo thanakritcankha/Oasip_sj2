@@ -10,7 +10,7 @@
         <h1>Preeyathorn Chaiyakum</h1>
       </div>
 
-      <div class="button">
+      <div class="pt-2">
         <button class="h-4 w-4 bg-yellow-400 rounded-full mr-2"></button>
         <button class="h-4 w-4 bg-green-500 rounded-full mr-2"></button>
         <button class="h-4 w-4 bg-red-600 rounded-full mr-2"></button>
@@ -59,4 +59,5 @@
   color: #fff;
   margin-bottom: 0.5rem;
 }
+
 </style>
