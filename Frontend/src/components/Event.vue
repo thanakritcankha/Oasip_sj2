@@ -1,10 +1,11 @@
-<script setup></script>
+<script setup>
+</script>
 
 <template>
   <div
     class="flex flex-col h-56 w-full bg-zinc-700 rounded-xl shadow-2xl shadow-zinc-900"
   >
-    <div class="flex w-full h-8 bg-zinc-800 rounded-t-lg p-2">
+    <div class="flex w-full h-12 bg-zinc-800 rounded-t-lg p-2">
       <div class="name">
         <h1>Preeyathorn Chaiyakum</h1>
       </div>
@@ -36,7 +37,7 @@
 }
 
 .name h1 {
-  font-size: 1.1rem;
+  font-size: 1.5rem;
   font-weight: 600;
   color: #fff;
 }
