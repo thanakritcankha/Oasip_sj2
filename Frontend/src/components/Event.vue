@@ -5,8 +5,8 @@
     class="flex flex-col h-56 w-full bg-zinc-700 rounded-xl shadow-2xl shadow-zinc-900"
   >
     <div class="flex w-full h-8 bg-zinc-800 rounded-t-lg p-2">
-      <div class="header">
-        <h1>Hello I Sus</h1>
+      <div class="name">
+        <h1>Preeyathorn Chaiyakum</h1>
       </div>
 
       <div class="button">
@@ -19,7 +19,7 @@
     <div class="p-3">
       <div class="eventsData">
         <ul>
-          <h1>Date : 26-04-2022</h1>
+          <li>Date : 26-04-2022</li>
           <li>Booking name : Preeyathorn Chaiyakum</li>
           <li>Start time : 00:00:00</li>
           <li>Duration : 30 Minutes</li>
@@ -31,8 +31,26 @@
 </template>
 
 <style>
-.button {
+.name {
+  flex: 1;
+}
+.eventsData {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.eventsData ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.eventsData ul li {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #fff;
+  margin-bottom: 0.5rem;
 }
 </style>
