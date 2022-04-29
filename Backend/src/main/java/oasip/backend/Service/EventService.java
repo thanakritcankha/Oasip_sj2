@@ -2,7 +2,6 @@ package oasip.backend.Service;
 
 import oasip.backend.DTOs.EventDto;
 import oasip.backend.Enitities.Event;
-import oasip.backend.Enitities.Eventcategory;
 import oasip.backend.ListMapper;
 import oasip.backend.repositories.EventRepository;
 import org.modelmapper.ModelMapper;
@@ -24,10 +23,17 @@ public class EventService {
         List<Event> events = repository.findAll();
         return listMapper.maplist(events,EventDto.class,modelMapper);
     }
-    public Event createEvent(EventDto newEvent){
+    public EventDto getEvent(Integer eventId){
+        Event event = repository.findById(eventId).orElseThrow(
+                () -> new RuntimeException(eventId + " Does not Exist !!!" ));
+        return modelMapper.map(event , EventDto.class);
+    }
+
+    public EventDto createEvent(EventDto newEvent){
         Event event = modelMapper.map(newEvent,Event.class);
         //event category
-        return repository.saveAndFlush(event);
+        repository.saveAndFlush(event);
+        return newEvent;
     }
     public void deleteEvent(Integer eventId){
         repository.findById(eventId).orElseThrow(
