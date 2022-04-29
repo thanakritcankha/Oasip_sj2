@@ -13,7 +13,7 @@ import java.util.Set;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class Eventcategory {
+public class EventCategory {
     @Id
     @Column(name = "eventCatedoryId", nullable = false)
     private Integer id;
