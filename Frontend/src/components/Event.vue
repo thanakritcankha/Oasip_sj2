@@ -20,7 +20,7 @@
       <div class="eventsData">
         <ul>
           <li>Date : 26-04-2022</li>
-          <li>Booking name : Preeyathorn Chaiyakum</li>
+          <!-- <li>Booking name : Preeyathorn Chaiyakum</li> -->
           <li>Start time : 00:00:00</li>
           <li>Duration : 30 Minutes</li>
           <li>Category : BackEnd Clinic</li>
@@ -32,13 +32,18 @@
 
 <style>
 .name {
-  flex: 1;
+  flex: auto;
 }
+
+.name h1 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+}
+
 .eventsData {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }
 
 .eventsData ul {
