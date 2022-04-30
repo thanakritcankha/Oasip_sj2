@@ -1,4 +1,4 @@
-<script setup>
+ <script setup>
 import { ref } from 'vue';
 import Event from './Event.vue';
 
@@ -10,9 +10,14 @@ const showWindow = ref(false)
         <Event />
         <Event />
         <Event />
+        
     </div>
+        <div>
 
+        </div>
+    
 </template>
  
 <style scoped>
+
 </style>
