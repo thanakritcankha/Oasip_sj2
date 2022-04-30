@@ -269,5 +269,13 @@ import { ref } from 'vue'
   border-collapse: collapse;
   margin-bottom: 1rem;
   font-size: 1.2rem;
+  font-weight: 500;
+  color: #fff;
+
+}
+
+.details-table td {
+  padding: 0.5rem;
+  border-bottom: 1px solid #fff;
 }
 </style>
