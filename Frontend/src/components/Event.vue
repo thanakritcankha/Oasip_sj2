@@ -1,5 +1,25 @@
 <script setup>
 import { ref } from 'vue'
+
+const showDetail = ref(false)
+const noEvents = ref(false)
+
+const btnShowDetail = () => {
+  showDetail.value = true;
+}
+
+const btnHideDetail = () => {
+  showDetail.value = false;
+}
+
+const checkEvents = () => {
+  if (events.value.length === 0) {
+    noEvents.value = true;
+  } else {
+    noEvents.value = false;
+  }
+}
+
 </script>
 
 <template>
@@ -13,7 +33,7 @@ import { ref } from 'vue'
 
       <div class="pt-2">
         <button class="h-4 w-4 bg-yellow-400 rounded-full mr-2"></button>
-        <button class="h-4 w-4 bg-green-500 rounded-full mr-2"></button>
+        <button class="h-4 w-4 bg-green-500 rounded-full mr-2" @click="btnShowDetail"></button>
         <button class="h-4 w-4 bg-red-600 rounded-full mr-2"></button>
       </div>
     </div>
@@ -45,13 +65,13 @@ import { ref } from 'vue'
     </div>
   </div>
 
-  <div class="modal-mask">
+  <div class="modal-mask" v-show="showDetail">
     <div class="modal-wrapper">
       <div class="modal-container">
         <div class="modal-body">
           <div class="header">
             <h1>Details</h1>
-            <a href="#" class="close-button" @click="close">&#10006;</a>
+            <a href="#" class="close-button" @click="btnHideDetail">&#10006;</a>
           </div>
           <table class="details-table">
             <tbody>
@@ -89,6 +109,11 @@ import { ref } from 'vue'
       </div>
     </div>
   </div>
+
+  <div class="empty" v-show="checkEvents">
+    <h1>No events now</h1>    
+  </div>
+
 </template>
 
 <style>
