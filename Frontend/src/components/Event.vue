@@ -1,4 +1,6 @@
-<script setup></script>
+<script setup>
+import { ref } from 'vue'
+</script>
 
 <template>
   <div
@@ -39,6 +41,27 @@
         <h1 class="duration">30 Minutes</h1>
         <!-- <h1 class="category">Category : BackEnd Clinic</h1> -->
         <h1 class="time">Start : 00:00:00</h1>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-mask">
+    <div class="modal-wrapper">
+      <div class="modal-container">
+        <div class="modal-body">
+          <div class="header">
+            <h1>Details</h1>
+          </div>
+          <div class="details">
+            <p>event date</p>
+            <p>event start time</p>
+            <p>event duration (in minutes)</p>
+            <p>eventCategoryName</p>
+            <p>bookingName</p>
+            <p>bookingEmail</p>
+            <p>eventNotes</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -164,5 +187,70 @@
   color: #fff;
   margin-left: auto;
   padding-bottom: 0.5rem;
+}
+
+.modal-mask {
+  position: fixed;
+  z-index: 9998;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: table;
+  transition: opacity 0.3s ease;
+
+}
+
+.modal-wrapper {
+  display: table-cell;
+  vertical-align: middle;
+
+}
+
+
+.modal-container {
+  width: 400px;
+  margin: 0px auto;
+  padding: 20px 30px;
+  background-color: rgb(55 65 81);
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
+  transition: all 0.3s ease;
+
+
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+
+
+}
+
+.header h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #fff;
+
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+
+}
+
+.details p {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #fff;
+  margin-bottom: 0.5rem;
+  
 }
 </style>
