@@ -51,6 +51,7 @@ import { ref } from 'vue'
         <div class="modal-body">
           <div class="header">
             <h1>Details</h1>
+            <a href="#" class="close-button">&#10006;</a>
           </div>
           <div class="details">
             <p>event date</p>
@@ -199,15 +200,12 @@ import { ref } from 'vue'
   background-color: rgba(0, 0, 0, 0.5);
   display: table;
   transition: opacity 0.3s ease;
-
 }
 
 .modal-wrapper {
   display: table-cell;
   vertical-align: middle;
-
 }
-
 
 .modal-container {
   width: 400px;
@@ -217,7 +215,6 @@ import { ref } from 'vue'
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
   transition: all 0.3s ease;
-
 }
 
 .header {
@@ -226,15 +223,12 @@ import { ref } from 'vue'
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
-
-
 }
 
 .header h1 {
   font-size: 1.5rem;
   font-weight: 600;
   color: #fff;
-
 }
 
 .details {
@@ -242,7 +236,6 @@ import { ref } from 'vue'
   flex-direction: column;
   justify-content: space-between;
   margin-bottom: 1rem;
-
 }
 
 .details p {
@@ -250,6 +243,16 @@ import { ref } from 'vue'
   font-weight: 500;
   color: #fff;
   margin-bottom: 0.5rem;
-  
 }
+
+.close-button {
+  background: transparent;
+  border: 0;
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1;
+  padding: 0;
+}
+
 </style>
