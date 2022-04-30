@@ -53,15 +53,6 @@ import { ref } from 'vue'
             <h1>Details</h1>
             <a href="#" class="close-button" @click="close">&#10006;</a>
           </div>
-          <!-- <div class="details">
-            <p>Date : 26-04-2022</p>
-            <p>Event Start : 00:00:00</p>
-            <p>Duration : 30 Minutes</p>
-            <p>Event Category : Backend Clinic</p>
-            <p>Booking By : Preeyathorn Chaiyakum</p>
-            <p>Email : preeyathorn.c@gmail.com</p>
-            <p>eventNotes : -</p>
-          </div> -->
           <table class="details-table">
             <tbody>
               <tr>
@@ -256,7 +247,6 @@ import { ref } from 'vue'
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
-
 }
 
 .header h1 {
@@ -273,7 +263,6 @@ import { ref } from 'vue'
   font-weight: 600;
   line-height: 1;
   padding: 0;
-
 }
 .details-table {
   width: 100%;
@@ -281,6 +270,4 @@ import { ref } from 'vue'
   margin-bottom: 1rem;
   font-size: 1.2rem;
 }
-
-
 </style>
