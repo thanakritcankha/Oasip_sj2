@@ -1,8 +1,12 @@
 <script setup>
 import { ref } from 'vue'
+const showDetail = ref(false);
 
-const closebtn = () => {
-  $('.modal-mask').modal('hide');
+const btnShowDetail = () => {
+  showDetail.value = true;
+}
+const btnCloseDetail = () => {
+  showDetail.value = false;
 }
 </script>
 
@@ -17,7 +21,7 @@ const closebtn = () => {
 
       <div class="pt-2">
         <button class="h-4 w-4 bg-yellow-400 rounded-full mr-2"></button>
-        <button class="h-4 w-4 bg-green-500 rounded-full mr-2"></button>
+        <button class="h-4 w-4 bg-green-500 rounded-full mr-2" @click="btnShowDetail()"></button>
         <button class="h-4 w-4 bg-red-600 rounded-full mr-2"></button>
       </div>
     </div>
@@ -49,13 +53,13 @@ const closebtn = () => {
     </div>
   </div>
 
-  <div class="modal-mask">
+  <div class="modal-mask" v-show="showDetail">
     <div class="modal-wrapper">
       <div class="modal-container">
         <div class="modal-body">
           <div class="header">
             <h1>Details</h1>
-            <a href="#" class="close-button" @click="closebtn">&#10006;</a>
+            <button class="close-btn" @click="btnCloseDetail">&#10006;</button>
           </div>
           <table class="details-table">
             <tbody>
