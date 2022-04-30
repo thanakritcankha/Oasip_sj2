@@ -51,17 +51,49 @@ import { ref } from 'vue'
         <div class="modal-body">
           <div class="header">
             <h1>Details</h1>
-            <a href="#" class="close-button">&#10006;</a>
+            <a href="#" class="close-button" @click="close">&#10006;</a>
           </div>
-          <div class="details">
-            <p>event date</p>
-            <p>event start time</p>
-            <p>event duration (in minutes)</p>
-            <p>eventCategoryName</p>
-            <p>bookingName</p>
-            <p>bookingEmail</p>
-            <p>eventNotes</p>
-          </div>
+          <!-- <div class="details">
+            <p>Date : 26-04-2022</p>
+            <p>Event Start : 00:00:00</p>
+            <p>Duration : 30 Minutes</p>
+            <p>Event Category : Backend Clinic</p>
+            <p>Booking By : Preeyathorn Chaiyakum</p>
+            <p>Email : preeyathorn.c@gmail.com</p>
+            <p>eventNotes : -</p>
+          </div> -->
+          <table class="details-table">
+            <tbody>
+              <tr>
+                <td>Date</td>
+                <td>26-04-2022</td>
+              </tr>
+              <tr>
+                <td>Event Start</td>
+                <td>00:00:00</td>
+              </tr>
+              <tr>
+                <td>Duration</td>
+                <td>30 Minutes</td>
+              </tr>
+              <tr>
+                <td>Event Category</td>
+                <td>Backend Clinic</td>
+              </tr>
+              <tr>
+                <td>Booking By</td>
+                <td>Preeyathorn Chaiyakum</td>
+              </tr>
+              <tr>
+                <td>Email</td>
+                <td>preeyathorn.c@gmail.com</td>
+              </tr>
+              <tr>
+                <td>EventNotes</td>
+                <td>-</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
@@ -208,13 +240,14 @@ import { ref } from 'vue'
 }
 
 .modal-container {
-  width: 400px;
+  width: 700px;
   margin: 0px auto;
   padding: 20px 30px;
   background-color: rgb(55 65 81);
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
   transition: all 0.3s ease;
+  height: auto;
 }
 
 .header {
@@ -223,26 +256,13 @@ import { ref } from 'vue'
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
+
 }
 
 .header h1 {
   font-size: 1.5rem;
   font-weight: 600;
   color: #fff;
-}
-
-.details {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  margin-bottom: 1rem;
-}
-
-.details p {
-  font-size: 1.2rem;
-  font-weight: 500;
-  color: #fff;
-  margin-bottom: 0.5rem;
 }
 
 .close-button {
@@ -253,6 +273,14 @@ import { ref } from 'vue'
   font-weight: 600;
   line-height: 1;
   padding: 0;
+
 }
+.details-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
 
 </style>
