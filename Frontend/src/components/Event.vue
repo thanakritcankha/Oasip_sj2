@@ -1,6 +1,9 @@
 <script setup>
-import { ref } from "vue";
+import { ref } from 'vue'
 
+const closebtn = () => {
+  $('.modal-mask').modal('hide');
+}
 </script>
 
 <template>
@@ -52,16 +55,40 @@ import { ref } from "vue";
         <div class="modal-body">
           <div class="header">
             <h1>Details</h1>
+            <a href="#" class="close-button" @click="closebtn">&#10006;</a>
           </div>
-          <div class="details">
-            <p>event date</p>
-            <p>event start time</p>
-            <p>event duration (in minutes)</p>
-            <p>eventCategoryName</p>
-            <p>bookingName</p>
-            <p>bookingEmail</p>
-            <p>eventNotes</p>
-          </div>
+          <table class="details-table">
+            <tbody>
+              <tr>
+                <td>Date</td>
+                <td>26-04-2022</td>
+              </tr>
+              <tr>
+                <td>Event Start</td>
+                <td>00:00:00</td>
+              </tr>
+              <tr>
+                <td>Duration</td>
+                <td>30 Minutes</td>
+              </tr>
+              <tr>
+                <td>Event Category</td>
+                <td>Backend Clinic</td>
+              </tr>
+              <tr>
+                <td>Booking By</td>
+                <td>Preeyathorn Chaiyakum</td>
+              </tr>
+              <tr>
+                <td>Email</td>
+                <td>preeyathorn.c@gmail.com</td>
+              </tr>
+              <tr>
+                <td>EventNotes</td>
+                <td>-</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
@@ -146,7 +173,7 @@ import { ref } from "vue";
   background: rgb(63 63 70);
   border-radius: 10px;
   box-shadow: inset 0 1px rgba(0, 0, 0, 0.25);
-  content: "";
+  content: '';
   height: 6px;
   left: 10px;
   position: absolute;
@@ -159,7 +186,7 @@ import { ref } from "vue";
   border-bottom: 13px solid transparent;
   border-left: 10px solid #eee;
   border-top: 13px solid transparent;
-  content: "";
+  content: '';
   position: absolute;
   right: 0;
   top: 0;
@@ -208,13 +235,14 @@ import { ref } from "vue";
 }
 
 .modal-container {
-  width: 400px;
+  width: 700px;
   margin: 0px auto;
   padding: 20px 30px;
   background-color: rgb(55 65 81);
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
   transition: all 0.3s ease;
+  height: auto;
 }
 
 .header {
@@ -231,17 +259,27 @@ import { ref } from "vue";
   color: #fff;
 }
 
-.details {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  margin-bottom: 1rem;
+.close-button {
+  background: transparent;
+  border: 0;
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1;
+  padding: 0;
 }
-
-.details p {
+.details-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
   font-size: 1.2rem;
   font-weight: 500;
   color: #fff;
-  margin-bottom: 0.5rem;
+
+}
+
+.details-table td {
+  padding: 0.5rem;
+  border-bottom: 1px solid #fff;
 }
 </style>
