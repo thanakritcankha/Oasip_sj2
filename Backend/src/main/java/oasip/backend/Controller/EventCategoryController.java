@@ -13,7 +13,7 @@ import org.w3c.dom.ls.LSInput;
 
 import java.util.List;
 
-@CrossOrigin
+//@CrossOrigin
 @RestController
 @RequestMapping("/api/categorys")
 public class EventCategoryController {
