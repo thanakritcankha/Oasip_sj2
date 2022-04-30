@@ -1,38 +1,35 @@
 package oasip.backend.Controller;
 
 
-import oasip.backend.DTOs.EventCategoryDto;
-import oasip.backend.DTOs.EventDto;
-import oasip.backend.Enitities.Event;
-import oasip.backend.Enitities.EventCategory;
+import oasip.backend.DTOs.EventcategoryDto;
+import oasip.backend.Enitities.Eventcategory;
 import oasip.backend.Service.EventCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.w3c.dom.ls.LSInput;
 
 import java.util.List;
 
 //@CrossOrigin
 @RestController
-@RequestMapping("/api/categorys")
+@RequestMapping("/api/categories")
 public class EventCategoryController {
     @Autowired
     private EventCategoryService service;
 
     @GetMapping("")
-    public List<EventCategoryDto> getAllCategory(){
+    public List<EventcategoryDto> getAllCategory(){
         return service.getAllCategory();
     }
 
     @GetMapping("/{categoryId}")
-    public EventCategoryDto getCategory(@PathVariable Integer categoryId){
+    public EventcategoryDto getCategory(@PathVariable Integer categoryId){
         return service.getCategory(categoryId);
     }
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public EventCategory create(@RequestBody EventCategoryDto newCategory){
+    public EventcategoryDto create(@RequestBody EventcategoryDto newCategory){
         return service.createCategory(newCategory);
     }
 
@@ -42,7 +39,7 @@ public class EventCategoryController {
     }
 
     @PutMapping("/{categoryId}")
-    public EventCategory update(@PathVariable Integer categoryId , @RequestBody EventCategoryDto updateCategor){
+    public Eventcategory update(@PathVariable Integer categoryId , @RequestBody EventcategoryDto updateCategor){
         return service.updateCategory(updateCategor , categoryId);
     }
 
