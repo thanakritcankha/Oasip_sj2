@@ -1,5 +1,7 @@
 <script setup>
-import { ref } from 'vue'
+import { ref } from "vue";
+
+
 </script>
 
 <template>
@@ -145,7 +147,7 @@ import { ref } from 'vue'
   background: rgb(63 63 70);
   border-radius: 10px;
   box-shadow: inset 0 1px rgba(0, 0, 0, 0.25);
-  content: '';
+  content: "";
   height: 6px;
   left: 10px;
   position: absolute;
@@ -158,7 +160,7 @@ import { ref } from 'vue'
   border-bottom: 13px solid transparent;
   border-left: 10px solid #eee;
   border-top: 13px solid transparent;
-  content: '';
+  content: "";
   position: absolute;
   right: 0;
   top: 0;
@@ -199,15 +201,12 @@ import { ref } from 'vue'
   background-color: rgba(0, 0, 0, 0.5);
   display: table;
   transition: opacity 0.3s ease;
-
 }
 
 .modal-wrapper {
   display: table-cell;
   vertical-align: middle;
-
 }
-
 
 .modal-container {
   width: 400px;
@@ -217,7 +216,6 @@ import { ref } from 'vue'
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
   transition: all 0.3s ease;
-
 }
 
 .header {
@@ -226,15 +224,12 @@ import { ref } from 'vue'
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
-
-
 }
 
 .header h1 {
   font-size: 1.5rem;
   font-weight: 600;
   color: #fff;
-
 }
 
 .details {
@@ -242,7 +237,6 @@ import { ref } from 'vue'
   flex-direction: column;
   justify-content: space-between;
   margin-bottom: 1rem;
-
 }
 
 .details p {
@@ -250,6 +244,5 @@ import { ref } from 'vue'
   font-weight: 500;
   color: #fff;
   margin-bottom: 0.5rem;
-  
 }
 </style>
