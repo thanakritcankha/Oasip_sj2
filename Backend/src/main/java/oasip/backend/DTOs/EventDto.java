@@ -13,5 +13,5 @@ public class EventDto implements Serializable {
     private LocalDateTime eventStartTime;
     private Integer eventDuration;
     private String eventNotes;
-    private EventCategoryDto eventCategory;
+    private EventcategoryDto eventCategory;
 }

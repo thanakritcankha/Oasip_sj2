@@ -1,9 +1,7 @@
 package oasip.backend.Controller;
 
-import oasip.backend.DTOs.EventCategoryDto;
 import oasip.backend.DTOs.EventDto;
 import oasip.backend.Enitities.Event;
-import oasip.backend.Enitities.EventCategory;
 import oasip.backend.Service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

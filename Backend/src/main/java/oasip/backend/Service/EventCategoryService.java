@@ -1,9 +1,7 @@
 package oasip.backend.Service;
 
-import oasip.backend.DTOs.EventCategoryDto;
-import oasip.backend.DTOs.EventDto;
-import oasip.backend.Enitities.Event;
-import oasip.backend.Enitities.EventCategory;
+import oasip.backend.DTOs.EventcategoryDto;
+import oasip.backend.Enitities.Eventcategory;
 import oasip.backend.ListMapper;
 import oasip.backend.repositories.EventcategoryRepository;
 import org.modelmapper.ModelMapper;
@@ -21,38 +19,40 @@ public class EventCategoryService {
     @Autowired
     private ListMapper listMapper;
 
-    public List<EventCategoryDto> getAllCategory() {
-        List<EventCategory> categoryList = repository.findAll();
-        return listMapper.maplist(categoryList, EventCategoryDto.class, modelMapper);
+    public List<EventcategoryDto> getAllCategory() {
+        List<Eventcategory> categoryList = repository.findAll();
+        return listMapper.maplist(categoryList, EventcategoryDto.class, modelMapper);
     }
-    public EventCategoryDto getCategory(Integer categoryId){
-        EventCategory category = repository.findById(categoryId).orElseThrow(
+    public EventcategoryDto getCategory(Integer categoryId){
+        Eventcategory category = repository.findById(categoryId).orElseThrow(
                 () -> new RuntimeException(categoryId + " Does not Exist !!!" ));
-        return modelMapper.map(category , EventCategoryDto.class);
+        return modelMapper.map(category , EventcategoryDto.class);
     }
 
-    public EventCategory createCategory(EventCategoryDto newCategory){
-        EventCategory category = modelMapper.map(newCategory,EventCategory.class);
+    public EventcategoryDto createCategory(EventcategoryDto newCategory){
+        Eventcategory category = modelMapper.map(newCategory,Eventcategory.class);
         //event category
-        return repository.saveAndFlush(category);
+        System.out.println(category);
+        repository.saveAndFlush(category);
+        return newCategory;
     }
     public void deleteCategory(Integer categoryId){
         repository.findById(categoryId).orElseThrow(
                 () -> new RuntimeException(categoryId + " Does not Exist !!!" ));
         repository.deleteById(categoryId);
     }
-    public EventCategory updateCategory(EventCategoryDto updateCategory , Integer categoryId){
-        EventCategory newCategory = modelMapper.map(updateCategory,EventCategory.class);
-        EventCategory category = repository.findById(categoryId).map(o -> mapCategory(o,newCategory)).orElseGet(() -> {
+    public Eventcategory updateCategory(EventcategoryDto updateCategory , Integer categoryId){
+        Eventcategory newCategory = modelMapper.map(updateCategory,Eventcategory.class);
+        Eventcategory category = repository.findById(categoryId).map(o -> mapCategory(o,newCategory)).orElseGet(() -> {
             newCategory.setId(categoryId);
             return newCategory;
         });
         return repository.saveAndFlush(category);
     }
-    private EventCategory mapCategory(EventCategory existingCategory, EventCategory updateCategory) {
+    private Eventcategory mapCategory(Eventcategory existingCategory, Eventcategory updateCategory) {
         existingCategory.setEventCategoryName(updateCategory.getEventCategoryName());
         existingCategory.setEventCategoryDescription(updateCategory.getEventCategoryDescription());
-        existingCategory.setEventDuration(updateCategory.getEventDuration());
+        existingCategory.setEventCategoryDuration(updateCategory.getEventCategoryDuration());
         return existingCategory; }
 
 }
