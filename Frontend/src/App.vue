@@ -1,11 +1,10 @@
 <script setup>
 import NavMain from './components/NavMain.vue';
-import Upcoming from './views/Upcoming.vue';
-import ListAll from './components/ListAll.vue';
+// import Upcoming from './views/Upcoming.vue';
 import { onMounted, ref } from 'vue';
 import EventDataService from './services/EventDataService';
 const menu = ref([
-  { name: "ALL", "path": "/", underline: false },
+  { name: "ALL", "path": "/list", underline: false },
   { name: "DETAIL", "path": "/about", underline: false },
   { name: "TODAY", "path": "/", underline: false },
   { name: "UPCOMING", "path": "/", underline: false },
@@ -18,19 +17,6 @@ const btn = (index) => {
   menu.value[index].underline = true
 }
 
-
-
-
-// ex 
-const note = ref([])
-const list = async () => {
-  const res = await EventDataService.retrieveAllEvent();
-  note.value = await res.json()
-}
-onMounted(async () => {
-  await list()
-  console.log(note.value);
-})
 </script>
 
 <template>
@@ -51,7 +37,6 @@ onMounted(async () => {
       </div>
       <div class="p-10">
         <router-view></router-view>
-        <ListAll />
       </div>
 
 
@@ -86,7 +71,12 @@ onMounted(async () => {
 </template>
 
 <style >
+
 .bg-main {
   background-color: #1C1C1E;
+}
+
+body {
+  font-family: 'Mochiy Pop P One', sans-serif;
 }
 </style>
