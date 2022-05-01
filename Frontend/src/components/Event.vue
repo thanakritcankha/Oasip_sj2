@@ -30,22 +30,22 @@ const formatDate = (datetime) => {
   <!-- card container -->
   <div class="max-w-lg shadow-lg rounded overflow-hidden m-4 sm:flex bg-zinc-700">
     <div
-      class="h-60 sm:h-auto sm:w-38 md:w-40 flex-none bg-cover bg-center rounded rounded-t sm:rounded sm:rounded-l text-center  overflow-hidden"
+      class="h-60 sm:h-auto sm:w-38 md:w-40 flex-none bg-cover bg-center rounded rounded-t sm:rounded sm:rounded-l flex text-center items-center overflow-hidden"
       style="background-image: url('https://unsplash.it/804/800')">
-      <div class="h-30 sm:h-50">
-        <div class=" w-full h-full flex items-center justify-center">
-          <div class="calendar sm:w-30 sm:mt-4">
-            <p id="monthName" class>{{ formatDate(prop.mask.eventStartTime).toLocaleString('th-TH', {
-                month: "long"
-              })
+      <div class=" m-auto flex ">
+        <div class="calendar sm:w-30">
+          <p id="monthName">
+            {{
+                formatDate(prop.mask.eventStartTime).toLocaleString('th-TH', {
+                  month: "long"
+                })
             }}</p>
-            <p id="dayName">{{ formatDate(prop.mask.eventStartTime).toLocaleString('th-TH', {
-                weekday: "long"
-              })
+          <p id="dayName">
+            {{ formatDate(prop.mask.eventStartTime).toLocaleString('th-TH',
+                { weekday: "long" })
             }}</p>
-            <p id="dayNumber">{{ formatDate(prop.mask.eventStartTime).getDate() }}</p>
-            <p id="year">{{ formatDate(prop.mask.eventStartTime).getFullYear() }}</p>
-          </div>
+          <p id="dayNumber">{{ formatDate(prop.mask.eventStartTime).getDate() }}</p>
+          <p id="year">{{ formatDate(prop.mask.eventStartTime).getFullYear() }}</p>
         </div>
       </div>
     </div>
