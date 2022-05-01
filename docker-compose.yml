@@ -1,0 +1,35 @@
+version: '3.3'
+services:
+  mysqldb:
+    image: mysql:5.7
+    restart: unless-stopped
+    env_file: ./.env
+    environment:
+      - MYSQL_ROOT_PASSWORD=$MYSQL_PASSWORD
+      - MYSQL_DATABASE=$MYSQL_DATABASE
+    ports:
+      - $MYSQL_PORT:$MYSQL_PORT
+    volumes:
+      - db_volume:/var/lib/mysql
+      - ./Database/:/docker-entrypoint-initdb.d/
+  backend:
+    depends_on:
+      - mysqldb
+    image: backend:latest
+    build: ./Backend
+    restart: on-failure
+    env_file: ./.env
+    ports:
+      - $SPRING_PORT:$SPRING_PORT
+    environment:
+      - MYSQL_PATH=mysqldb
+      - MYSQL_PORT=$MYSQL_PORT
+      - MYSQL_USER=$MYSQL_USER
+      - MYSQL_PASSWORD=$MYSQL_PASSWORD
+      - MYSQL_DATABASE=$MYSQL_DATABASE
+    # volumes:
+    #   - .m2:/root/.m2
+    # stdin_open: true
+    # tty: true
+volumes:
+  db_volume: {}
