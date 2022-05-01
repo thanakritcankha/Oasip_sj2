@@ -2,7 +2,8 @@
 import NavMain from './components/NavMain.vue';
 import Upcoming from './views/Upcoming.vue';
 import ListAll from './components/ListAll.vue';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
+import EventDataService from './services/EventDataService';
 const menu = ref([
   { name: "ALL", "path": "/", underline: false },
   { name: "DETAIL", "path": "/about", underline: false },
@@ -16,6 +17,20 @@ const btn = (index) => {
   }
   menu.value[index].underline = true
 }
+
+
+
+
+// ex 
+const note = ref([])
+const list = async () => {
+  const res = await EventDataService.retrieveAllEvent();
+  note.value = await res.json()
+}
+onMounted(async () => {
+  await list()
+  console.log(note.value);
+})
 </script>
 
 <template>
