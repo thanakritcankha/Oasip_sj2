@@ -67,7 +67,7 @@ const formatDate = (datetime) => {
           <li><button class="tag font-Mochiy">{{ prop.mask.eventCategory.eventCategoryName }}</button></li>
         </ul>
         <div class="time font-bold text-lg flex items-center">
-          <img src="public/icons/chronometer.png" alt="chronometer" class="w-8">
+          <img src="../assets/icons/chronometer.png" alt="chronometer" class="w-8">
           <span class="pl-3">Start : </span> {{
               formatTime(prop.mask.eventStartTime)
           }}
