@@ -117,6 +117,7 @@ const checkEvents = () => {
 </template>
 
 <style>
+
 .name {
   flex: auto;
 }
