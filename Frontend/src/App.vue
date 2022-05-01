@@ -1,10 +1,10 @@
 <script setup>
 import NavMain from './components/NavMain.vue';
-import Upcoming from './views/Upcoming.vue';
-import ListAll from './components/ListAll.vue';
-import { ref } from 'vue';
+// import Upcoming from './views/Upcoming.vue';
+import { onMounted, ref } from 'vue';
+import EventDataService from './services/EventDataService';
 const menu = ref([
-  { name: "ALL", "path": "/", underline: false },
+  { name: "ALL", "path": "/list", underline: false },
   { name: "DETAIL", "path": "/about", underline: false },
   { name: "TODAY", "path": "/", underline: false },
   { name: "UPCOMING", "path": "/", underline: false },
@@ -16,6 +16,7 @@ const btn = (index) => {
   }
   menu.value[index].underline = true
 }
+
 </script>
 
 <template>
@@ -36,7 +37,6 @@ const btn = (index) => {
       </div>
       <div class="p-10">
         <router-view></router-view>
-        <ListAll />
       </div>
 
 
@@ -71,7 +71,12 @@ const btn = (index) => {
 </template>
 
 <style >
+
 .bg-main {
   background-color: #1C1C1E;
+}
+
+body {
+  font-family: 'Mochiy Pop P One', sans-serif;
 }
 </style>
