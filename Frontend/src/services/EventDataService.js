@@ -1,7 +1,10 @@
 const API_URL = '/api'
-class EventDataService {
+class EventDataService{
     retrieveAllEvent(){
         return fetch(`${API_URL}/events`)
     }
-}   
-export default new EventDataService();
+    retrieveEvent(id){
+        return fetch(`${API_URL}/events/${id}`)
+    }
+}
+export default new EventDataService()
