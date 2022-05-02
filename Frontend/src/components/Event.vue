@@ -32,7 +32,7 @@ const formatDate = (datetime) => {
     <div
       class="h-60 sm:h-auto sm:w-38 md:w-40 flex-none bg-cover bg-center rounded rounded-t sm:rounded sm:rounded-l flex text-center items-center overflow-hidden"
       style="background-image: url('https://unsplash.it/804/800')">
-      <div class=" m-auto flex ">
+      <div class=" m-auto flex shadow-2xl">
         <div class="calendar sm:w-30">
           <p id="monthName">
             {{
@@ -63,14 +63,14 @@ const formatDate = (datetime) => {
           is
           pretty amazing, I must say.
         </p> -->
-        
+
         <ul class="tags flex items-center">
           <img src="public/icons/subfolder.png" alt="subfolder" class="w-8 pr-2">
           <li><button class="tag font-Mochiy ">{{ prop.mask.eventCategory.eventCategoryName }}</button></li>
         </ul>
         <div class="time font-bold text-lg flex items-center">
           <img src="public/icons/chronometer.png" alt="chronometer" class="w-8">
-          <span class="pl-3 text-xl">Start :  {{
+          <span class="pl-3 text-xl">Start : {{
               formatTime(prop.mask.eventStartTime)
           }}</span>
         </div>
@@ -227,6 +227,7 @@ const formatDate = (datetime) => {
   margin-bottom: 1rem;
   font-size: small;
 }
+
 .tag {
   background: #ff6331;
   color: #fff;
