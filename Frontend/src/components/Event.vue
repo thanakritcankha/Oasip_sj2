@@ -46,6 +46,7 @@ const formatDate = (datetime) => {
             }}</p>
           <p id="dayNumber">{{ formatDate(prop.mask.eventStartTime).getDate() }}</p>
           <p id="year">{{ formatDate(prop.mask.eventStartTime).getFullYear() }}</p>
+<<<<<<< HEAD
         </div>
       </div>
     </div>
@@ -129,6 +130,91 @@ const formatDate = (datetime) => {
         </div>
       </div>
     </div>
+=======
+        </div>
+      </div>
+    </div>
+    <!-- card-content -->
+    <div class="px-2 py-3 w-full relative">
+      <div class="flex justify-end pb-3">
+        <button class="h-4 w-4 bg-yellow-400 rounded-full mr-2"></button>
+        <button class="h-4 w-4 bg-green-500 rounded-full mr-2" @click="btnShowDetail()"></button>
+        <button class="h-4 w-4 bg-red-600 rounded-full mr-2"></button>
+      </div>
+      <div class="px-5">
+        <h2 class="pb-2 font-black text-xl border-b-2"> {{ prop.mask.bookingName }} </h2>
+        <!-- <p class="mb-4 text-grey-dark text-sm">
+          Learning Tailwind is incredibly easy. The team has done a wonderful job with the documentation. This
+          is
+          pretty amazing, I must say.
+        </p> -->
+        <ul class="tags grid justify-items-center  items-center text-md">
+          <li class="text-xl w-max mt-1">Category :</li>
+          <li><button class="tag font-Mochiy flex break-words"> {{ prop.mask.eventCategory.eventCategoryName }}</button>
+          </li>
+        </ul>
+        <div class="time font-bold text-lg flex items-center">
+          <img src="../assets/icons/chronometer.png" alt="chronometer" class="w-8">
+          <span class="pl-3 text-xl">Start : {{
+              formatTime(prop.mask.eventStartTime)
+          }}</span>
+        </div>
+
+      </div>
+      <h1 class="duration text-white mt-2 flex justify-end font-Mochiy">
+        <div class="px-4 py-1 bg-orange-600 rounded-full">{{
+            prop.mask.eventDuration
+        }} Minutes</div>
+      </h1>
+    </div>
+  </div>
+
+
+  <!-- showDetail -->
+  <div class="modal-mask" v-show="showDetail">
+    <div class="modal-wrapper">
+      <div class="modal-container">
+        <div class="modal-body">
+          <div class="header">
+            <h1>Details</h1>
+            <button class="close-btn" @click="btnCloseDetail">&#10006;</button>
+          </div>
+          <table class="details-table">
+            <tbody>
+              <tr>
+                <td>Date</td>
+                <td>26-04-2022</td>
+              </tr>
+              <tr>
+                <td>Event Start</td>
+                <td>{{ formatTime(prop.mask.eventStartTime) }}</td>
+              </tr>
+              <tr>
+                <td>Duration</td>
+                <td>{{ prop.mask.eventDuration }} Minutes</td>
+              </tr>
+              <tr>
+                <td>Event Category</td>
+                <td>{{ prop.mask.eventCategory.eventCategoryName }}</td>
+              </tr>
+              <tr>
+                <td>Booking By</td>
+                <td>{{ prop.mask.bookingName }}</td>
+              </tr>
+              <tr>
+                <td>Email</td>
+                <td>{{ prop.mask.bookingEmail }}</td>
+              </tr>
+              <tr>
+                <td>EventNotes</td>
+                <td>{{ prop.mask.eventNotes }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+>>>>>>> main
   </div>
 </template>
 
@@ -219,6 +305,7 @@ const formatDate = (datetime) => {
 }
 
 .tags {
+<<<<<<< HEAD
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -226,6 +313,14 @@ const formatDate = (datetime) => {
   align-items: center;
   margin-bottom: 1rem;
   font-size: small;
+=======
+  /* display: flex;
+  flex-direction: row;
+  flex-wrap: wrap; */
+  /* justify-content: flex-start; */
+  align-items: center;
+  margin-bottom: 1rem;
+>>>>>>> main
 }
 
 .tag {
@@ -234,7 +329,10 @@ const formatDate = (datetime) => {
   padding: 0.5rem 1rem;
   margin-right: 0.5rem;
   border-radius: 1rem;
+<<<<<<< HEAD
 
+=======
+>>>>>>> main
 }
 
 .time {
