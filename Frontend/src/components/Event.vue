@@ -32,7 +32,7 @@ const formatDate = (datetime) => {
     <div
       class="h-60 sm:h-auto sm:w-38 md:w-40 flex-none bg-cover bg-center rounded rounded-t sm:rounded sm:rounded-l flex text-center items-center overflow-hidden"
       style="background-image: url('https://unsplash.it/804/800')">
-      <div class=" m-auto flex ">
+      <div class=" m-auto flex shadow-2xl">
         <div class="calendar sm:w-30">
           <p id="monthName">
             {{
@@ -57,24 +57,26 @@ const formatDate = (datetime) => {
         <button class="h-4 w-4 bg-red-600 rounded-full mr-2"></button>
       </div>
       <div class="px-5">
-        <h2 class="mb-2 font-black text-xl "> {{ prop.mask.bookingName }} </h2>
+        <h2 class="pb-2 font-black text-xl border-b-2"> {{ prop.mask.bookingName }} </h2>
         <!-- <p class="mb-4 text-grey-dark text-sm">
           Learning Tailwind is incredibly easy. The team has done a wonderful job with the documentation. This
           is
           pretty amazing, I must say.
         </p> -->
-        <ul class="tags">
-          <li><button class="tag font-Mochiy">{{ prop.mask.eventCategory.eventCategoryName }}</button></li>
+        <ul class="tags grid justify-items-center  items-center text-md">
+          <li class="text-xl w-max mt-1">Category :</li>
+          <li><button class="tag font-Mochiy flex break-words"> {{ prop.mask.eventCategory.eventCategoryName }}</button>
+          </li>
         </ul>
         <div class="time font-bold text-lg flex items-center">
-          <img src="public/icons/chronometer.png" alt="chronometer" class="w-8">
-          <span class="pl-3">Start : </span> {{
+          <img src="../assets/icons/chronometer.png" alt="chronometer" class="w-8">
+          <span class="pl-3 text-xl">Start : {{
               formatTime(prop.mask.eventStartTime)
-          }}
+          }}</span>
         </div>
 
       </div>
-      <h1 class="duration text-white mt-2 flex justify-end">
+      <h1 class="duration text-white mt-2 flex justify-end font-Mochiy">
         <div class="px-4 py-1 bg-orange-600 rounded-full">{{
             prop.mask.eventDuration
         }} Minutes</div>
@@ -217,75 +219,29 @@ const formatDate = (datetime) => {
 }
 
 .tags {
-  list-style: none;
-  margin: 0;
-  overflow: hidden;
-  padding: 0;
-  width: auto;
-  height: auto;
-}
-
-.tags li {
-  float: left;
-  /* margin-right: 0.5rem; */
-  /* margin-bottom: 0.5rem; */
+  /* display: flex;
+  flex-direction: row;
+  flex-wrap: wrap; */
+  /* justify-content: flex-start; */
+  align-items: center;
+  margin-bottom: 1rem;
 }
 
 .tag {
-  background: #eee;
-  border-radius: 3px 0 0 3px;
-  color: black;
-  display: inline-block;
-  height: 26px;
-  line-height: 26px;
-  padding: 0 20px 0 23px;
-  position: relative;
-  margin: 0 10px 10px 0;
-  text-decoration: none;
-  transition: color 0.2s;
-  width: auto;
-  height: auto;
-}
-
-.tag::before {
-  background: rgb(63 63 70);
-  border-radius: 10px;
-  box-shadow: inset 0 1px rgba(0, 0, 0, 0.25);
-  content: '';
-  height: 6px;
-  left: 10px;
-  position: absolute;
-  width: 6px;
-  top: 10px;
-}
-
-.tag::after {
-  background: rgb(63 63 70);
-  border-bottom: 13px solid transparent;
-  border-left: 10px solid #eee;
-  border-top: 13px solid transparent;
-  content: '';
-  position: absolute;
-  right: 0;
-  top: 0;
-}
-
-.tag:hover {
-  background-color: #ddd;
-  color: #444;
-  cursor: pointer;
-}
-
-.tag:hover::after {
-  border-left-color: #ddd;
+  background: #ff6331;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  margin-right: 0.5rem;
+  border-radius: 1rem;
 }
 
 .time {
   margin-left: auto;
 }
 
+
 .duration {
-  font-size: 1.2rem;
+  font-size: 0.8rem;
   font-weight: 500;
   color: #fff;
   margin-left: auto;

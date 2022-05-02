@@ -23,10 +23,10 @@ onBeforeMount(async () => {
             <Event :mask="event" />
         </div>
     </div> -->
-    <div class="relative flex flex-col justify-center py-6 sm:py-12 " v-if="events.length > 0">
+    <div class="relative flex flex-col justify-center py-2 sm:py-4 " v-if="events.length > 0">
         <div
-            class="columns-2 2xl:columns-3 gap-10 [column-fill:_balance] box-border mx-auto before:box-inherit after:box-inherit">
-            <div class="break-inside-avoid p-8 mb-6 bg-gray-100 rounded-lg" v-for="(event, index) in events"
+            class="columns-2 2xl:columns-3 gap-6 [column-fill:_balance] box-border mx-auto before:box-inherit after:box-inherit">
+            <div class="break-inside-avoid p-2 mb-6 bg-gray-100 rounded-lg" v-for="(event, index) in events"
                 :id="event.id">
                 <Event :mask="event" />
             </div>
