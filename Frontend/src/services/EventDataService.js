@@ -6,5 +6,10 @@ class EventDataService{
     retrieveEvent(id){
         return fetch(`${API_URL}/events/${id}`)
     }
+    deleteEvent(id){
+        return fetch(`${API_URL}/events/${id}`,{
+            method: 'DELETE'
+        })
+    }
 }
 export default new EventDataService()
