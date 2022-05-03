@@ -6,7 +6,6 @@ const prop = defineProps({
   mask: Object,
 })
 
-const showDetail = ref(false);
 
 const btnShowDetail = () => {
   showDetail.value = true;

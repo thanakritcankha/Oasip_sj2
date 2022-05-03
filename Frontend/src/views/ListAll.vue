@@ -2,7 +2,6 @@
 import { onBeforeMount, ref } from 'vue';
 import EventDataService from '../services/EventDataService';
 import Event from '../components/Event.vue';
-
 const showWindow = ref(false)
 
 // ex 
@@ -23,6 +22,9 @@ onBeforeMount(async () => {
             <Event :mask="event" />
         </div>
     </div> -->
+    <router-link to="/CreateEvent" class="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-full">
+        Creaet New Event
+    </router-link>
     <div class="relative flex flex-col justify-center py-2 sm:py-4 " v-if="events.length > 0">
         <div
             class="columns-2 2xl:columns-3 gap-6 [column-fill:_balance] box-border mx-auto before:box-inherit after:box-inherit">
