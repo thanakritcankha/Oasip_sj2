@@ -27,14 +27,14 @@ const btn = (index) => {
       <div class="pl-10  text-2xl">
         EVENTS
       </div>
-      <div class="pt-5 pl-14 text-md">
+      <!-- <div class="pt-5 pl-14 text-md">
         <router-link :id="n.name" v-for="(n, index) in menu" :to="n.path" class="px-5 mr-10"
           :class="{ 'border-b-2': n.underline }" @click="btn(index)">
           {{
               n.name
           }}
         </router-link>
-      </div>
+      </div> -->
       <div class="p-10">
         <router-view></router-view>
       </div>
@@ -71,7 +71,6 @@ const btn = (index) => {
 </template>
 
 <style >
-
 .bg-main {
   background-color: #1C1C1E;
 }

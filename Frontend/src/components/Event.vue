@@ -16,7 +16,8 @@ const btnCloseDetail = () => {
 
 
 const formatTime = (datetime) => {
-  return datetime.slice(-8)
+  var date = new Date(datetime).toUTCString()
+  return date.slice(-12, -4)
 }
 
 const formatDate = (datetime) => {
@@ -37,7 +38,8 @@ const formatDate = (datetime) => {
           <p id="monthName">
             {{
                 formatDate(prop.mask.eventStartTime).toLocaleString('th-TH', {
-                  month: "long"
+                  month: "long",
+                  timeZone: "UTC",
                 })
             }}</p>
           <p id="dayName">
