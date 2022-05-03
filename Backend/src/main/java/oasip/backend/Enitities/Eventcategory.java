@@ -1,5 +1,6 @@
 package oasip.backend.Enitities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -7,15 +8,15 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "eventcategory")
+@Table(name = "eventcategories")
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class EventCategory {
+public class Eventcategory {
     @Id
-    @Column(name = "eventCatedoryId", nullable = false)
+    @Column(name = "eventCategoryId", nullable = false)
     private Integer id;
 
     @Column(name = "eventCategoryName", nullable = false, length = 100)
@@ -25,9 +26,10 @@ public class EventCategory {
     @Column(name = "eventCategoryDescription")
     private String eventCategoryDescription;
 
-    @Column(name = "eventDuration", nullable = false)
-    private Integer eventDuration;
+    @Column(name = "eventCategoryDuration", nullable = false)
+    private Integer eventCategoryDuration;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "eventCategory")
     private Set<Event> events = new LinkedHashSet<>();
 

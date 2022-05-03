@@ -1,0 +1,61 @@
+version: '3.3'
+services:
+  mysqldb:
+    image: mysql:5.7
+    container_name: mysqldb
+    restart: unless-stopped
+    env_file: ./.env
+    environment:
+      - MYSQL_ROOT_PASSWORD=$MYSQL_PASSWORD
+      - MYSQL_DATABASE=$MYSQL_DATABASE
+    ports:
+      - $MYSQL_PORT:$MYSQL_PORT
+    volumes:
+      - db_volume:/var/lib/mysql
+      - ./Database/:/docker-entrypoint-initdb.d/
+  backend:
+    depends_on:
+      - mysqldb
+    image: img_backend
+    container_name: backend
+    build: ./Backend
+    restart: on-failure
+    env_file: ./.env
+    ports:
+      - $SPRING_PORT:$SPRING_PORT
+    environment:
+      - MYSQL_PATH=mysqldb
+      - MYSQL_PORT=$MYSQL_PORT
+      - MYSQL_USER=$MYSQL_USER
+      - MYSQL_PASSWORD=$MYSQL_PASSWORD
+      - MYSQL_DATABASE=$MYSQL_DATABASE
+  frontend:
+    image: img_frontend
+    container_name: frontend
+    build: ./Frontend
+    # working_dir: /var/local/app
+    restart: unless-stopped
+    volumes:
+      - ./Frontend/:/var/local/app:cached
+    # environment:
+    #   - HOST=0.0.0.0
+    # command: /bin/sh -c "yarn cache clean && yarn install && yarn dev"
+  proxy_nginx_frontend:
+    image: nginx:1.19.1
+    volumes:
+      - ./Frontend/config/nginx/dev.conf:/etc/nginx/conf.d/default.conf:cached
+      - ./Frontend/logs/nginx:/var/log/nginx:cached
+    container_name: proxy_nginx_frontend
+    ports:
+      - 8000:80
+    # environment:
+    #   - BACKEN_URL : backend
+    #   - FRONT_URL : frontend
+    depends_on:
+      - frontend
+    # volumes:
+    #   - .m2:/root/.m2
+    # stdin_open: true
+    # tty: true
+volumes:
+  db_volume: {}

@@ -4,7 +4,11 @@ module.exports = {
     "./src/**/*.{vue,js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+      Mochiy: ["Mochiy Pop P One", "sans-serif"],
+     },
+    },
   },
   plugins: [],
 }

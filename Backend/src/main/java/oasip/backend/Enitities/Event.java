@@ -3,10 +3,11 @@ package oasip.backend.Enitities;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "event")
+@Table(name = "events")
 @Getter
 @Setter
 @ToString
@@ -24,7 +25,7 @@ public class Event {
     private String bookingEmail;
 
     @Column(name = "eventStartTime", nullable = false)
-    private LocalDateTime eventStartTime;
+    private Instant eventStartTime;
 
     @Column(name = "eventDuration", nullable = false)
     private Integer eventDuration;
@@ -35,6 +36,6 @@ public class Event {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "EventCategory_id", nullable = false)
-    private EventCategory eventCategory;
+    private Eventcategory eventCategory;
 
 }
