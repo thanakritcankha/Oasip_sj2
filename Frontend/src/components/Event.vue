@@ -100,7 +100,7 @@ const formatDate = (datetime) => {
             <tbody>
               <tr>
                 <td>Date</td>
-                <td>26-04-2022</td>
+                <td>{{ formatDate(prop.mask.eventStartTime).toUTCString().slice(4,16) }}</td>
               </tr>
               <tr>
                 <td>Event Start</td>
