@@ -2,7 +2,6 @@
 import { ref } from 'vue'
 const showDetail = ref(false);
 
-<<<<<<< HEAD
 const prop = defineProps({
   mask: Object,
 })
@@ -11,13 +10,6 @@ const showDetail = ref(false);
 
 const btnShowDetail = () => {
   showDetail.value = true;
-=======
-const btnShowDetail = () => {
-  showDetail.value = true;
-}
-const btnCloseDetail = () => {
-  showDetail.value = false;
->>>>>>> 44cbfb3665cc4736b1be0460683c0e3e700a070a
 }
 const btnCloseDetail = () => {
   showDetail.value = false;
@@ -37,7 +29,6 @@ const formatDate = (datetime) => {
 </script>
 
 <template>
-<<<<<<< HEAD
   <!-- card container -->
   <div class="max-w-lg shadow-lg rounded overflow-hidden m-4 sm:flex bg-zinc-700">
     <div
@@ -59,20 +50,6 @@ const formatDate = (datetime) => {
           <p id="dayNumber">{{ formatDate(prop.mask.eventStartTime).getDate() }}</p>
           <p id="year">{{ formatDate(prop.mask.eventStartTime).getFullYear() }}</p>
         </div>
-=======
-  <div
-    class="flex flex-col h-56 w-full bg-zinc-700 rounded-xl shadow-2xl shadow-zinc-900"
-  >
-    <div class="flex w-full h-12 bg-zinc-800 rounded-t-lg p-2">
-      <div class="name">
-        <h1>Preeyathorn Chaiyakum</h1>
-      </div>
-
-      <div class="pt-2">
-        <button class="h-4 w-4 bg-yellow-400 rounded-full mr-2"></button>
-        <button class="h-4 w-4 bg-green-500 rounded-full mr-2" @click="btnShowDetail()"></button>
-        <button class="h-4 w-4 bg-red-600 rounded-full mr-2"></button>
->>>>>>> 44cbfb3665cc4736b1be0460683c0e3e700a070a
       </div>
     </div>
     <!-- card-content -->
@@ -110,11 +87,8 @@ const formatDate = (datetime) => {
     </div>
   </div>
 
-<<<<<<< HEAD
 
   <!-- showDetail -->
-=======
->>>>>>> 44cbfb3665cc4736b1be0460683c0e3e700a070a
   <div class="modal-mask" v-show="showDetail">
     <div class="modal-wrapper">
       <div class="modal-container">
