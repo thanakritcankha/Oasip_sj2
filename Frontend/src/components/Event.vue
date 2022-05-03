@@ -16,7 +16,8 @@ const btnCloseDetail = () => {
 
 
 const formatTime = (datetime) => {
-  return datetime.slice(-8)
+  var date = new Date(datetime).toUTCString()
+  return date.slice(-12, -4)
 }
 
 const formatDate = (datetime) => {
@@ -32,12 +33,13 @@ const formatDate = (datetime) => {
     <div
       class="h-60 sm:h-auto sm:w-38 md:w-40 flex-none bg-cover bg-center rounded rounded-t sm:rounded sm:rounded-l flex text-center items-center overflow-hidden"
       style="background-image: url('https://unsplash.it/804/800')">
-      <div class=" m-auto flex ">
+      <div class=" m-auto flex shadow-2xl">
         <div class="calendar sm:w-30">
           <p id="monthName">
             {{
                 formatDate(prop.mask.eventStartTime).toLocaleString('th-TH', {
-                  month: "long"
+                  month: "long",
+                  timeZone: "UTC",
                 })
             }}</p>
           <p id="dayName">
@@ -57,20 +59,20 @@ const formatDate = (datetime) => {
         <button class="h-4 w-4 bg-red-600 rounded-full mr-2"></button>
       </div>
       <div class="px-5">
-        <h2 class="mb-2 font-black text-xl "> {{ prop.mask.bookingName }} </h2>
+        <h2 class="pb-2 font-black text-xl border-b-2"> {{ prop.mask.bookingName }} </h2>
         <!-- <p class="mb-4 text-grey-dark text-sm">
           Learning Tailwind is incredibly easy. The team has done a wonderful job with the documentation. This
           is
           pretty amazing, I must say.
         </p> -->
-        
-        <ul class="tags flex items-center">
-          <img src="public/icons/subfolder.png" alt="subfolder" class="w-8 pr-2">
-          <li><button class="tag font-Mochiy ">{{ prop.mask.eventCategory.eventCategoryName }}</button></li>
+        <ul class="tags grid justify-items-center  items-center text-md">
+          <li class="text-xl w-max mt-1">Category :</li>
+          <li><button class="tag font-Mochiy flex break-words"> {{ prop.mask.eventCategory.eventCategoryName }}</button>
+          </li>
         </ul>
         <div class="time font-bold text-lg flex items-center">
-          <img src="public/icons/chronometer.png" alt="chronometer" class="w-8">
-          <span class="pl-3 text-xl">Start :  {{
+          <img src="../assets/icons/chronometer.png" alt="chronometer" class="w-8">
+          <span class="pl-3 text-xl">Start : {{
               formatTime(prop.mask.eventStartTime)
           }}</span>
         </div>
@@ -219,21 +221,20 @@ const formatDate = (datetime) => {
 }
 
 .tags {
-  display: flex;
+  /* display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: flex-start;
+  flex-wrap: wrap; */
+  /* justify-content: flex-start; */
   align-items: center;
   margin-bottom: 1rem;
-  font-size: small;
 }
+
 .tag {
   background: #ff6331;
   color: #fff;
   padding: 0.5rem 1rem;
   margin-right: 0.5rem;
   border-radius: 1rem;
-
 }
 
 .time {

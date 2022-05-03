@@ -25,7 +25,7 @@ public class Event {
     private String bookingEmail;
 
     @Column(name = "eventStartTime", nullable = false)
-    private LocalDateTime eventStartTime;
+    private Instant eventStartTime;
 
     @Column(name = "eventDuration", nullable = false)
     private Integer eventDuration;

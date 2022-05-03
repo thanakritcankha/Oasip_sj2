@@ -85,3 +85,15 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2022-04-30 23:42:10
+CREATE USER 'dev'@'%' IDENTIFIED WITH mysql_native_password BY 'Oasip_sj2';
+-- create user 'dev'@'%' identified with mysql_native_password by 'Oasip_sj2';
+-- grant all privileges on . to 'dev'@'%';
+GRANT ALL PRIVILEGES ON *.* TO 'dev'@'%';
+flush privileges;
+
+
+
+
+
+
+

@@ -6,6 +6,7 @@ import oasip.backend.ListMapper;
 import oasip.backend.repositories.EventRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public class EventService {
     private ListMapper listMapper;
 
     public List<EventDto> getAllEvent(){
-        List<Event> events = repository.findAll();
+        List<Event> events = repository.findAll(Sort.by("eventStartTime").descending());
         return listMapper.maplist(events,EventDto.class,modelMapper);
     }
     public EventDto getEvent(Integer eventId){
