@@ -1,11 +1,8 @@
 package oasip.backend.Enitities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "eventcategories")
@@ -16,6 +13,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class Eventcategory {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "eventCategoryId", nullable = false)
     private Integer id;
 
@@ -28,9 +26,5 @@ public class Eventcategory {
 
     @Column(name = "eventCategoryDuration", nullable = false)
     private Integer eventCategoryDuration;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "eventCategory")
-    private Set<Event> events = new LinkedHashSet<>();
 
 }

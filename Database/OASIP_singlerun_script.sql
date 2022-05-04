@@ -25,7 +25,7 @@ DROP TABLE IF EXISTS `eventcategories`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `eventcategories` (
-  `eventCategoryId` int NOT NULL,
+  `eventCategoryId` int NOT NULL auto_increment,
   `eventCategoryName` varchar(100) NOT NULL,
   `eventCategoryDescription` text,
   `eventCategoryDuration` int NOT NULL,
@@ -52,7 +52,7 @@ DROP TABLE IF EXISTS `events`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `events` (
-  `eventId` int NOT NULL,
+  `eventId` int NOT NULL AUTO_INCREMENT,
   `bookingName` varchar(100) NOT NULL,
   `bookingEmail` varchar(255) NOT NULL,
   `eventStartTime` datetime NOT NULL,

@@ -4,7 +4,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.Instant;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "events")
@@ -15,6 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class Event {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "eventId", nullable = false)
     private Integer id;
 
@@ -25,7 +25,7 @@ public class Event {
     private String bookingEmail;
 
     @Column(name = "eventStartTime", nullable = false)
-    private LocalDateTime eventStartTime;
+    private Instant eventStartTime;
 
     @Column(name = "eventDuration", nullable = false)
     private Integer eventDuration;
