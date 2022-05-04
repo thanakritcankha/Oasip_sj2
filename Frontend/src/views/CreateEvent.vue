@@ -71,9 +71,6 @@ const durationCategory = () => {
 onBeforeMount(async () => {
   await getAllCategory()
 })
-// onBeforeUpdate(() => {
-
-// })
 </script>
 
 <template>
