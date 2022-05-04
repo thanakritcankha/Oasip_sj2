@@ -2,13 +2,14 @@
 import { onBeforeMount, ref } from 'vue';
 import EventDataService from '../services/EventDataService';
 import Event from '../components/Event.vue';
-const showWindow = ref(false)
-// ex 
+import Event1 from '../components/Event.vue';
+
 const events = ref([])
 const listEvents = async () => {
     const res = await EventDataService.retrieveAllEvent()
     events.value = await res.json()
 }
+
 const oneEvent = ref()
 const getEvents = async (id) => {
     const res = await EventDataService.retrieveEvent(id);
@@ -16,6 +17,7 @@ const getEvents = async (id) => {
         ? oneEvent.value = await res.json()
         : console.log("หาไม่เจอ")
 }
+
 const btnDelete = (id) => {
     // let text = "Press a button!\nEither OK or Cancel.";
     let text = "เลือกดีๆนะไอ้สัส กูขี้เกียจใส่ข้อมูลใหม่";
@@ -30,6 +32,7 @@ const deleteEvent = async (id) => {
         ? (events.value = events.value.filter((value) => value.id !== id))
         : console.log('Error to delete event')
 }
+
 const showDetail = ref(false)
 const sendId = ref()
 const btnclick = (id) => {
@@ -128,7 +131,7 @@ onBeforeMount(async () => {
                             </tr>
                         </thead>
                         <tbody>
-                            <Event :mask="event" v-for="(event, index) in events" @deleteEvent="btnDelete($event)" />
+                            <Event :mask="event" v-for="event in events" @deleteEvent="btnDelete($event)" />
                         </tbody>
                     </table>
                 </div>

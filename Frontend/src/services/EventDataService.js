@@ -11,5 +11,14 @@ class EventDataService{
             method: 'DELETE'
         })
     }
+    createEvent(newEvent){
+        return fetch(`${API_URL}/events`,{
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(newEvent)
+        })
+    }
 }
 export default new EventDataService()

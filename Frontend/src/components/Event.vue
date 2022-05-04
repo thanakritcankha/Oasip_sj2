@@ -1,5 +1,4 @@
 <script setup>
-import { ref } from 'vue'
 defineEmits(['deleteEvent'])
 const prop = defineProps({
   mask: Object,
@@ -51,7 +50,7 @@ const formatDate = (datetime) => {
     <td class="px-1 py-1 border-b border-gray-600 text-sm">
       <div class="flex justify-around">
         <button type="button" class="flex items-center justify-center inline-block text-gray-900 hover:text-gray-100">
-          <Details></Details>
+          Details
         </button>
         <button type="button"
           class="flex items-center justify-center px-2 py-2 rounded-full bg-gray-600 inline-block text-red-500 hover:text-gray-100"
