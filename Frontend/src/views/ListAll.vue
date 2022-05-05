@@ -42,7 +42,7 @@ const btnclick = (id) => {
 }
 onBeforeMount(async () => {
     await listEvents();
-    console.log(events.value)
+    // console.log(events.value)
 })
 </script>
 
