@@ -1,4 +1,7 @@
 <script setup>
+import { detail } from '../data/EventDetail';
+import router from '../router';
+
 defineEmits(['deleteEvent'])
 const prop = defineProps({
   mask: Object,
@@ -12,10 +15,16 @@ const formatDate = (datetime) => {
   // var text = date.getDate() + " " + date.toLocaleString('en-US', { month: "short", timeZone: "UTC" }) + " " + date.getFullYear();
   return date
 }
+const setDetail = () => {
+  // console.log(prop.mask)
+  detail.setData(prop.mask)
+  detail.setCategoryName(prop.mask.eventCategory.eventCategoryName)
+  router.push({ name: 'Detail' })
+}
 </script>
 
 <template>
-  <tr class="text-gray-800 bg-gray-500  hover:bg-gray-400 cursor-pointer">
+  <tr class="text-gray-800 bg-gray-500  hover:bg-gray-400 cursor-pointer" @click="setDetail()">
     <td class="px-5 py-5 border-b border-gray-600 text-md">
       {{ prop.mask.eventCategory.eventCategoryName }}
     </td>
@@ -49,12 +58,13 @@ const formatDate = (datetime) => {
     </td>
     <td class="px-1 py-1 border-b border-gray-600 text-sm">
       <div class="flex justify-around">
-        <button type="button" class="flex items-center justify-center inline-block text-gray-900 hover:text-gray-100">
+        <button type="button" class="flex items-center justify-center inline-block text-gray-900 hover:text-gray-100"
+          @click.stop.prevent="setDetail()">
           Details
         </button>
         <button type="button"
-          class="flex items-center justify-center px-2 py-2 rounded-full bg-gray-600 inline-block text-red-500 hover:text-gray-100"
-          @click="$emit('deleteEvent', prop.mask.id)">
+          class="flex items-center justify-center px-2 py-2 rounded-full bg-gray-600 inline-block text-red-500 hover:text-gray-100 "
+          @click.stop.prevent="$emit('deleteEvent', prop.mask.id)">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash-fill"
             viewBox="0 0 16 16">
             <path
