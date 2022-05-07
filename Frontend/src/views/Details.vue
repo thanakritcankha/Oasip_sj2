@@ -1,13 +1,18 @@
 <script setup>
-import { detail } from '../data/EventDetail';
-
+import { detail } from '../data/EventDetail'
 const formatTime = (datetime) => {
   var date = new Date(datetime).toUTCString()
   return date.slice(-12, -7)
 }
 const formatDate = (datetime) => {
   var date = new Date(datetime)
-  return date.getDate() + " | " + date.toLocaleString('en-US', { month: "short", timeZone: "UTC" }) + " | " + date.getFullYear()
+  return (
+    date.getDate() +
+    ' | ' +
+    date.toLocaleString('en-US', { month: 'short', timeZone: 'UTC' }) +
+    ' | ' +
+    date.getFullYear()
+  )
 }
 const formatCategory = (category) => {
   return category.eventCategoryName
@@ -15,8 +20,8 @@ const formatCategory = (category) => {
 </script>
 
 <template>
-  <div class="modal-mask">
-    <div class="modal-wrapper">
+  <div class="modal-wrapper">
+    <div class="details">
       <div class="modal-container">
         <div class="modal-body">
           <div class="header flex justify-center">
@@ -57,27 +62,29 @@ const formatCategory = (category) => {
         </div>
       </div>
       <div class="btnBack flex justify-center pt-5">
-        <router-link :to="{ name: 'ListEvent' }"><button class="back ">Back</button></router-link>
+        <router-link :to="{ name: 'ListEvent' }"><button class="back">Back</button></router-link>
       </div>
     </div>
   </div>
 </template>
 
 <style>
-.modal-mask {
-  position: fixed;
-  z-index: 9998;
+.modal-wrapper {
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  display: table;
-  transition: opacity 0.3s ease;
 }
 
-.modal-wrapper {
-  display: table-cell;
-  vertical-align: middle;
+.details {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 55px;
+
 }
 
 .modal-container {
@@ -145,6 +152,5 @@ const formatCategory = (category) => {
   padding: 10px;
   font-size: 1.2rem;
   cursor: pointer;
-
 }
 </style>
