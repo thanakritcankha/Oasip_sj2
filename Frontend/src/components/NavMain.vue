@@ -28,7 +28,7 @@ const goHome = () => {
             <img src="../assets/xiao-white.png" alt="Logo" width="80" class="pt-1">
             <p>จตุรเทพ</p>
         </div>
-        <router-link to="/about" class="pl-10 text-white">about</router-link>
+        <!-- <router-link to="/about" class="pl-10 text-white">about</router-link> -->
         <router-link to="/CreateEvent" class="pl-10 text-white">CreateEvent</router-link>
     </div>
 </template>

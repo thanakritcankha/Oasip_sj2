@@ -13,23 +13,48 @@ const eventDate = ref()
 const eventTime = ref()
 
 const submitEvent = async () => {
-  if (validateForm()) {
-    console.log(eventCategory.value)
-    var newEvent = {
-      "bookingName": bookingName.value,
-      "bookingEmail": bookingEmail.value,
-      "eventStartTime": "2022-05-23T06:30:00Z",
-      "eventDuration": duration.value,
-      "eventNotes": bookingNote.value,
-      "eventCategory": eventCategory.value
-    }
-    console.log(newEvent)
-    const res = await EventDataService.createEvent(newEvent)
-    reset()
-    router.push('/')
+  console.log(eventCategory.value)
+  console.log(eventDate.value)
+  console.log(eventTime.value)
+  var dateTime = `${eventDate.value}T${eventTime.value}:00z`;
+  // consol.log(dateTime)
+  var newEvent = {
+    "bookingName": bookingName.value,
+    "bookingEmail": bookingEmail.value,
+    "eventStartTime": dateTime,
+    "eventDuration": duration.value,
+    "eventNotes": bookingNote.value,
+    "eventCategory": eventCategory.value
   }
-
+  console.log(newEvent)
+  const res = await EventDataService.createEvent(newEvent)
+  reset()
+  return false;
 }
+
+function checkDate() {
+  if (eventDate.value != undefined) {
+    if (eventTime.value != undefined) {
+      var selectedText = `${eventDate.value}T${eventTime.value}:00z`;
+      var selectedDate = new Date(selectedText);
+      var now = new Date();
+      console.log("now" + now)
+      // console.log(selectedDate)
+      selectedDate.setHours(selectedDate.getHours() - 7)
+      console.log(selectedDate)
+      if (selectedDate < now) {
+        alert("Date must be in the future");
+        eventDate.value = ""
+        eventTime.value = ""
+      }
+    }
+  }
+  // console.log(eventDate.value)
+  // console.log(eventTime.value)
+  // var selectedText = document.getElementById('eventTime').value;
+  // var selectedDate = new Date(selectedText);
+}
+
 const reset = () => {
   bookingName.value = null
   bookingEmail.value = null
@@ -76,8 +101,8 @@ onBeforeMount(async () => {
 <template>
   <div class="min-w-full flex justify-center pt-10">
     <div class="w-full max-w-xl">
-      <form name="bookingForm" class="bg-white shadow-md rounded px-5 pt-6 mb-4">
-        <h3 class="text-center pb-5 text-xl">Create New Evet</h3>
+      <form name="bookingForm" class="bg-white shadow-md rounded px-5 pt-6 mb-4" @submit="submitEvent();"
+        onsubmit="return false;">
         <div class="mb-4">
           <label for="bname" class="block text-gray-700 text-sm font-bold mb-2">Booking Name :
           </label>
@@ -107,25 +132,24 @@ onBeforeMount(async () => {
             disabled />
         </div>
         <div class="mb-6">
-          <label for="notes" class="block text-gray-700 text-sm font-bold">Booking Notes : </label><br />
+          <label for="notes" class="block text-gray-700 text-sm font-bold mb-2">Booking Notes : </label><br />
           <textarea v-model="bookingNote"
             class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-orange-600 focus:outline-none"></textarea>
         </div>
-
         <div class="mb-6">
           <label for="eventTime" class="block text-gray-700 text-sm font-bold mb-2">Start Time Event :
           </label>
-          <div class="flex justify-around">
-            <input required type="date" id="eventTime" name="eventTime" v-model="eventDate"
-              class="focus:border-orange-600 shadow appearance-none border rounded w-1/3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
-            <input required type="time" id="eventTime" name="eventTime" v-model="eventTime"
-              class="focus:border-orange-600 shadow appearance-none border rounded w-1/3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+          <div class="flex px-10">
+            <input required @change="checkDate()" type="date" id="eventTime" name="eventTime" v-model="eventDate"
+              class="focus:border-orange-600 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+            <input required @change="checkDate()" type="time" id="eventTime" name="eventTime" v-model="eventTime"
+              class="focus:border-orange-600 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
           </div>
         </div>
-        <button type="submit"
+        <button
           class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white my-5 py-1 px-5 border border-blue-500 hover:border-transparent rounded"
-          @click="submitEvent()">
-          Submit</button>
+          @click="">
+          Submit</button><br />
       </form>
     </div>
   </div>
