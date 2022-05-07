@@ -1,11 +1,11 @@
 <script setup>
-import { computed, onBeforeMount, onBeforeUnmount, onBeforeUpdate, onUpdated, ref } from 'vue';
-import router from '../router';
+import { onBeforeMount, ref } from 'vue';
 import EventCategoryDataService from '../services/EventCategoryDataService';
 import EventDataService from '../services/EventDataService';
 
 const bookingName = ref()
 const bookingEmail = ref()
+const eventCategoryName = ref()
 const eventCategory = ref()
 const duration = ref()
 const bookingNote = ref()
@@ -13,7 +13,7 @@ const eventDate = ref()
 const eventTime = ref()
 
 const submitEvent = async () => {
-  console.log(eventCategory.value)
+  console.log(eventCategoryName.value)
   console.log(eventDate.value)
   console.log(eventTime.value)
   var dateTime = `${eventDate.value}T${eventTime.value}:00z`;
@@ -65,26 +65,18 @@ const reset = () => {
   eventTime.value = null
 }
 
-function validateForm() {
-  let x = document.forms["bookingForm"]["bname"].value;
-  if (x == "") {
-    alert("Name must be filled out");
-    return false;
-  }
-  return true
-}
 const categories = ref()
 const getAllCategory = async () => {
   const res = await EventCategoryDataService.retrieveAllCategory()
   categories.value = await res.json()
 }
 
-let textDefault = "Selected"
 const durationCategory = () => {
-  var selectValue = document.getElementById("category");
-  if (selectValue.value != textDefault) {
-    var x = categories.value.find((value) => value.eventCategoryName == selectValue.value)
+  console.log(eventCategoryName.value)
+  if (eventCategoryName.value != "") {
+    var x = categories.value.find((value) => value.eventCategoryName == eventCategoryName.value)
     eventCategory.value = x
+    console.log(x)
     duration.value = x.eventCategoryDuration
   } else {
     duration.value = ""
@@ -118,9 +110,9 @@ onBeforeMount(async () => {
         <div class="mb-6">
           <label for="category" class="block text-gray-700 text-sm font-bold mb-2">Event Category :
           </label>
-          <select required name="category" id="category" @change="durationCategory()"
+          <select required name="category" id="category" @change="durationCategory()" v-model="eventCategoryName"
             class="focus:border-orange-600 shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-            <option>{{ textDefault }}</option>
+            <option disabled selected value></option>
             <option v-for="(category, index) in categories">{{ category.eventCategoryName }}</option>
           </select>
         </div>
