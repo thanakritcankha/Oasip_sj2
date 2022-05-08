@@ -4,7 +4,7 @@ import About from "../views/About.vue";
 import ListAll from "../views/ListAll.vue";
 import Detail from "../views/Details.vue"
 import CreateEvent from "../views/CreateEvent.vue";
-const history = createWebHistory();
+const history = createWebHistory('/sj2/');
 const routes = [
   { path: "/Home", name: "Home", component: Home },
   { path: "/about", name: "About", component: About },
