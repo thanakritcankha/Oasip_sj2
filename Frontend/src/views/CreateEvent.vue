@@ -87,10 +87,9 @@ const durationCategory = () => {
   }
 }
 
-
-
 onBeforeMount(async () => {
   await getAllCategory()
+  console.log(categories.value)
 })
 </script>
 

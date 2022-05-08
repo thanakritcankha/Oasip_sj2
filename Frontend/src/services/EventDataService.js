@@ -1,18 +1,18 @@
 const API_URL = '/api'
 class EventDataService{
     retrieveAllEvent(){
-        return fetch(`${API_URL}/events`)
+        return fetch(`/sj2${API_URL}/events`)
     }
     retrieveEvent(id){
-        return fetch(`${API_URL}/events/${id}`)
+        return fetch(`/sj2${API_URL}/events/${id}`)
     }
     deleteEvent(id){
-        return fetch(`${API_URL}/events/${id}`,{
+        return fetch(`/sj2${API_URL}/events/${id}`,{
             method: 'DELETE'
         })
     }
     createEvent(newEvent){
-        return fetch(`${API_URL}/events`,{
+        return fetch(`/sj2${API_URL}/events`,{
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
