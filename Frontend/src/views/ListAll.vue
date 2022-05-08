@@ -9,19 +9,11 @@ const listEvents = async () => {
     const res = await EventDataService.retrieveAllEvent()
     events.value = await res.json()
 }
-
-const oneEvent = ref()
-const getEvents = async (id) => {
-    const res = await EventDataService.retrieveEvent(id);
-    res.status === 200
-        ? oneEvent.value = await res.json()
-        : console.log("หาไม่เจอ")
-}
-
 const btnDelete = (id) => {
     // let text = "Press a button!\nEither OK or Cancel.";
-    let text = "เลือกดีๆนะไอ้สัส กูขี้เกียจใส่ข้อมูลใหม่";
-    console.log(id)
+    // let text = "เลือกดีๆนะไอ้สัส กูขี้เกียจใส่ข้อมูลใหม่";
+    let text = "คุณแน่ที่จะลบหรือไม่";
+    // console.log(id)
     if (confirm(text) == true) {
         deleteEvent(id)
     }
@@ -33,13 +25,6 @@ const deleteEvent = async (id) => {
         : console.log('Error to delete event')
 }
 
-const showDetail = ref(false)
-const sendId = ref()
-const btnclick = (id) => {
-    console.log("logg")
-    showDetail.value = true
-    getEvents(id)
-}
 onBeforeMount(async () => {
     await listEvents();
     // console.log(events.value)
@@ -62,8 +47,7 @@ onBeforeMount(async () => {
                 <h2 class="text-2xl font-semibold leading-tight">Invoices</h2>
             </div> -->
             <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
-                <div class="inline-block min-w-full shadow-md rounded-lg overflow-hidden" v-if="events.length > 0"
-                    v-show="!showDetail">
+                <div class="inline-block min-w-full shadow-md rounded-lg overflow-hidden" v-if="events.length > 0">
                     <table class="min-w-full leading-normal">
                         <thead>
                             <tr>
@@ -137,9 +121,6 @@ onBeforeMount(async () => {
                 </div>
                 <div v-else>
                     No Scheduled Events
-                </div>
-                <div class=" min-w-full leading-normal text-black bg-white" v-show="showDetail">
-                    {{ oneEvent }}
                 </div>
             </div>
         </div>

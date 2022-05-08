@@ -1,6 +1,8 @@
 package oasip.backend.Service;
 
-import oasip.backend.DTOs.EventDto;
+import oasip.backend.DTOs.Create.CreateEventDto;
+import oasip.backend.DTOs.Detail.DetailEventDto;
+import oasip.backend.DTOs.ListAll.ListAllEventDto;
 import oasip.backend.Enitities.Event;
 import oasip.backend.ListMapper;
 import oasip.backend.repositories.EventRepository;
@@ -20,17 +22,17 @@ public class EventService {
     @Autowired
     private ListMapper listMapper;
 
-    public List<EventDto> getAllEvent(){
+    public List<ListAllEventDto> getAllEvent(){
         List<Event> events = repository.findAll(Sort.by("eventStartTime").descending());
-        return listMapper.maplist(events,EventDto.class,modelMapper);
+        return listMapper.maplist(events, ListAllEventDto.class,modelMapper);
     }
-    public EventDto getEvent(Integer eventId){
+    public DetailEventDto getEvent(Integer eventId){
         Event event = repository.findById(eventId).orElseThrow(
                 () -> new RuntimeException(eventId + " Does not Exist !!!" ));
-        return modelMapper.map(event , EventDto.class);
+        return modelMapper.map(event , DetailEventDto.class);
     }
 
-    public EventDto createEvent(EventDto newEvent){
+    public CreateEventDto createEvent(CreateEventDto newEvent){
         Event event = modelMapper.map(newEvent,Event.class);
         //event category
         repository.saveAndFlush(event);
@@ -41,7 +43,7 @@ public class EventService {
                 () -> new RuntimeException(eventId + " Does not Exist !!!" ));
         repository.deleteById(eventId);
     }
-    public Event updateEvent(EventDto updateEvent , Integer eventId){
+    public Event updateEvent(ListAllEventDto updateEvent , Integer eventId){
         Event newEvent = modelMapper.map(updateEvent,Event.class);
         Event event = repository.findById(eventId).map(o -> mapEvent(o,newEvent)).orElseGet(() -> {
             newEvent.setId(eventId);

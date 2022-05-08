@@ -7,11 +7,8 @@ export const detail = reactive({
     //         "eventDuration": "",
     //         "eventNotes": "",
     //         "eventCategory": ""},
-        data:{},
-    setData(value){
-        this.data = value 
+        dataId:{},
+    setDataId(id){
+        this.dataId = id
     },
-    setCategoryName(name){
-        this.data.eventCategory = name
-    }
 })

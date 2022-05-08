@@ -13,23 +13,27 @@ const eventDate = ref()
 const eventTime = ref()
 
 const submitEvent = async () => {
-  console.log(eventCategoryName.value)
-  console.log(eventDate.value)
-  console.log(eventTime.value)
-  var dateTime = `${eventDate.value}T${eventTime.value}:00z`;
-  // consol.log(dateTime)
-  var newEvent = {
-    "bookingName": bookingName.value,
-    "bookingEmail": bookingEmail.value,
-    "eventStartTime": dateTime,
-    "eventDuration": duration.value,
-    "eventNotes": bookingNote.value,
-    "eventCategory": eventCategory.value
+  // console.log(eventCategoryName.value)
+  // console.log(eventDate.value)
+  // console.log(eventTime.value)
+  let text = "กรุณาตรวจสอบให้ครบถ้วน กดตกลงเพื่อยืนยัน";
+  if (confirm(text) == true) {
+    var dateTime = `${eventDate.value}T${eventTime.value}:00z`;
+    // consol.log(dateTime)
+    var newEvent = {
+      "bookingName": bookingName.value,
+      "bookingEmail": bookingEmail.value,
+      "eventStartTime": dateTime,
+      "eventDuration": duration.value,
+      "eventNotes": bookingNote.value,
+      "eventCategory": eventCategory.value
+    }
+    console.log(newEvent)
+    const res = await EventDataService.createEvent(newEvent)
+    reset()
+    return false;
   }
-  console.log(newEvent)
-  const res = await EventDataService.createEvent(newEvent)
-  reset()
-  return false;
+
 }
 
 function checkDate() {
@@ -38,10 +42,10 @@ function checkDate() {
       var selectedText = `${eventDate.value}T${eventTime.value}:00z`;
       var selectedDate = new Date(selectedText);
       var now = new Date();
-      console.log("now" + now)
+      // console.log("now" + now)
       // console.log(selectedDate)
       selectedDate.setHours(selectedDate.getHours() - 7)
-      console.log(selectedDate)
+      // console.log(selectedDate)
       if (selectedDate < now) {
         alert("Date must be in the future");
         eventDate.value = ""

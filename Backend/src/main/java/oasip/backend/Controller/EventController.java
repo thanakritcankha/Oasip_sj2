@@ -1,6 +1,8 @@
 package oasip.backend.Controller;
 
-import oasip.backend.DTOs.EventDto;
+import oasip.backend.DTOs.Create.CreateEventDto;
+import oasip.backend.DTOs.Detail.DetailEventDto;
+import oasip.backend.DTOs.ListAll.ListAllEventDto;
 import oasip.backend.Enitities.Event;
 import oasip.backend.Service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,18 +19,18 @@ public class EventController {
     private EventService service;
 
     @GetMapping("")
-    public List<EventDto> getAllEvent(){
+    public List<ListAllEventDto> getAllEvent(){
         return service.getAllEvent();
     }
 
     @GetMapping("/{eventId}")
-    public EventDto getEvent(@PathVariable Integer eventId){
+    public DetailEventDto getEvent(@PathVariable Integer eventId){
         return service.getEvent(eventId);
     }
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public EventDto create(@RequestBody EventDto newEvent){
+    public CreateEventDto create(@RequestBody CreateEventDto newEvent){
         return service.createEvent(newEvent);
     }
 
@@ -38,7 +40,7 @@ public class EventController {
     }
 
     @PutMapping("/{eventId}")
-    public Event update(@PathVariable Integer eventId , @RequestBody EventDto updateEvent){
+    public Event update(@PathVariable Integer eventId , @RequestBody ListAllEventDto updateEvent){
         return service.updateEvent(updateEvent , eventId);
     }
 }

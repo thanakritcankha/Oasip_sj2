@@ -1,5 +1,6 @@
 package oasip.backend.Service;
 
+import oasip.backend.DTOs.Create.CreateEventcategoryDto;
 import oasip.backend.DTOs.EventcategoryDto;
 import oasip.backend.Enitities.Eventcategory;
 import oasip.backend.ListMapper;
@@ -23,10 +24,10 @@ public class EventCategoryService {
         List<Eventcategory> categoryList = repository.findAll();
         return listMapper.maplist(categoryList, EventcategoryDto.class, modelMapper);
     }
-    public EventcategoryDto getCategory(Integer categoryId){
+    public CreateEventcategoryDto getCategory(Integer categoryId){
         Eventcategory category = repository.findById(categoryId).orElseThrow(
                 () -> new RuntimeException(categoryId + " Does not Exist !!!" ));
-        return modelMapper.map(category , EventcategoryDto.class);
+        return modelMapper.map(category , CreateEventcategoryDto.class);
     }
 
     public EventcategoryDto createCategory(EventcategoryDto newCategory){
