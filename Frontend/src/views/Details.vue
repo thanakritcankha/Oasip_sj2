@@ -1,5 +1,24 @@
 <script setup>
+import { onBeforeMount, ref } from 'vue';
 import { detail } from '../data/EventDetail'
+import router from '../router';
+import EventDataService from '../services/EventDataService';
+onBeforeMount(async () => {
+  await getDetailEvent(detail.dataId)
+  // console.log(event.value)
+})
+const event = ref({})
+const getDetailEvent = async (id) => {
+  const res = await EventDataService.retrieveEvent(id);
+  if (res.status == 200)
+    event.value = await res.json()
+  else {
+    alert("ขออภัยเกิดข้อผิดพลาดกรุณาลองอีกครั้ง")
+    router.push({ name: 'ListEvent' })
+  }
+
+}
+
 const formatTime = (datetime) => {
   var date = new Date(datetime).toUTCString()
   return date.slice(-12, -7)
@@ -13,9 +32,6 @@ const formatDate = (datetime) => {
     ' | ' +
     date.getFullYear()
   )
-}
-const formatCategory = (category) => {
-  return category.eventCategoryName
 }
 </script>
 
@@ -31,31 +47,31 @@ const formatCategory = (category) => {
             <tbody>
               <tr>
                 <td>Date</td>
-                <td>{{ formatDate(detail.data.eventStartTime) }}</td>
+                <td>{{ formatDate(event.eventStartTime) }}</td>
               </tr>
               <tr>
                 <td>Event Start</td>
-                <td>{{ formatTime(detail.data.eventStartTime) }}</td>
+                <td>{{ formatTime(event.eventStartTime) }}</td>
               </tr>
               <tr>
                 <td>Duration</td>
-                <td>{{ detail.data.eventDuration }} Minutes</td>
+                <td>{{ event.eventDuration }} Minutes</td>
               </tr>
               <tr>
                 <td>Event Category</td>
-                <td>{{ detail.data.eventCategory }}</td>
+                <td>{{ event.eventCategory }}</td>
               </tr>
               <tr>
                 <td>Booking By</td>
-                <td>{{ detail.data.bookingName }}</td>
+                <td>{{ event.bookingName }}</td>
               </tr>
               <tr>
                 <td>Email</td>
-                <td>{{ detail.data.bookingEmail }}</td>
+                <td>{{ event.bookingEmail }}</td>
               </tr>
               <tr>
                 <td>EventNotes</td>
-                <td>{{ detail.data.eventNotes }}</td>
+                <td>{{ event.eventNotes }}</td>
               </tr>
             </tbody>
           </table>

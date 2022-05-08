@@ -17,8 +17,8 @@ const formatDate = (datetime) => {
 }
 const setDetail = () => {
   // console.log(prop.mask)
-  detail.setData(prop.mask)
-  detail.setCategoryName(prop.mask.eventCategory.eventCategoryName)
+  detail.setDataId(prop.mask.id)
+  // console.log(prop.mask.id)
   router.push({ name: 'Detail' })
 }
 </script>

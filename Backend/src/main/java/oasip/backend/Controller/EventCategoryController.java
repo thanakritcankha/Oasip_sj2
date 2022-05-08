@@ -1,6 +1,7 @@
 package oasip.backend.Controller;
 
 
+import oasip.backend.DTOs.Create.CreateEventcategoryDto;
 import oasip.backend.DTOs.EventcategoryDto;
 import oasip.backend.Enitities.Eventcategory;
 import oasip.backend.Service.EventCategoryService;
@@ -23,7 +24,7 @@ public class EventCategoryController {
     }
 
     @GetMapping("/{categoryId}")
-    public EventcategoryDto getCategory(@PathVariable Integer categoryId){
+    public CreateEventcategoryDto getCategory(@PathVariable Integer categoryId){
         return service.getCategory(categoryId);
     }
 
