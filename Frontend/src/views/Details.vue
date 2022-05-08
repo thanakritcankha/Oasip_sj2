@@ -59,7 +59,7 @@ const formatDate = (datetime) => {
               </tr>
               <tr>
                 <td>Event Category</td>
-                <td>{{ event.eventCategory }}</td>
+                <td>{{ event.eventCategory.eventCategoryName }}</td>
               </tr>
               <tr>
                 <td>Booking By</td>
