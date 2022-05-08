@@ -5,6 +5,7 @@ import router from '../router';
 import EventDataService from '../services/EventDataService';
 onBeforeMount(async () => {
   await getDetailEvent(detail.dataId)
+  categoryName()
   // console.log(event.value)
 })
 const event = ref({})
@@ -18,7 +19,10 @@ const getDetailEvent = async (id) => {
   }
 
 }
-
+const cateName = ref()
+const categoryName = () => {
+  cateName.value = event.eventCategory
+}
 const formatTime = (datetime) => {
   var date = new Date(datetime).toUTCString()
   return date.slice(-12, -7)
@@ -59,7 +63,7 @@ const formatDate = (datetime) => {
               </tr>
               <tr>
                 <td>Event Category</td>
-                <td>{{ event.eventCategory.eventCategoryName }}</td>
+                <td>{{ event.eventCategory?.eventCategoryName }}</td>
               </tr>
               <tr>
                 <td>Booking By</td>
@@ -74,6 +78,13 @@ const formatDate = (datetime) => {
                 <td>{{ event.eventNotes }}</td>
               </tr>
             </tbody>
+            <!-- <tbody v-else>
+              <tr>
+                <h2>
+                  เกิดข้อผิดพลาด
+                </h2>
+              </tr>
+            </tbody> -->
           </table>
         </div>
       </div>
