@@ -1,29 +1,19 @@
- <script setup>
+<script setup>
 import { onBeforeMount, ref } from 'vue';
 import EventDataService from '../services/EventDataService';
 import Event from '../components/Event.vue';
+import Event1 from '../components/Event.vue';
 
-const showWindow = ref(false)
-
-// ex 
 const events = ref([])
 const listEvents = async () => {
     const res = await EventDataService.retrieveAllEvent()
     events.value = await res.json()
 }
-
-const oneEvent = ref()
-const getEvents = async (id) => {
-    const res = await EventDataService.retrieveEvent(id);
-    res.status === 200
-        ? oneEvent.value = await res.json()
-        : console.log("หาไม่เจอ")
-}
-
 const btnDelete = (id) => {
     // let text = "Press a button!\nEither OK or Cancel.";
-    let text = "เลือกดีๆนะไอ้สัส กูขี้เกียจใส่ข้อมูลใหม่";
-    console.log(id)
+    // let text = "เลือกดีๆนะไอ้สัส กูขี้เกียจใส่ข้อมูลใหม่";
+    let text = "คุณแน่ที่จะลบหรือไม่";
+    // console.log(id)
     if (confirm(text) == true) {
         deleteEvent(id)
     }
@@ -34,37 +24,19 @@ const deleteEvent = async (id) => {
         ? (events.value = events.value.filter((value) => value.id !== id))
         : console.log('Error to delete event')
 }
-const showDetail = ref(false)
-const sendId = ref()
-const btnclick = (id) => {
-    console.log("logg")
-    showDetail.value = true
-    getEvents(id)
-}
 onBeforeMount(async () => {
     await listEvents();
-    console.log(events.value)
+    // console.log(events.value)
 })
 </script>
-
-
- 
-<template>
-
-    <!-- <th class="text-left text-gray-700 capitalize px-4 py-4">Category</th>
-    <th class="text-left text-gray-700 capitalize px-4 py-4">Bookig Name</th>
-    <th class="text-left text-gray-700 capitalize px-4 py-4">Date</th>
-    <th class="text-left text-gray-700 capitalize px-4 py-4">Time</th>
     <th class="text-left text-gray-700 capitalize px-4 py-4">Duration</th> -->
-
     <div class="container mx-auto px-4 sm:px-8">
         <div class="py-">
             <!-- <div>
                 <h2 class="text-2xl font-semibold leading-tight">Invoices</h2>
             </div> -->
             <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
-                <div class="inline-block min-w-full shadow-md rounded-lg overflow-hidden" v-if="events.length > 0"
-                    v-show="!showDetail">
+                <div class="inline-block min-w-full shadow-md rounded-lg overflow-hidden" v-if="events.length > 0">
                     <table class="min-w-full leading-normal">
                         <thead>
                             <tr>
@@ -90,7 +62,7 @@ onBeforeMount(async () => {
                                             <path
                                                 d="M6 .5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1H9v1.07a7.001 7.001 0 0 1 3.274 12.474l.601.602a.5.5 0 0 1-.707.708l-.746-.746A6.97 6.97 0 0 1 8 16a6.97 6.97 0 0 1-3.422-.892l-.746.746a.5.5 0 0 1-.707-.708l.602-.602A7.001 7.001 0 0 1 7 2.07V1h-.5A.5.5 0 0 1 6 .5zm2.5 5a.5.5 0 0 0-1 0v3.362l-1.429 2.38a.5.5 0 1 0 .858.515l1.5-2.5A.5.5 0 0 0 8.5 9V5.5zM.86 5.387A2.5 2.5 0 1 1 4.387 1.86 8.035 8.035 0 0 0 .86 5.387zM11.613 1.86a2.5 2.5 0 1 1 3.527 3.527 8.035 8.035 0 0 0-3.527-3.527z" />
                                         </svg>
-                                        Bookig Name
+                                        Booking Name
                                     </div>
 
                                 </th>
@@ -132,20 +104,16 @@ onBeforeMount(async () => {
                             </tr>
                         </thead>
                         <tbody>
-                            <Event :mask="event" v-for="(event, index) in events" @deleteEvent="btnDelete($event)" />
+                            <Event :mask="event" v-for="event in events" @deleteEvent="btnDelete($event)" />
                         </tbody>
                     </table>
                 </div>
                 <div v-else>
                     No Scheduled Events
                 </div>
-                <div class=" min-w-full leading-normal text-black bg-white" v-show="showDetail">
-                    {{ oneEvent }}
-                </div>
             </div>
         </div>
     </div>
-
 
 
 </template>

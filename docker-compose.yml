@@ -33,11 +33,15 @@ services:
     image: img_frontend
     container_name: frontend
     build: ./Frontend
+    # env_file: ./.env
     # working_dir: /var/local/app
     restart: unless-stopped
     volumes:
       - ./Frontend/:/var/local/app:cached
+      ports:
+      - 3000:80
     # environment:
+    #   - ASSET_URL=$
     #   - HOST=0.0.0.0
     # command: /bin/sh -c "yarn cache clean && yarn install && yarn dev"
   proxy_nginx_frontend:
@@ -47,7 +51,7 @@ services:
       - ./Frontend/logs/nginx:/var/log/nginx:cached
     container_name: proxy_nginx_frontend
     ports:
-      - 8000:80
+      - 80:80
     # environment:
     #   - BACKEN_URL : backend
     #   - FRONT_URL : frontend

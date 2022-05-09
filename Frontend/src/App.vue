@@ -16,13 +16,11 @@ const btn = (index) => {
   }
   menu.value[index].underline = true
 }
-
 </script>
 
 <template>
-  <div class="h-screen w-screen bg-main">
+  <div class="h-screen w-screen">
     <NavMain />
-
     <div class="p-2">
       <router-view></router-view>
     </div>
