@@ -16,10 +16,11 @@ const submitEvent = async () => {
   // console.log(eventCategoryName.value)
   // console.log(eventDate.value)
   // console.log(eventTime.value)
-  let text = "กรุณาตรวจสอบให้ครบถ้วน กดตกลงเพื่อยืนยัน";
+  // let text = "กรุณาตรวจสอบให้ครบถ้วน กดตกลงเพื่อยืนยัน";
+  let text = "Please check your event data. Press OK for booking.";
   if (confirm(text) == true) {
     var dateTime = `${eventDate.value}T${eventTime.value}:00z`;
-    // consol.log(dateTime)
+    console.log(dateTime)
     var newEvent = {
       "bookingName": bookingName.value,
       "bookingEmail": bookingEmail.value,
@@ -62,7 +63,7 @@ function checkDate() {
 const reset = () => {
   bookingName.value = null
   bookingEmail.value = null
-  eventCategory.value = null
+  eventCategoryName.value = null
   duration.value = null
   bookingNote.value = null
   eventDate.value = null
@@ -101,7 +102,7 @@ onBeforeMount(async () => {
         <div class="mb-4">
           <label for="bname" class="block text-gray-700 text-sm font-bold mb-2">Booking Name :
           </label>
-          <input required type="text" id="bname" name="bname" v-model="bookingName"
+          <input required type="text" id="bname" name="bname" v-model="bookingName" maxlength="100"
             class="focus:border-orange-600 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
         </div>
         <div class="mb-6">
@@ -128,7 +129,7 @@ onBeforeMount(async () => {
         </div>
         <div class="mb-6">
           <label for="notes" class="block text-gray-700 text-sm font-bold mb-2">Booking Notes : </label><br />
-          <textarea v-model="bookingNote"
+          <textarea v-model="bookingNote" maxlength="500"
             class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-orange-600 focus:outline-none"></textarea>
         </div>
         <div class="mb-6">
@@ -142,9 +143,15 @@ onBeforeMount(async () => {
           </div>
         </div>
         <button
-          class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white my-5 py-1 px-5 border border-blue-500 hover:border-transparent rounded"
+          class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white my-5 py-1 px-5 border border-blue-500 hover:border-transparent rounded mr-5"
           @click="">
-          Submit</button><br />
+          Submit</button>
+        <router-link :to="{ name: 'ListEvent' }"><button
+            class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white my-5 py-1 px-5 border border-blue-500 hover:border-transparent rounded"
+            @click="">
+            Cancel
+          </button></router-link>
+        <br />
       </form>
     </div>
   </div>

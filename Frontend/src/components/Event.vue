@@ -12,6 +12,7 @@ const formatTime = (datetime) => {
 }
 const formatDate = (datetime) => {
   var date = new Date(datetime)
+  date.setHours(date.getHours() - 7)
   // var text = date.getDate() + " " + date.toLocaleString('en-US', { month: "short", timeZone: "UTC" }) + " " + date.getFullYear();
   return date
 }
@@ -34,7 +35,7 @@ const setDetail = () => {
     <td class="px-2 py-5 border-b border-gray-600 text-sm text-center">
       <div class="grid grid-cols-3 divide-x divide-slate-800/100 h-full">
         <div>{{ formatDate(prop.mask.eventStartTime).getDate() }}</div>
-        <div>{{ formatDate(prop.mask.eventStartTime).toLocaleString('en-US', { month: "short", timeZone: "UTC" }) }}
+        <div>{{ formatDate(prop.mask.eventStartTime).toLocaleString('en-US', { month: "short" }) }}
         </div>
         <div>{{ formatDate(prop.mask.eventStartTime).getFullYear() }}</div>
       </div>

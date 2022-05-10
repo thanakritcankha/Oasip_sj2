@@ -12,7 +12,7 @@ const listEvents = async () => {
 const btnDelete = (id) => {
     // let text = "Press a button!\nEither OK or Cancel.";
     // let text = "เลือกดีๆนะไอ้สัส กูขี้เกียจใส่ข้อมูลใหม่";
-    let text = "คุณแน่ที่จะลบหรือไม่";
+    let text = "Do you want to delete the event?";
     // console.log(id)
     if (confirm(text) == true) {
         deleteEvent(id)
