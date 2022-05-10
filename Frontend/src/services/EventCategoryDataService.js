@@ -1,3 +1,4 @@
+// const API_URL = '/sj2/api'
 const API_URL = '/api'
 class EventCategoryDataService{
     retrieveAllCategory(){

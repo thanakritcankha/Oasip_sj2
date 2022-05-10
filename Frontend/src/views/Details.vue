@@ -29,10 +29,11 @@ const formatTime = (datetime) => {
 }
 const formatDate = (datetime) => {
   var date = new Date(datetime)
+  date.setHours(date.getHours() - 7)
   return (
     date.getDate() +
     ' | ' +
-    date.toLocaleString('en-US', { month: 'short', timeZone: 'UTC' }) +
+    date.toLocaleString('en-US', { month: 'short'}) +
     ' | ' +
     date.getFullYear()
   )
