@@ -6,9 +6,9 @@ import Detail from "../views/Details.vue"
 import CreateEvent from "../views/CreateEvent.vue";
 const history = createWebHistory('/sj2/');
 const routes = [
-  { path: "/Home", name: "Home", component: Home },
+  { path: "/", name: "Home", component: Home },
   { path: "/about", name: "About", component: About },
-  { path: "/", name: "ListEvent", component: ListAll },
+  { path: "/listevents", name: "ListEvent", component: ListAll },
   { path: "/detail", name: "Detail", component: Detail },
   { path: "/CreateEvent", name: "CreateEvent", component: CreateEvent },
 ];
