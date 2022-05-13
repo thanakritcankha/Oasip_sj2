@@ -51,7 +51,7 @@ const formatDate = (datetime) => {
 
 <template>
   <div
-    class="max-w-6xl h-60 md:h-20 shadow-lg rounded overflow-hidden m-4 sm:flex bg-white rounded-xl border-l-8 border-r-8 shadow-lg shadow-black/50 cursor-pointer scale-100 hover:scale-110 transition duration-700"
+    class="max-w-6xl h-60 md:h-20 shadow-lg rounded overflow-hidden m-4 sm:flex bg-white rounded-xl border-l-8 border-r-8 shadow-lg shadow-black/50 cursor-pointer scale-100 hover:scale-105 transition duration-700"
     :class="getBorder(prop.mask.eventCategory?.id)"
   >
     <div
