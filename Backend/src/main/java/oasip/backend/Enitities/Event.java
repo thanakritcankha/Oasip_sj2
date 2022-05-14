@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.Date;
 
 @Entity
 @Table(name = "events")
@@ -25,7 +26,7 @@ public class Event {
     private String bookingEmail;
 
     @Column(name = "eventStartTime", nullable = false)
-    private Instant eventStartTime;
+    private Date eventStartTime;
 
     @Column(name = "eventDuration", nullable = false)
     private Integer eventDuration;

@@ -1,12 +1,10 @@
 <script setup>
 import { ref } from 'vue';
-const category = ref([
-  'Project Management Clinic',
-  'Devops/Infra Clinic',
-  'Database Clinic',
-  'Client-side Clinic',
-  'Server-side clinic',
-]);
+import { detail } from '../data/EventDetail';
+import router from '../router';
+const prop = defineProps({
+  mask: Object,
+});
 const borderCategory = [
   'border-red-500',
   'border-blue-500',
@@ -24,14 +22,15 @@ const bgCategory = [
 ];
 
 const getBorder = (id) => {
+  console.log(id);
+  console.log(borderCategory[id - 1]);
   return borderCategory[id - 1];
 };
 const getColor = (id) => {
+  console.log(id);
   return bgCategory[id - 1];
 };
-const prop = defineProps({
-  mask: Object,
-});
+const slide = ref(false);
 const showDetail = ref(false);
 const btnShowDetail = () => {
   showDetail.value = true;
@@ -47,12 +46,23 @@ const formatDate = (datetime) => {
   var date = new Date(datetime);
   return date;
 };
+const setDetail = () => {
+  // console.log(prop.mask)
+  detail.setDataId(prop.mask.id);
+  // console.log(prop.mask.id)
+  slide.value = true;
+  setTimeout(() => {
+    router.push({ path: '/detail', name: 'Detail' });
+  }, 500);
+};
 </script>
 
 <template>
   <div
     class="max-w-6xl h-60 md:h-20 shadow-lg rounded overflow-hidden m-4 sm:flex bg-white rounded-xl border-l-8 border-r-8 shadow-lg shadow-black/50 cursor-pointer scale-100 hover:scale-105 transition duration-700"
     :class="getBorder(prop.mask.eventCategory?.id)"
+    v-bind:class="{ '-translate-x-52': slide }"
+    @click="setDetail()"
   >
     <div
       class="flex flex-col w-32 justify-center items-center border-r-2 border-gray-200 px-4"
@@ -66,7 +76,15 @@ const formatDate = (datetime) => {
     <div
       class="flex flex-col justify-center items-center border-r-2 border-gray-200 px-4"
     >
-      dsjakdl
+      <div>{{ formatDate(prop.mask.eventStartTime).getDate() }}</div>
+      <div>
+        {{
+          formatDate(prop.mask.eventStartTime).toLocaleString('en-US', {
+            month: 'short',
+          })
+        }}
+      </div>
+      <div>{{ formatDate(prop.mask.eventStartTime).getFullYear() }}</div>
     </div>
     <!-- category -->
     <div
@@ -95,7 +113,7 @@ const formatDate = (datetime) => {
         <button
           type="button"
           class="flex items-center justify-center px-2 py-2 rounded-full inline-block text-black hover:text-red-700"
-          @click.stop.prevent="$emit('deleteEvent', prop.mask.id)"
+          @click.stop.prevent="setDetail()"
         >
           Detail
         </button>

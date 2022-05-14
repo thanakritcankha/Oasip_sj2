@@ -39,7 +39,7 @@ onBeforeMount(async () => {
       <!-- card container -->
       <div class="-mt-16">
         <div v-for="event in events" v-if="events.length > 0" class>
-          <Event :mask="event" />
+          <Event :mask="event" @deleteEvent="btnDelete($event)" />
         </div>
         <div v-else>No Scheduled Events</div>
       </div>

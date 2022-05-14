@@ -40,13 +40,17 @@ const goHome = () => {
         class="pt-4 text-base text-gray-700 md:flex md:justify-between md:pt-0"
       >
         <li class="gc3">
-          <a class="md:p-4 py-2 block hover:text-purple-400 text-white" href="#"
-            >List Event</a
+          <router-link
+            class="md:p-4 py-2 block hover:text-purple-400 text-white"
+            :to="{ path: '/listevents', name: 'ListEvent' }"
+            >List Event</router-link
           >
         </li>
         <li>
-          <a class="md:p-4 py-2 block hover:text-purple-400 text-white" href="#"
-            >Create Event</a
+          <router-link
+            class="md:p-4 py-2 block hover:text-purple-400 text-white"
+            :to="{ path: '/CreateEvent', name: 'CreateEvent' }"
+            >Create Event</router-link
           >
         </li>
         <li>

@@ -21,5 +21,14 @@ class EventDataService{
             body: JSON.stringify(newEvent)
         })
     }
+    updateEvent(id , update){
+        return fetch(`${API_URL}/events/${id}`,{
+            method: 'PUT',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(update)
+        })
+    }
 }
 export default new EventDataService()

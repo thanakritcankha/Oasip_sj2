@@ -2,10 +2,15 @@ package oasip.backend.Service;
 
 import oasip.backend.DTOs.Create.CreateEventDto;
 import oasip.backend.DTOs.Detail.DetailEventDto;
+import oasip.backend.DTOs.Edits.EditEventDto;
+import oasip.backend.DTOs.EventDto;
+import oasip.backend.DTOs.EventcategoryDto;
 import oasip.backend.DTOs.ListAll.ListAllEventDto;
 import oasip.backend.Enitities.Event;
+import oasip.backend.Enitities.Eventcategory;
 import oasip.backend.ListMapper;
 import oasip.backend.repositories.EventRepository;
+import oasip.backend.repositories.EventcategoryRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -17,6 +22,8 @@ import java.util.List;
 public class EventService {
     @Autowired
     private EventRepository repository;
+    @Autowired
+    private EventcategoryRepository eventcategoryRepository;
     @Autowired
     private ModelMapper modelMapper;
     @Autowired
@@ -32,6 +39,7 @@ public class EventService {
         return modelMapper.map(event , DetailEventDto.class);
     }
 
+    
     public CreateEventDto createEvent(CreateEventDto newEvent){
         Event event = modelMapper.map(newEvent,Event.class);
         //event category
@@ -43,21 +51,21 @@ public class EventService {
                 () -> new RuntimeException(eventId + " Does not Exist !!!" ));
         repository.deleteById(eventId);
     }
-    public Event updateEvent(ListAllEventDto updateEvent , Integer eventId){
+    public EventDto updateEvent(EditEventDto updateEvent , Integer eventId){
         Event newEvent = modelMapper.map(updateEvent,Event.class);
         Event event = repository.findById(eventId).map(o -> mapEvent(o,newEvent)).orElseGet(() -> {
             newEvent.setId(eventId);
             return newEvent;
         });
-        return repository.saveAndFlush(event);
+        System.out.println(event);
+        repository.saveAndFlush(event);
+        return modelMapper.map(event , EventDto.class);
     }
 
-    private Event mapEvent(Event existingEvent, Event updateEvent) {
-        existingEvent.setBookingName(updateEvent.getBookingName());
-        existingEvent.setBookingEmail(updateEvent.getBookingEmail());
-        existingEvent.setEventStartTime(updateEvent.getEventStartTime());
-        existingEvent.setEventDuration(updateEvent.getEventDuration());
-        existingEvent.setEventNotes(updateEvent.getEventNotes());
-        existingEvent.setEventCategory(updateEvent.getEventCategory());
-        return existingEvent; }
+private Event mapEvent(Event existingEvent, Event updateEvent) {
+    existingEvent.setEventStartTime(updateEvent.getEventStartTime());
+    existingEvent.setEventNotes(updateEvent.getEventNotes());
+    existingEvent.setEventCategory(eventcategoryRepository.getById(existingEvent.getEventCategory().getId()));
+    return existingEvent; }
+
 }

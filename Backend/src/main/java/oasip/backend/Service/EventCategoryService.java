@@ -24,6 +24,7 @@ public class EventCategoryService {
         List<Eventcategory> categoryList = repository.findAll();
         return listMapper.maplist(categoryList, EventcategoryDto.class, modelMapper);
     }
+
     public CreateEventcategoryDto getCategory(Integer categoryId){
         Eventcategory category = repository.findById(categoryId).orElseThrow(
                 () -> new RuntimeException(categoryId + " Does not Exist !!!" ));
