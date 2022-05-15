@@ -6,6 +6,7 @@ import oasip.backend.DTOs.Edits.EditEventDto;
 import oasip.backend.DTOs.EventDto;
 import oasip.backend.DTOs.EventcategoryDto;
 import oasip.backend.DTOs.ListAll.ListAllEventDto;
+import oasip.backend.DTOs.Overlap.OverlapEventDto;
 import oasip.backend.Enitities.Event;
 import oasip.backend.Enitities.Eventcategory;
 import oasip.backend.ListMapper;
@@ -14,7 +15,9 @@ import oasip.backend.repositories.EventcategoryRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -39,12 +42,20 @@ public class EventService {
         return modelMapper.map(event , DetailEventDto.class);
     }
 
-    
+    public List<OverlapEventDto> getOldEvent(Integer categoryId){
+        List<Event> events = repository.findByEventCategory_Id(categoryId);
+        System.out.println(events);
+        return listMapper.maplist(events , OverlapEventDto.class , modelMapper);
+    }
+
     public CreateEventDto createEvent(CreateEventDto newEvent){
-        Event event = modelMapper.map(newEvent,Event.class);
-        //event category
-        repository.saveAndFlush(event);
-        return newEvent;
+        try {
+            Event event = modelMapper.map(newEvent,Event.class);
+            repository.saveAndFlush(event);
+            return newEvent;
+        }catch (Exception ex){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST , "กรุณาใส่ข้อมูลให้ถูกต้อง" , ex);
+        }
     }
     public void deleteEvent(Integer eventId){
         repository.findById(eventId).orElseThrow(

@@ -3,6 +3,20 @@ import { onBeforeMount, ref } from 'vue';
 import EventCategoryDataService from '../services/EventCategoryDataService';
 import EventDataService from '../services/EventDataService';
 
+onBeforeMount(async () => {
+  await getAllCategory();
+  setTimeout(() => {
+    fade.value = true;
+  }, 400);
+});
+
+const categories = ref();
+
+const getAllCategory = async () => {
+  const res = await EventCategoryDataService.retrieveAllCategory();
+  categories.value = await res.json();
+};
+
 const bookingName = ref();
 const bookingEmail = ref();
 const eventCategoryName = ref();
@@ -11,16 +25,54 @@ const duration = ref();
 const bookingNote = ref();
 const eventDate = ref();
 const eventTime = ref();
+const overlaps = ref();
+
+// ดึง Event Category ทั้งหมด
+const listOverlap = async (id) => {
+  console.log(id);
+  const res = await EventDataService.retreiveOverlap(id);
+  const data = await res.json();
+  overlaps.value = data;
+};
+
+const getDateM = (date) => {
+  var dd = String(date.getDate()).padStart(2, '0');
+  var mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var yyyy = date.getFullYear();
+  var myDate = yyyy + '-' + mm + '-' + dd;
+  return myDate;
+};
 
 const submitEvent = async () => {
-  // console.log(eventCategoryName.value)
-  // console.log(eventDate.value)
-  // console.log(eventTime.value)
-  // let text = "กรุณาตรวจสอบให้ครบถ้วน กดตกลงเพื่อยืนยัน";
   let text = 'Please check your event data. Press OK for booking.';
+  var dateTime = new Date(`${eventDate.value}T${eventTime.value}`);
+  if (eventCategory.value != null) {
+    await listOverlap(eventCategory.value.id);
+  }
+  var result = overlaps.value.filter((item) => {
+    let oldDateStart = new Date(item.eventStartTime);
+    let oldDateEnd = new Date(item.eventStartTime);
+    oldDateEnd.setMinutes(oldDateStart.getMinutes() + item.eventDuration);
+    let userDateTimeEnd = new Date(`${eventDate.value}T${eventTime.value}`);
+    userDateTimeEnd.setMinutes(userDateTimeEnd.getMinutes() + duration.value);
+    //เช็คว่าเป็นวันที่เดียวกันไหม
+    if (getDateM(oldDateStart) == getDateM(dateTime))
+      if (
+        (oldDateStart <= dateTime && dateTime <= oldDateEnd) ||
+        (oldDateStart <= userDateTimeEnd && userDateTimeEnd <= oldDateEnd)
+      ) {
+        return true;
+      }
+    return false;
+  });
+  // console.log(result);
+  if (result.length != 0) {
+    alert('ไอสัดมันซ้ำไอควายนะครับ');
+    eventDate.value = '';
+    eventTime.value = '';
+    return false;
+  }
   if (confirm(text) == true) {
-    var dateTime = `${eventDate.value}T${eventTime.value}:00z`;
-    console.log(dateTime);
     var newEvent = {
       bookingName: bookingName.value,
       bookingEmail: bookingEmail.value,
@@ -29,39 +81,15 @@ const submitEvent = async () => {
       eventNotes: bookingNote.value,
       eventCategory: eventCategory.value,
     };
-    console.log(newEvent);
+    // console.log(newEvent);
     const res = await EventDataService.createEvent(newEvent);
+    if (res.status != 201) {
+      alert('Fail to create Event');
+    }
     reset();
     return false;
   }
 };
-
-function checkDate() {
-  if (eventDate.value != undefined) {
-    if (eventTime.value != undefined) {
-      console.log(eventDate.value);
-      console.log(eventTime.value);
-      var selectedText = `${eventDate.value}T${eventTime.value}:00z`;
-      var selectedDate = new Date(selectedText);
-      var now = new Date();
-
-      // console.log("now" + now)
-      // console.log(selectedDate)
-      selectedDate.setHours(selectedDate.getHours() - 7);
-      // console.log(selectedDate)
-      if (selectedDate < now) {
-        alert('Date must be in the future');
-        eventDate.value = '';
-        eventTime.value = '';
-      }
-    }
-  }
-  // console.log(eventDate.value)
-  // console.log(eventTime.value)
-  // var selectedText = document.getElementById('eventTime').value;
-  // var selectedDate = new Date(selectedText);
-}
-
 const reset = () => {
   bookingName.value = null;
   bookingEmail.value = null;
@@ -72,12 +100,6 @@ const reset = () => {
   eventTime.value = null;
 };
 
-const categories = ref();
-const getAllCategory = async () => {
-  const res = await EventCategoryDataService.retrieveAllCategory();
-  categories.value = await res.json();
-};
-
 const durationCategory = () => {
   console.log(eventCategoryName.value);
   if (eventCategoryName.value != '') {
@@ -85,23 +107,48 @@ const durationCategory = () => {
       (value) => value.eventCategoryName == eventCategoryName.value
     );
     eventCategory.value = x;
-    console.log(x);
     duration.value = x.eventCategoryDuration;
   } else {
     duration.value = '';
   }
 };
 
-onBeforeMount(async () => {
-  await getAllCategory();
-  console.log(categories.value);
-});
+const checkDate = () => {
+  if (eventDate.value != undefined && eventTime.value != undefined) {
+    var selectedDate = new Date(`${eventDate.value}T${eventTime.value}`);
+    var now = new Date();
+    //compare now and เวลาที่เลือก
+    if (selectedDate < now) {
+      alert('Date must be in the future');
+      eventDate.value = '';
+      eventTime.value = '';
+    }
+  }
+};
+
+const minDate = () => {
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var yyyy = today.getFullYear();
+
+  today = yyyy + '-' + mm + '-' + dd;
+  return today;
+};
+const fade = ref(false);
 </script>
 
 <template>
-  <div class="min-w-full flex justify-center pt-10">
+  <div
+    class="min-w-full flex justify-center pt-10 transition ease-in duration-700"
+    :class="{ 'opacity-0': !fade, 'opacity-100': fade }"
+  >
     <div class="w-full max-w-5xl bg-white grid grid-cols-2 divide-x rounded-xl">
-      <div>ภาพปลารอบ</div>
+      <div
+        class="place-self-center w-full h-full rounded-l-xl bgimg bg-contain bg-repeat-x bg-center bg-blue-400"
+      >
+        <!-- <div class="text-3xl text-white">OASIP</div> -->
+      </div>
       <div>
         <form
           name="bookingForm"
@@ -112,7 +159,7 @@ onBeforeMount(async () => {
           <div class="mb-4">
             <label
               for="bname"
-              class="block text-gray-700 text-sm font-bold mb-2"
+              class="block text-gray-700 text-lg font-bold mb-2"
               >Booking Name :
             </label>
             <input
@@ -122,13 +169,13 @@ onBeforeMount(async () => {
               name="bname"
               v-model="bookingName"
               maxlength="100"
-              class="focus:border-orange-600 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-orange-600"
             />
           </div>
           <div class="mb-6">
             <label
               for="email"
-              class="block text-gray-700 text-sm font-bold mb-2"
+              class="block text-gray-700 text-lg font-bold mb-2"
               >Booking Email :
             </label>
             <input
@@ -137,13 +184,13 @@ onBeforeMount(async () => {
               id="email"
               name="email"
               v-model="bookingEmail"
-              class="focus:border-orange-600 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-orange-600"
             />
           </div>
           <div class="mb-6">
             <label
               for="category"
-              class="block text-gray-700 text-sm font-bold mb-2"
+              class="block text-gray-700 text-lg font-bold mb-2"
               >Event Category :
             </label>
             <select
@@ -152,7 +199,7 @@ onBeforeMount(async () => {
               id="category"
               @change="durationCategory()"
               v-model="eventCategoryName"
-              class="focus:border-orange-600 shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-orange-600"
             >
               <option disabled selected value></option>
               <option v-for="(category, index) in categories">
@@ -163,7 +210,7 @@ onBeforeMount(async () => {
           <div class="mb-6">
             <label
               for="duration"
-              class="block text-gray-700 text-sm font-bold mb-2"
+              class="block text-gray-700 text-lg font-bold mb-2"
               >Booking Duration :
             </label>
             <input
@@ -172,24 +219,26 @@ onBeforeMount(async () => {
               id="duration"
               name="duration"
               v-model="duration"
-              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none"
+              class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none"
               disabled
             />
           </div>
           <div class="mb-6">
-            <label for="notes" class="block text-gray-700 text-sm font-bold"
-              >Booking Notes : </label
-            ><br />
+            <label
+              for="notes"
+              class="block text-gray-700 text-lg font-bold mb-2"
+              >Booking Notes :
+            </label>
             <textarea
               v-model="bookingNote"
               maxlength="500"
-              class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-orange-600 focus:outline-none"
+              class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-gray-300 rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-orange-600 focus:outline-none"
             ></textarea>
           </div>
-          <div class="mb-6">
+          <div class="mb-3">
             <label
               for="eventTime"
-              class="block text-gray-700 text-sm font-bold mb-2"
+              class="block text-gray-700 text-lg font-bold mb-2"
               >Start Time Event :
             </label>
             <div class="flex px-10">
@@ -197,10 +246,10 @@ onBeforeMount(async () => {
                 required
                 @change="checkDate()"
                 type="date"
-                id="eventTime"
-                name="eventTime"
+                id="eventDate"
+                :min="minDate()"
                 v-model="eventDate"
-                class="focus:border-orange-600 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                class="focus:border-orange-600 shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mr-8"
               />
               <input
                 required
@@ -209,7 +258,7 @@ onBeforeMount(async () => {
                 id="eventTime"
                 name="eventTime"
                 v-model="eventTime"
-                class="focus:border-orange-600 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                class="focus:border-orange-600 shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />
             </div>
           </div>
@@ -234,4 +283,8 @@ onBeforeMount(async () => {
   </div>
 </template>
 
-<style></style>
+<style scoped>
+.bgimg {
+  background-image: url('../assets/bgCreate.png');
+}
+</style>

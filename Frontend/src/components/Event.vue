@@ -5,6 +5,7 @@ import router from '../router';
 const prop = defineProps({
   mask: Object,
 });
+
 const borderCategory = [
   'border-red-500',
   'border-blue-500',
@@ -20,36 +21,29 @@ const bgCategory = [
   'bg-green-500',
   'bg-orange-500',
 ];
-
 const getBorder = (id) => {
   console.log(id);
   console.log(borderCategory[id - 1]);
   return borderCategory[id - 1];
 };
-const getColor = (id) => {
+const getBgColor = (id) => {
   console.log(id);
   return bgCategory[id - 1];
 };
+
 const slide = ref(false);
-const showDetail = ref(false);
-const btnShowDetail = () => {
-  showDetail.value = true;
-};
-const btnCloseDetail = () => {
-  showDetail.value = false;
-};
 const formatTime = (datetime) => {
-  var date = new Date(datetime).toLocaleString('en-US');
-  return date.slice(-10, -6) + ' ' + date.slice(-2);
+  var date = new Date(datetime).toLocaleString('th-TH');
+  console.log(date);
+  console.log(Intl.DateTimeFormat().resolvedOptions().timeZone);
+  return date.slice(-8, -3);
 };
 const formatDate = (datetime) => {
   var date = new Date(datetime);
   return date;
 };
 const setDetail = () => {
-  // console.log(prop.mask)
   detail.setDataId(prop.mask.id);
-  // console.log(prop.mask.id)
   slide.value = true;
   setTimeout(() => {
     router.push({ path: '/detail', name: 'Detail' });
@@ -101,7 +95,7 @@ const setDetail = () => {
     >
       <p
         class="font-extrabold text-xl text-gray-900 tag text-center"
-        :class="getColor(prop.mask.eventCategory?.id)"
+        :class="getBgColor(prop.mask.eventCategory?.id)"
       >
         {{ prop.mask.eventCategory?.eventCategoryName }}
       </p>

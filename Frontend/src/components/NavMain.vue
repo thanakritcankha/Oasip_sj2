@@ -53,7 +53,7 @@ const goHome = () => {
             >Create Event</router-link
           >
         </li>
-        <li>
+        <!-- <li>
           <a class="md:p-4 py-2 block hover:text-purple-400 text-white" href="#"
             >Customers</a
           >
@@ -67,7 +67,7 @@ const goHome = () => {
           <a class="md:p-4 py-2 block hover:text-purple-400 text-white" href="#"
             >Sign Up</a
           >
-        </li>
+        </li> -->
       </ul>
     </div>
   </nav>

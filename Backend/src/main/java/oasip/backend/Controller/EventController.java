@@ -5,8 +5,7 @@ import oasip.backend.DTOs.Detail.DetailEventDto;
 import oasip.backend.DTOs.Edits.EditEventDto;
 import oasip.backend.DTOs.EventDto;
 import oasip.backend.DTOs.ListAll.ListAllEventDto;
-import oasip.backend.DTOs.OverlapEventDto;
-import oasip.backend.Enitities.Event;
+import oasip.backend.DTOs.Overlap.OverlapEventDto;
 import oasip.backend.Service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,8 +30,8 @@ public class EventController {
         return service.getEvent(eventId);
     }
 
-    @GetMapping("/allstarttime")
-    public List<OverlapEventDto> getOverlap(){ return }
+    @GetMapping("/overlap/{categoryId}")
+    public List<OverlapEventDto> getOverlap(@PathVariable Integer categoryId){ return service.getOldEvent(categoryId);}
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)

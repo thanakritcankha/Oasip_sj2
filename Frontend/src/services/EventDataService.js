@@ -30,5 +30,8 @@ class EventDataService{
             body: JSON.stringify(update)
         })
     }
+    retreiveOverlap(id){
+        return fetch(`${API_URL}/events/overlap/${id}`)
+    }
 }
 export default new EventDataService()

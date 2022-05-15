@@ -1,71 +1,20 @@
 <script setup>
-import {
-  onBeforeMount,
-  onBeforeUnmount,
-  onBeforeUpdate,
-  onMounted,
-  onUnmounted,
-  onUpdated,
-  ref,
-} from 'vue';
+import { onBeforeMount, onBeforeUpdate, onUpdated, ref } from 'vue';
 import { detail } from '../data/EventDetail';
 import router from '../router';
 import EventDataService from '../services/EventDataService';
+//Lifecycle Hooks
 onBeforeMount(async () => {
   await getDetailEvent(detail.dataId);
-  // console.log(event.value)
+  setTimeout(() => {
+    fadein.value = true;
+  });
 });
-onUpdated(async () => {
+onBeforeUpdate(async () => {
   await getDetailEvent(detail.dataId);
 });
 
-const bgCategory = [
-  'bg-red-500',
-  'bg-blue-500',
-  'bg-yellow-500',
-  'bg-green-500',
-  'bg-orange-500',
-];
-
-const editMode = ref(false);
-const editNote = ref();
-const editDate = ref();
-const editTime = ref();
-const editModeOn = (note, time) => {
-  // console.log(note);
-  console.log(time);
-  editMode.value = true;
-  editNote.value = note;
-  var date = new Date(time);
-  var hours = 0;
-  if (date.getHours() < 10) hours = `0${date.getHours()}`;
-  else hours = date.getHours();
-  var inputTime = `${hours}:${date.getMinutes()}`;
-  console.log(inputTime);
-  editTime.value = inputTime;
-  var month = 0;
-  if (date.getMonth() < 10) month = `0${date.getMonth()}`;
-  else month = date.getMonth();
-  var inputDate = `${date.getFullYear()}-${month}-${date.getDate()}`;
-  editDate.value = inputDate;
-  // console.log(inputDate);
-  // editDate.value =
-};
-
-const save = async (id) => {
-  let obj = {
-    eventStartTime: '2022-05-23T20:30:00.000+07:00',
-    eventNotes: editNote.value,
-  };
-  const res = await EventDataService.updateEvent(id, obj);
-  console.log(res.text());
-};
-
-const editModeOff = async (id) => {
-  editMode.value = false;
-  await save(id);
-};
-
+//Fetch API
 const event = ref({});
 const getDetailEvent = async (id) => {
   const res = await EventDataService.retrieveEvent(id);
@@ -75,36 +24,90 @@ const getDetailEvent = async (id) => {
     router.push({ name: 'ListEvent' });
   }
 };
-const formatTime = (datetime) => {
-  var date = new Date(datetime).toLocaleString();
-  console.log(date);
-  return date.slice(-10, -6) + ' ' + date.slice(-2);
+
+const editMode = ref(false);
+const editNote = ref();
+const editDate = ref();
+const editTime = ref();
+
+const editModeOn = (note, time) => {
+  editMode.value = true;
+  editNote.value = note;
+  var inputDate = time.slice(0, 10);
+  var inputTime = time.slice(-18, -13);
+  editTime.value = inputTime;
+  editDate.value = inputDate;
 };
-const formatDate = (datetime) => {
-  var date = new Date(datetime);
-  return (
-    date.getDate() +
-    ' | ' +
-    date.toLocaleString('en-US', { month: 'short' }) +
-    ' | ' +
-    date.getFullYear()
-  );
+
+const save = async (id) => {
+  editModeOff();
+  var dateTime = new Date(`${editDate.value}T${editTime.value}`);
+  console.log(dateTime);
+  let obj = {
+    eventStartTime: dateTime,
+    eventNotes: editNote.value,
+  };
+  const res = await EventDataService.updateEvent(id, obj);
 };
+
+const editModeOff = () => {
+  editMode.value = false;
+};
+
 const eventNoteReturn = (notes) => {
-  // console.log(notes == undefined);
   if (notes != undefined) return notes;
   else return 'No message';
 };
+
+const checkDate = () => {
+  if (editDate.value != undefined && editTime.value != undefined) {
+    var selectedDate = new Date(`${editDate.value}T${editTime.value}`);
+    var now = new Date();
+    //compare now and เวลาที่เลือก
+    if (selectedDate < now) {
+      alert('Date must be in the future');
+      editDate.value = '';
+      editTime.value = '';
+    }
+  }
+};
+const minDate = () => {
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var yyyy = today.getFullYear();
+
+  today = yyyy + '-' + mm + '-' + dd;
+  return today;
+};
+
+const fadein = ref(false);
 </script>
 
 <template>
-  <div class="min-w-full flex justify-center pt-10">
+  <div
+    class="min-w-full flex justify-center pt-10 transition ease-out duration-1000"
+    :class="{ 'translate-x-0': fadein, 'translate-x-full': !fadein }"
+  >
     <div class="px-6 py-6 bg-white rounded-xl">
       <div>
         <div class="text-3xl w-full text-center">My Detail</div>
-        <div class="text-gray-400 text-2xl rounded w-full p-2 mt-2 text-center">
+        <div
+          class="text-gray-400 text-2xl rounded w-full p-2 text-center"
+          v-if="!editMode"
+        >
           {{ event.bookingName }}
         </div>
+        <input
+          v-else
+          type="text"
+          id="bname"
+          name="bname"
+          v-model="event.bookingName"
+          maxlength="100"
+          class="shadow atext-gray-400 text-2xl rounded w-full p-2 text-center cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none"
+          disabled
+        />
       </div>
       <div class="grid grid-cols-2">
         <div class="flex flex-col">
@@ -112,7 +115,16 @@ const eventNoteReturn = (notes) => {
             <label class="block text-xl font-medium text-gray-700"
               >Booking Email</label
             >
-            <div class="text-gray-400 text-lg rounded w-full p-2">
+            <div
+              class="text-gray-400 text-lg rounded w-full p-2"
+              v-if="!editMode"
+            >
+              {{ event.bookingEmail }}
+            </div>
+            <div
+              v-else
+              class="text-lg rounded w-full p-2 bg-slate-200 text-slate-500 border-slate-200 shadow cursor-not-allowed"
+            >
               {{ event.bookingEmail }}
             </div>
           </div>
@@ -120,17 +132,44 @@ const eventNoteReturn = (notes) => {
             <label class="block text-xl font-medium text-gray-700"
               >Cetagory</label
             >
-            <div class="text-gray-400 text-lg rounded w-full p-2">
-              {{ event.eventCategory?.eventCategoryName }} Minutes
+            <div
+              class="text-gray-400 text-lg rounded w-full p-2"
+              v-if="!editMode"
+            >
+              {{ event.eventCategory?.eventCategoryName }}
+            </div>
+            <div
+              v-else
+              class="text-lg rounded w-full p-2 bg-slate-200 text-slate-500 border-slate-200 shadow cursor-not-allowed"
+            >
+              {{ event.eventCategory?.eventCategoryName }}
             </div>
           </div>
           <div>
             <label class="block text-xl font-medium text-gray-700"
               >Duration</label
             >
-            <div class="text-gray-400 text-lg rounded w-full p-2">
+            <div
+              class="text-gray-400 text-lg rounded w-full p-2"
+              v-if="!editMode"
+            >
               {{ event.eventDuration }} Minutes
             </div>
+            <div
+              v-else
+              class="text-lg rounded w-full p-2 bg-slate-200 text-slate-500 border-slate-200 shadow cursor-not-allowed"
+            >
+              {{ event.eventDuration }} Minutes
+            </div>
+            <!-- <input
+              v-else
+              type="text"
+              id="duration"
+              name="duration"
+              v-model="event.eventDuration"
+              class="shadow appearance-none border rounded w-full text-lg py-2 px-3 text-gray-700 leading-tight cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none"
+              disabled
+            /> -->
           </div>
           <div>
             <label class="block text-xl font-medium text-gray-700">Date</label>
@@ -138,16 +177,18 @@ const eventNoteReturn = (notes) => {
               class="text-gray-400 text-lg rounded w-full p-2"
               v-if="!editMode"
             >
-              {{ formatDate(event.eventStartTime) }}
+              {{ event.eventStartTime?.slice(0, 10) }}
             </div>
             <div v-else>
               <input
                 required
                 type="date"
-                id="eventTime"
-                name="eventTime"
+                id="eventDate"
+                @change="checkDate()"
+                :min="minDate()"
+                name="eventDate"
                 v-model="editDate"
-                class="focus:border-orange-600 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                class="focus:border-orange-600 text-lg shadow appearance-none border rounded w-full p-2.5 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />
             </div>
           </div>
@@ -157,16 +198,17 @@ const eventNoteReturn = (notes) => {
               class="text-gray-400 text-lg rounded w-full p-2"
               v-if="!editMode"
             >
-              {{ formatTime(event.eventStartTime) }}
+              {{ event.eventStartTime?.slice(11, 16) }}
             </div>
             <div v-else>
               <input
                 required
                 type="time"
                 id="eventTime"
+                @change="checkDate()"
                 name="eventTime"
                 v-model="editTime"
-                class="focus:border-orange-600 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                class="focus:border-orange-600 text-lg shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />
             </div>
           </div>
@@ -183,7 +225,8 @@ const eventNoteReturn = (notes) => {
           v-else
           v-model="editNote"
           maxlength="500"
-          class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-orange-600 focus:outline-none"
+          rows="1"
+          class="form-control block w-full text-lg px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-orange-600 focus:outline-none"
         ></textarea>
       </div>
       <div class="mt-6 flex">
@@ -229,7 +272,7 @@ const eventNoteReturn = (notes) => {
         <button
           class="flex items-center rounded-xl bg-green-500 px-2 text-white mr-10"
           v-else
-          @click="editModeOff(event.id)"
+          @click="save(event.id)"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
