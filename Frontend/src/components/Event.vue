@@ -22,20 +22,20 @@ const bgCategory = [
   'bg-orange-500',
 ];
 const getBorder = (id) => {
-  console.log(id);
-  console.log(borderCategory[id - 1]);
+  // console.log(id);
+  // console.log(borderCategory[id - 1]);
   return borderCategory[id - 1];
 };
 const getBgColor = (id) => {
-  console.log(id);
+  // console.log(id);
   return bgCategory[id - 1];
 };
 
 const slide = ref(false);
 const formatTime = (datetime) => {
   var date = new Date(datetime).toLocaleString('th-TH');
-  console.log(date);
-  console.log(Intl.DateTimeFormat().resolvedOptions().timeZone);
+  // console.log(date);
+  // console.log(Intl.DateTimeFormat().resolvedOptions().timeZone);
   return date.slice(-8, -3);
 };
 const formatDate = (datetime) => {

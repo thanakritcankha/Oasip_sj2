@@ -55,7 +55,8 @@ const submitEvent = async () => {
     oldDateEnd.setMinutes(oldDateStart.getMinutes() + item.eventDuration);
     let userDateTimeEnd = new Date(`${eventDate.value}T${eventTime.value}`);
     userDateTimeEnd.setMinutes(userDateTimeEnd.getMinutes() + duration.value);
-    //เช็คว่าเป็นวันที่เดียวกันไหม
+    //เช็คว่าเป็นวันที่เดียวกันไหม 
+    //และจะต้องเอา newtimend มาเช็คด้วย
     if (getDateM(oldDateStart) == getDateM(dateTime))
       if (
         (oldDateStart <= dateTime && dateTime <= oldDateEnd) ||
@@ -183,6 +184,7 @@ const fade = ref(false);
               type="email"
               id="email"
               name="email"
+              maxlength="100"
               v-model="bookingEmail"
               class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-orange-600"
             />

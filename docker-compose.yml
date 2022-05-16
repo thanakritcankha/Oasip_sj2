@@ -39,7 +39,7 @@ services:
     restart: unless-stopped
     volumes:
       - ./Frontend/:/var/local/app:cached
-      ports:
+    ports:
       - 3000:80
     # environment:
     #   - ASSET_URL=$

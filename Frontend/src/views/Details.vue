@@ -10,9 +10,6 @@ onBeforeMount(async () => {
     fadein.value = true;
   });
 });
-onBeforeUpdate(async () => {
-  await getDetailEvent(detail.dataId);
-});
 
 //Fetch API
 const event = ref({});
@@ -39,15 +36,66 @@ const editModeOn = (note, time) => {
   editDate.value = inputDate;
 };
 
+const overlaps = ref();
+
+// ดึง Event Category ทั้งหมด
+const listOverlap = async (id) => {
+  console.log(id);
+  const res = await EventDataService.retreiveOverlap(id);
+  const data = await res.json();
+  overlaps.value = data;
+};
+
+const getDateM = (date) => {
+  var dd = String(date.getDate()).padStart(2, '0');
+  var mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var yyyy = date.getFullYear();
+  var myDate = yyyy + '-' + mm + '-' + dd;
+  return myDate;
+};
+
 const save = async (id) => {
-  editModeOff();
   var dateTime = new Date(`${editDate.value}T${editTime.value}`);
-  console.log(dateTime);
+  if (event.value.eventCategory?.id != null) {
+    await listOverlap(event.value.eventCategory?.id);
+  }
+  var result = overlaps.value.filter((item) => {
+    let oldDateStart = new Date(item.eventStartTime);
+    let oldDateEnd = new Date(item.eventStartTime);
+    oldDateEnd.setMinutes(oldDateStart.getMinutes() + item.eventDuration);
+    let userDateTimeEnd = new Date(`${editDate.value}T${editTime.value}`);
+    userDateTimeEnd.setMinutes(
+      userDateTimeEnd.getMinutes() + event.value.eventDuration
+    );
+    // console.log(dateTime);
+    // console.log(event.value.eventDuration);
+    //เช็คว่าเป็นวันที่เดียวกันไหม
+    if (getDateM(oldDateStart) == getDateM(dateTime))
+      if (
+        (oldDateStart <= dateTime && dateTime <= oldDateEnd) ||
+        (oldDateStart <= userDateTimeEnd && userDateTimeEnd <= oldDateEnd)
+      ) {
+        return true;
+      }
+    return false;
+  });
+  // console.log(result);
+  if (result.length != 0) {
+    alert('ไอสัดมันซ้ำไอควายนะครับ');
+    eventDate.value = '';
+    eventTime.value = '';
+    editModeOff();
+    editModeOn(event.value.eventNotes, event.value.eventStartTime);
+
+    return false;
+  }
+  editModeOff();
   let obj = {
     eventStartTime: dateTime,
     eventNotes: editNote.value,
   };
   const res = await EventDataService.updateEvent(id, obj);
+  await getDetailEvent(detail.dataId);
 };
 
 const editModeOff = () => {

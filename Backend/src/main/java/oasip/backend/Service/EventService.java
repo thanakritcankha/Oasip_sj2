@@ -10,6 +10,7 @@ import oasip.backend.DTOs.Overlap.OverlapEventDto;
 import oasip.backend.Enitities.Event;
 import oasip.backend.Enitities.Eventcategory;
 import oasip.backend.ListMapper;
+import oasip.backend.Validation.Validation;
 import oasip.backend.repositories.EventRepository;
 import oasip.backend.repositories.EventcategoryRepository;
 import org.modelmapper.ModelMapper;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class EventService {
@@ -49,13 +51,17 @@ public class EventService {
     }
 
     public CreateEventDto createEvent(CreateEventDto newEvent){
-        try {
-            Event event = modelMapper.map(newEvent,Event.class);
-            repository.saveAndFlush(event);
-            return newEvent;
-        }catch (Exception ex){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST , "กรุณาใส่ข้อมูลให้ถูกต้อง" , ex);
+        Validation validation = new Validation();
+        validation.Email(newEvent.getBookingEmail());
+        validation.stringLength(newEvent.getBookingName() , newEvent.getBookingEmail(), newEvent.getEventNotes());
+        validation.DateFuture(newEvent.getEventStartTime());
+        validation.overlab(getOldEvent(newEvent.getEventCategory().getId()) , newEvent.getEventStartTime() , newEvent.getEventDuration());
+        if (validation.getTextError().length() > 0){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,validation.getTextError());
         }
+        Event event = modelMapper.map(newEvent,Event.class);
+        repository.saveAndFlush(event);
+        return newEvent;
     }
     public void deleteEvent(Integer eventId){
         repository.findById(eventId).orElseThrow(
