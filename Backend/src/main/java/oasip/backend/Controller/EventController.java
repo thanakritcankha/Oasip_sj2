@@ -1,9 +1,13 @@
 package oasip.backend.Controller;
 
+import oasip.backend.DTOs.Create.CreateDto;
 import oasip.backend.DTOs.Create.CreateEventDto;
+import oasip.backend.DTOs.Detail.DetailDto;
 import oasip.backend.DTOs.Detail.DetailEventDto;
 import oasip.backend.DTOs.Edits.EditEventDto;
+import oasip.backend.DTOs.Edits.ResPatchDto;
 import oasip.backend.DTOs.EventDto;
+import oasip.backend.DTOs.ListAll.ListAllDto;
 import oasip.backend.DTOs.ListAll.ListAllEventDto;
 import oasip.backend.DTOs.Overlap.OverlapEventDto;
 import oasip.backend.Service.EventService;
@@ -21,12 +25,12 @@ public class EventController {
     private EventService service;
 
     @GetMapping("")
-    public List<ListAllEventDto> getAllEvent(){
+    public List<ListAllDto> getAllEvent(){
         return service.getAllEvent();
     }
 
     @GetMapping("/{eventId}")
-    public DetailEventDto getEvent(@PathVariable Integer eventId){
+    public DetailDto getEvent(@PathVariable Integer eventId){
         return service.getEvent(eventId);
     }
 
@@ -35,7 +39,7 @@ public class EventController {
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public CreateEventDto create(@RequestBody CreateEventDto newEvent){
+    public CreateDto create(@RequestBody CreateDto newEvent){
         return service.createEvent(newEvent);
     }
 
@@ -45,7 +49,7 @@ public class EventController {
     }
 
     @PatchMapping("/{eventId}")
-    public EventDto update(@PathVariable Integer eventId , @RequestBody EditEventDto updateEvent){
+    public ResPatchDto update(@PathVariable Integer eventId , @RequestBody EditEventDto updateEvent){
        return service.updateEvent(updateEvent , eventId);
     }
 }

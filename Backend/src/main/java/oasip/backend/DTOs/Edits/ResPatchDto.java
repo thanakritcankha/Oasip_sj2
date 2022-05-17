@@ -6,7 +6,10 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Data
-public class EditEventDto implements Serializable {
+public class ResPatchDto implements Serializable {
+    private String bookingName;
+    private String bookingEmail;
     private Date eventStartTime;
     private String eventNotes;
+    private String eventCategoryEventCategoryName;
 }

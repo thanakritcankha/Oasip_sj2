@@ -40,7 +40,7 @@ const overlaps = ref();
 
 // ดึง Event Category ทั้งหมด
 const listOverlap = async (id) => {
-  console.log(id);
+  // console.log(id);
   const res = await EventDataService.retreiveOverlap(id);
   const data = await res.json();
   overlaps.value = data;
@@ -56,8 +56,8 @@ const getDateM = (date) => {
 
 const save = async (id) => {
   var dateTime = new Date(`${editDate.value}T${editTime.value}`);
-  if (event.value.eventCategory?.id != null) {
-    await listOverlap(event.value.eventCategory?.id);
+  if (event.value.eventCategoryId != null) {
+    await listOverlap(event.value.eventCategoryId);
   }
   var result = overlaps.value.filter((item) => {
     let oldDateStart = new Date(item.eventStartTime);
@@ -88,7 +88,6 @@ const save = async (id) => {
   // console.log(result);
   if (result.length != 0) {
     alert('This event is overlap.');
-    eventDate.value = '';
     eventTime.value = '';
     editModeOff();
     editModeOn(event.value.eventNotes, event.value.eventStartTime);
@@ -100,6 +99,7 @@ const save = async (id) => {
     eventStartTime: dateTime,
     eventNotes: editNote.value,
   };
+  console.log(obj);
   const res = await EventDataService.updateEvent(id, obj);
   await getDetailEvent(detail.dataId);
 };
@@ -190,13 +190,13 @@ const fadein = ref(false);
               class="text-gray-400 text-lg rounded w-full p-2"
               v-if="!editMode"
             >
-              {{ event.eventCategory?.eventCategoryName }}
+              {{ event.eventCategoryEventCategoryName }}
             </div>
             <div
               v-else
               class="text-lg rounded w-full p-2 bg-slate-200 text-slate-500 border-slate-200 shadow cursor-not-allowed"
             >
-              {{ event.eventCategory?.eventCategoryName }}
+              {{ event.eventCategoryEventCategoryName }}
             </div>
           </div>
           <div>

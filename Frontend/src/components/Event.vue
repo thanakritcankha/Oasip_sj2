@@ -54,7 +54,7 @@ const setDetail = () => {
 <template>
   <div
     class="max-w-6xl h-60 md:h-20 shadow-lg rounded overflow-hidden m-4 sm:flex bg-white rounded-xl border-l-8 border-r-8 shadow-lg shadow-black/50 cursor-pointer scale-100 hover:scale-105 transition duration-700"
-    :class="getBorder(prop.mask.eventCategory?.id)"
+    :class="getBorder(prop.mask.eventCategoryId)"
     v-bind:class="{ '-translate-x-52': slide }"
     @click="setDetail()"
   >
@@ -95,9 +95,9 @@ const setDetail = () => {
     >
       <p
         class="font-extrabold text-xl text-gray-900 tag text-center"
-        :class="getBgColor(prop.mask.eventCategory?.id)"
+        :class="getBgColor(prop.mask.eventCategoryId)"
       >
-        {{ prop.mask.eventCategory?.eventCategoryName }}
+        {{ prop.mask.eventCategoryEventCategoryName }}
       </p>
       <!-- <p class="text-sm text-gray-600">klatsch.duration</p> -->
     </div>

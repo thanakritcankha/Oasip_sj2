@@ -95,7 +95,8 @@ const submitEvent = async () => {
       eventStartTime: dateTime,
       eventDuration: duration.value,
       eventNotes: bookingNote.value,
-      eventCategory: eventCategory.value,
+      eventCategoryId: eventCategory.value.id,
+      eventCategoryEventCategoryName: eventCategory.value.eventCategoryName,
     };
     // console.log(newEvent);
     const res = await EventDataService.createEvent(newEvent);
@@ -122,6 +123,7 @@ const durationCategory = () => {
     var x = categories.value.find(
       (value) => value.eventCategoryName == eventCategoryName.value
     );
+    console.log(x);
     eventCategory.value = x;
     duration.value = x.eventCategoryDuration;
   } else {
