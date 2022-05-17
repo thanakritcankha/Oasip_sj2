@@ -70,18 +70,24 @@ const save = async (id) => {
     // console.log(dateTime);
     // console.log(event.value.eventDuration);
     //เช็คว่าเป็นวันที่เดียวกันไหม
-    if (getDateM(oldDateStart) == getDateM(dateTime))
+    if (item.id != event.value.id)
       if (
-        (oldDateStart <= dateTime && dateTime <= oldDateEnd) ||
-        (oldDateStart <= userDateTimeEnd && userDateTimeEnd <= oldDateEnd)
-      ) {
-        return true;
-      }
+        getDateM(oldDateStart) == getDateM(dateTime) ||
+        getDateM(oldDateStart) == getDateM(userDateTimeEnd) ||
+        getDateM(oldDateEnd) == getDateM(dateTime) ||
+        getDateM(oldDateEnd) == getDateM(userDateTimeEnd)
+      )
+        if (
+          (oldDateStart < dateTime && dateTime < oldDateEnd) ||
+          (oldDateStart < userDateTimeEnd && userDateTimeEnd < oldDateEnd)
+        ) {
+          return true;
+        }
     return false;
   });
   // console.log(result);
   if (result.length != 0) {
-    alert('ไอสัดมันซ้ำไอควายนะครับ');
+    alert('This event is overlap.');
     eventDate.value = '';
     eventTime.value = '';
     editModeOff();

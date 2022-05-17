@@ -43,6 +43,14 @@ const getDateM = (date) => {
   return myDate;
 };
 
+function validateEmail() {
+  if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.email)) {
+    this.msg['email'] = 'Please enter a valid email address';
+  } else {
+    this.msg['email'] = '';
+  }
+}
+
 const submitEvent = async () => {
   let text = 'Please check your event data. Press OK for booking.';
   var dateTime = new Date(`${eventDate.value}T${eventTime.value}`);
@@ -55,12 +63,19 @@ const submitEvent = async () => {
     oldDateEnd.setMinutes(oldDateStart.getMinutes() + item.eventDuration);
     let userDateTimeEnd = new Date(`${eventDate.value}T${eventTime.value}`);
     userDateTimeEnd.setMinutes(userDateTimeEnd.getMinutes() + duration.value);
-    //เช็คว่าเป็นวันที่เดียวกันไหม 
+    //เช็คว่าเป็นวันที่เดียวกันไหม
     //และจะต้องเอา newtimend มาเช็คด้วย
-    if (getDateM(oldDateStart) == getDateM(dateTime))
+    if (
+      getDateM(oldDateStart) == getDateM(dateTime) ||
+      getDateM(oldDateStart) == getDateM(userDateTimeEnd) ||
+      getDateM(oldDateEnd) == getDateM(dateTime) ||
+      getDateM(oldDateEnd) == getDateM(userDateTimeEnd)
+    )
       if (
-        (oldDateStart <= dateTime && dateTime <= oldDateEnd) ||
-        (oldDateStart <= userDateTimeEnd && userDateTimeEnd <= oldDateEnd)
+        (oldDateStart <= dateTime && dateTime < oldDateEnd) ||
+        (oldDateStart < userDateTimeEnd && userDateTimeEnd <= oldDateEnd) ||
+        (dateTime < oldDateStart && oldDateEnd < userDateTimeEnd) ||
+        (oldDateStart < dateTime && userDateTimeEnd < oldDateEnd)
       ) {
         return true;
       }
@@ -68,8 +83,8 @@ const submitEvent = async () => {
   });
   // console.log(result);
   if (result.length != 0) {
-    alert('ไอสัดมันซ้ำไอควายนะครับ');
-    eventDate.value = '';
+    alert('This event is overlap.');
+    // eventDate.value = '';
     eventTime.value = '';
     return false;
   }
@@ -185,6 +200,7 @@ const fade = ref(false);
               id="email"
               name="email"
               maxlength="100"
+              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$"
               v-model="bookingEmail"
               class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-orange-600"
             />

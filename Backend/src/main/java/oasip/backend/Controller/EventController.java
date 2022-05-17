@@ -44,7 +44,7 @@ public class EventController {
         service.deleteEvent(eventId);
     }
 
-    @PutMapping("/{eventId}")
+    @PatchMapping("/{eventId}")
     public EventDto update(@PathVariable Integer eventId , @RequestBody EditEventDto updateEvent){
        return service.updateEvent(updateEvent , eventId);
     }

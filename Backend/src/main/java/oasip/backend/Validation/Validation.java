@@ -42,35 +42,32 @@ public class Validation {
         if (!(0 < email.length() && email.length() <= 100)){
             this.textError = this.textError + "email size must be between 1 and 100; ";
         }
-        if (note.length() > 500){
-            this.textError = this.textError + "note size must be between 0 and 500; ";
+        if (note != null){
+            if (note.length() > 500){
+                this.textError = this.textError + "note size must be between 0 and 500; ";
+            }
         }
     }
     public void overlab(List<OverlapEventDto> overlap , Date startTime , Integer duration) {
-        Date newStartTime = new Date();
-        newStartTime.setTime(startTime.getTime());
-        Date plusDuration =  new Date();
-        plusDuration.setTime(startTime.getTime());
+//      Date newStartTime = new Date();
+//      newStartTime.setTime(startTime.getTime());
+//      Date newEndTime =  new Date();
+//      newEndTime.setTime(startTime.getTime() + (duration * 60000));
+        Date newStartTime = new Date(startTime.getTime());
+        Date newEndTime =  new Date(startTime.getTime() + (duration * 60000));
 
-//        System.out.println(startTime.getTime());
-//        System.out.println(plusDuration);
-        plusDuration.setTime(plusDuration.getTime() + (duration * 60000));
-//        System.out.println("newdate \n"+startTime);
-//        System.out.println("newdate and plus duration \n"+plusDuration);
-//        System.out.println(overlap);
         List<OverlapEventDto> result = overlap.stream().filter((old) -> {
-            Date oldDateTime = new Date();
-            oldDateTime.setTime(old.getEventStartTime().getTime());
-            Date oldplusDuration = new Date();
-//            System.out.println("------------------------------\n");
-//            System.out.println("oldDate \n"+oldplusDuration);
-            oldplusDuration.setTime(old.getEventStartTime().getTime() + (old.getEventDuration() * 60000));
-//            System.out.println("duration" + old.getEventDuration());
-//            System.out.println("oldTime \n"+oldplusDuration);
-//            System.out.println("------------------------------\n");
+//            Date oldDateTime = new Date();
+//            oldDateTime.setTime(old.getEventStartTime().getTime());
+//            Date oldEndTime = new Date();
+//            oldEndTime.setTime(old.getEventStartTime().getTime() + (old.getEventDuration() * 60000));
+            Date oldDateTime = new Date(old.getEventStartTime().getTime());
+            Date oldEndTime = new Date(old.getEventStartTime().getTime() + (old.getEventDuration() * 60000));
+
             SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy");
             String newstringDate= DateFor.format(startTime);
             String oldstringDate= DateFor.format(old.getEventStartTime());
+
             Date newdate = null;
             Date olddate = null;
             try {
@@ -82,14 +79,18 @@ public class Validation {
 
 //            System.out.println("new format \n" +newdate );
 //            System.out.println("old format \n" +olddate );
-            if ((olddate.compareTo(newdate) == 0) || (oldplusDuration.compareTo(newdate) == 0)) {
+//            if (id != old.getId())
+            if ((olddate.compareTo(newdate) == 0) || (oldEndTime.compareTo(newdate) == 0)) {
 //                System.out.println("------------------");
-//                System.out.println("old not plus \n"+oldDateTime);
-//                System.out.println("old plus \n"+oldplusDuration);
-//                System.out.println("startTIme \n" + startTime);
+//                System.out.println(oldDateTime.compareTo(newStartTime));
+//                System.out.println("oldstart \n"+oldDateTime);
+//                System.out.println("new start \n" + newStartTime);
+//                System.out.println(old);
 //                System.out.println("------------------");
 //                System.out.println(oldDateTime.after(newStartTime));
-                if((oldDateTime.before(newStartTime) && oldplusDuration.after(newStartTime)) || (oldDateTime.before(plusDuration)&& oldplusDuration.after(plusDuration))){
+//                if((oldDateTime.before(newStartTime) && oldplusDuration.after(newStartTime)) || (oldDateTime.before(plusDuration)&& oldplusDuration.after(plusDuration))){
+                if(((oldDateTime.compareTo(newStartTime) <= 0) && (newStartTime.compareTo(oldEndTime) < 0)) || ((oldDateTime.compareTo(newEndTime) < 0) && (newEndTime.compareTo(oldEndTime) <= 0))
+                    || ((newStartTime.compareTo(oldDateTime) < 0) && (oldEndTime.compareTo(newEndTime) < 0)) || ((oldDateTime.compareTo(newStartTime) < 0) && (newEndTime.compareTo(oldEndTime) < 0))){
                     return true;
                 }
                 return false;

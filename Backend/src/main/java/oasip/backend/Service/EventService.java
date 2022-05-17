@@ -46,7 +46,7 @@ public class EventService {
 
     public List<OverlapEventDto> getOldEvent(Integer categoryId){
         List<Event> events = repository.findByEventCategory_Id(categoryId);
-        System.out.println(events);
+//        System.out.println(events);
         return listMapper.maplist(events , OverlapEventDto.class , modelMapper);
     }
 
@@ -69,19 +69,25 @@ public class EventService {
         repository.deleteById(eventId);
     }
     public EventDto updateEvent(EditEventDto updateEvent , Integer eventId){
+        System.out.println(updateEvent);
         Event newEvent = modelMapper.map(updateEvent,Event.class);
         Event event = repository.findById(eventId).map(o -> mapEvent(o,newEvent)).orElseGet(() -> {
             newEvent.setId(eventId);
             return newEvent;
         });
-        System.out.println(event);
+//        System.out.println(event);
         repository.saveAndFlush(event);
         return modelMapper.map(event , EventDto.class);
     }
 
 private Event mapEvent(Event existingEvent, Event updateEvent) {
-    existingEvent.setEventStartTime(updateEvent.getEventStartTime());
-    existingEvent.setEventNotes(updateEvent.getEventNotes());
+        if (updateEvent.getEventStartTime() != null){
+            existingEvent.setEventStartTime(updateEvent.getEventStartTime());
+        }
+        if (updateEvent.getEventNotes() != null){
+            existingEvent.setEventNotes(updateEvent.getEventNotes());
+        }
+
     existingEvent.setEventCategory(eventcategoryRepository.getById(existingEvent.getEventCategory().getId()));
     return existingEvent; }
 
