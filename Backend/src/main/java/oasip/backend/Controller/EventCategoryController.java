@@ -3,6 +3,7 @@ package oasip.backend.Controller;
 
 import oasip.backend.DTOs.Create.CreateEventcategoryDto;
 import oasip.backend.DTOs.EventcategoryDto;
+import oasip.backend.DTOs.ListAll.ListAllEventcategoryDto;
 import oasip.backend.Enitities.Eventcategory;
 import oasip.backend.Service.EventCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class EventCategoryController {
     private EventCategoryService service;
 
     @GetMapping("")
-    public List<EventcategoryDto> getAllCategory(){
+    public List<ListAllEventcategoryDto> getAllCategory(){
         return service.getAllCategory();
     }
 

@@ -2,6 +2,7 @@ package oasip.backend.Service;
 
 import oasip.backend.DTOs.Create.CreateEventcategoryDto;
 import oasip.backend.DTOs.EventcategoryDto;
+import oasip.backend.DTOs.ListAll.ListAllEventcategoryDto;
 import oasip.backend.Enitities.Eventcategory;
 import oasip.backend.ListMapper;
 import oasip.backend.repositories.EventcategoryRepository;
@@ -20,9 +21,9 @@ public class EventCategoryService {
     @Autowired
     private ListMapper listMapper;
 
-    public List<EventcategoryDto> getAllCategory() {
+    public List<ListAllEventcategoryDto> getAllCategory() {
         List<Eventcategory> categoryList = repository.findAll();
-        return listMapper.maplist(categoryList, EventcategoryDto.class, modelMapper);
+        return listMapper.maplist(categoryList, ListAllEventcategoryDto.class, modelMapper);
     }
 
     public CreateEventcategoryDto getCategory(Integer categoryId){

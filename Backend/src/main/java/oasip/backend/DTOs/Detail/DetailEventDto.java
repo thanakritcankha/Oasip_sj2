@@ -3,7 +3,6 @@ package oasip.backend.DTOs.Detail;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.time.Instant;
 import java.util.Date;
 
 @Data
@@ -14,5 +13,6 @@ public class DetailEventDto implements Serializable {
     private Date eventStartTime;
     private Integer eventDuration;
     private String eventNotes;
-    private DetailEventcategoryDto eventCategory;
+    private Integer eventCategoryId;
+    private String eventCategoryEventCategoryName;
 }

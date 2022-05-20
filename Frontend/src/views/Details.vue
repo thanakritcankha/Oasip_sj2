@@ -1,11 +1,13 @@
 <script setup>
 import { onBeforeMount, onBeforeUpdate, onUpdated, ref } from 'vue';
+import { useRoute } from 'vue-router';
 import { detail } from '../data/EventDetail';
 import router from '../router';
 import EventDataService from '../services/EventDataService';
+let { params } = useRoute();
 //Lifecycle Hooks
 onBeforeMount(async () => {
-  await getDetailEvent(detail.dataId);
+  await getDetailEvent(params.id);
   setTimeout(() => {
     fadein.value = true;
   });

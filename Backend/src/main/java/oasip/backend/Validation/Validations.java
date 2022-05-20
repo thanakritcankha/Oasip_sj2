@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class Validation {
+public class Validations {
     private String textError = "";
 
     public void Email(String email){
@@ -68,7 +68,7 @@ public class Validation {
     }
     public void overlab(List<OverlapEventDto> overlap , Date startTime , Integer duration) {
         if(startTime != null){
-            //      Date newStartTime = new Date();
+//            Date newStartTime = new Date();
 //      newStartTime.setTime(startTime.getTime());
 //      Date newEndTime =  new Date();
 //      newEndTime.setTime(startTime.getTime() + (duration * 60000));
@@ -108,8 +108,10 @@ public class Validation {
 //                System.out.println("------------------");
 //                System.out.println(oldDateTime.after(newStartTime));
 //                if((oldDateTime.before(newStartTime) && oldplusDuration.after(newStartTime)) || (oldDateTime.before(plusDuration)&& oldplusDuration.after(plusDuration))){
-                    if(((oldDateTime.compareTo(newStartTime) <= 0) && (newStartTime.compareTo(oldEndTime) < 0)) || ((oldDateTime.compareTo(newEndTime) < 0) && (newEndTime.compareTo(oldEndTime) <= 0))
-                            || ((newStartTime.compareTo(oldDateTime) < 0) && (oldEndTime.compareTo(newEndTime) < 0)) || ((oldDateTime.compareTo(newStartTime) < 0) && (newEndTime.compareTo(oldEndTime) < 0))){
+                    if(((oldDateTime.compareTo(newStartTime) <= 0) && (newStartTime.compareTo(oldEndTime) < 0))
+                            || ((oldDateTime.compareTo(newEndTime) < 0) && (newEndTime.compareTo(oldEndTime) <= 0))
+                            || ((newStartTime.compareTo(oldDateTime) < 0) && (oldEndTime.compareTo(newEndTime) < 0))
+                            || ((oldDateTime.compareTo(newStartTime) < 0) && (newEndTime.compareTo(oldEndTime) < 0))){
                         return true;
                     }
                     return false;

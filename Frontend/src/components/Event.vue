@@ -1,6 +1,5 @@
 <script setup>
 import { ref } from 'vue';
-import { detail } from '../data/EventDetail';
 import router from '../router';
 const prop = defineProps({
   mask: Object,
@@ -43,10 +42,9 @@ const formatDate = (datetime) => {
   return date;
 };
 const setDetail = () => {
-  detail.setDataId(prop.mask.id);
   slide.value = true;
   setTimeout(() => {
-    router.push({ path: '/detail', name: 'Detail' });
+    router.push({ name: 'Detail' , params:{id: prop.mask.id} });
   }, 500);
 };
 </script>

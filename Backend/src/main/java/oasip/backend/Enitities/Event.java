@@ -1,6 +1,8 @@
 package oasip.backend.Enitities;
 
+import com.sun.istack.NotNull;
 import lombok.*;
+import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.*;
 import java.time.Instant;
