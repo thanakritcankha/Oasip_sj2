@@ -46,10 +46,10 @@ public class EventService {
         return modelMapper.map(event , DetailEventDto.class);
     }
 
-    public List<OverlapEventDto> getOldEvent(Integer categoryId){
+    public List<ListAllEventDto> getOldEvent(Integer categoryId){
         List<Event> events = repository.findByEventCategory_Id(categoryId);
 //        System.out.println(events);
-        return listMapper.maplist(events , OverlapEventDto.class , modelMapper);
+        return listMapper.maplist(events , ListAllEventDto.class , modelMapper);
     }
 
     public CreateEventDto createEvent(CreateEventDto newEvent){

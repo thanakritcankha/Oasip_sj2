@@ -13,7 +13,7 @@ onBeforeMount(async () => {
 const categories = ref();
 
 const getAllCategory = async () => {
-  const res = await EventCategoryDataService.retrieveAllCategory();
+  const res = await EventCategoryDataService.retrieveAllCategoryForCreate();
   categories.value = await res.json();
 };
 
@@ -30,7 +30,7 @@ const overlaps = ref();
 // ดึง Event Category ทั้งหมด
 const listOverlap = async (id) => {
   console.log(id);
-  const res = await EventDataService.retreiveOverlap(id);
+  const res = await EventDataService.retreiveCategory(id);
   const data = await res.json();
   overlaps.value = data;
 };
@@ -42,14 +42,6 @@ const getDateM = (date) => {
   var myDate = yyyy + '-' + mm + '-' + dd;
   return myDate;
 };
-
-function validateEmail() {
-  if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.email)) {
-    this.msg['email'] = 'Please enter a valid email address';
-  } else {
-    this.msg['email'] = '';
-  }
-}
 
 const submitEvent = async () => {
   let text = 'Please check your event data. Press OK for booking.';
@@ -98,7 +90,7 @@ const submitEvent = async () => {
       eventCategoryId: eventCategory.value.id,
       eventCategoryEventCategoryName: eventCategory.value.eventCategoryName,
     };
-    // console.log(newEvent);
+    console.log(newEvent);
     const res = await EventDataService.createEvent(newEvent);
     if (res.status != 201) {
       alert('Fail to create Event');
@@ -107,6 +99,7 @@ const submitEvent = async () => {
     return false;
   }
 };
+
 const reset = () => {
   bookingName.value = null;
   bookingEmail.value = null;
@@ -146,12 +139,7 @@ const checkDate = () => {
 
 const minDate = () => {
   var today = new Date();
-  var dd = String(today.getDate()).padStart(2, '0');
-  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-  var yyyy = today.getFullYear();
-
-  today = yyyy + '-' + mm + '-' + dd;
-  return today;
+  return getDateM(today);
 };
 const fade = ref(false);
 </script>
@@ -161,19 +149,16 @@ const fade = ref(false);
     class="min-w-full flex justify-center pt-10 transition ease-in duration-700"
     :class="{ 'opacity-0': !fade, 'opacity-100': fade }"
   >
-    <div class="w-full max-w-5xl bg-white grid grid-cols-2 divide-x rounded-xl">
+    <form
+      class="w-full max-w-5xl bg-white grid grid-cols-2 divide-x rounded-xl"
+      @submit="submitEvent()"
+      onsubmit="return false;"
+    >
       <div
         class="place-self-center w-full h-full rounded-l-xl bgimg bg-contain bg-repeat-x bg-center bg-blue-400"
-      >
-        <!-- <div class="text-3xl text-white">OASIP</div> -->
-      </div>
+      ></div>
       <div>
-        <form
-          name="bookingForm"
-          class="px-5 pt-6 mb-4"
-          @submit="submitEvent()"
-          onsubmit="return false;"
-        >
+        <div name="bookingForm" class="px-5 pt-6 mb-4">
           <div class="mb-4">
             <label
               for="bname"
@@ -297,13 +282,18 @@ const fade = ref(false);
             </button></router-link
           >
           <br />
-        </form>
+        </div>
       </div>
-    </div>
+    </form>
   </div>
 </template>
 
 <style scoped>
+input:checked + label {
+  border-color: black;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
 .bgimg {
   background-image: url('../assets/bgCreate.png');
 }

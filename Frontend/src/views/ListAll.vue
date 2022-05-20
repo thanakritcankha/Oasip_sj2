@@ -2,6 +2,7 @@
 import { onBeforeMount, ref } from 'vue';
 import EventDataService from '../services/EventDataService';
 import Event from '../components/Event.vue';
+import Filter from '../components/Filter.vue';
 
 //Lifecycle Hooks
 onBeforeMount(async () => {
@@ -35,27 +36,45 @@ const confirmDelete = (id) => {
 };
 // :class="{ 'translate-x-0': scalefade, 'translate-x-full': !scalefade }"
 const fade = ref(false);
+
+const categoryForFilter = async (id) => {
+  console.log(id);
+  if (id != 0) {
+    const res = await EventDataService.retreiveCategory(id);
+    events.value = await res.json();
+  }
+};
 </script>
 <template>
   <div
-    class="w-full flex justify-center transition ease-in-out duration-700"
+    class="w-full transition ease-in-out duration-700"
     :class="{ 'opacity-0': !fade, 'opacity-100': fade }"
   >
-    <div class="mt-2">
+    <Filter @category="categoryForFilter($event)" />
+    <div class="w-full flex justify-center">
       <div
+        class="flex justify-center mt-4 px-10 w-3/4 h-120 bg-blue-300/70 border-4 border-blue-300 rounded-xl overflow-auto touch-none"
+      >
+        <!-- <div
         class="text-3xl text-white px-4 pt-4 pb-14 bg-slate-700 rounded-lg border-double border-2 border-white"
       >
         My EventBoard
-      </div>
-      <!-- card container -->
-      <div class="-mt-16">
-        <div v-for="event in events" v-if="events.length > 0" class>
-          <Event :mask="event" @deleteEvent="confirmDelete($event)" />
+      </div> -->
+        <!-- card container -->
+        <!-- <div class="-mt-16"> -->
+        <div>
+          <div v-for="event in events" v-if="events.length > 0" class>
+            <Event :mask="event" @deleteEvent="confirmDelete($event)" />
+          </div>
+          <div v-else>No Scheduled Events</div>
         </div>
-        <div v-else>No Scheduled Events</div>
       </div>
     </div>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.h-120 {
+  height: 44rem;
+}
+</style>

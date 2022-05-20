@@ -2,6 +2,7 @@ package oasip.backend.Validation;
 
 
 import lombok.*;
+import oasip.backend.DTOs.ListAll.ListAllEventDto;
 import oasip.backend.DTOs.Overlap.OverlapEventDto;
 
 import java.text.ParseException;
@@ -66,7 +67,7 @@ public class Validations {
             }
         }
     }
-    public void overlab(List<OverlapEventDto> overlap , Date startTime , Integer duration) {
+    public void overlab(List<ListAllEventDto> overlap , Date startTime , Integer duration) {
         if(startTime != null){
 //            Date newStartTime = new Date();
 //      newStartTime.setTime(startTime.getTime());
@@ -75,7 +76,7 @@ public class Validations {
             Date newStartTime = new Date(startTime.getTime());
             Date newEndTime =  new Date(startTime.getTime() + (duration * 60000));
 
-            List<OverlapEventDto> result = overlap.stream().filter((old) -> {
+            List<ListAllEventDto> result = overlap.stream().filter((old) -> {
 //            Date oldDateTime = new Date();
 //            oldDateTime.setTime(old.getEventStartTime().getTime());
 //            Date oldEndTime = new Date();

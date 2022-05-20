@@ -31,8 +31,8 @@ public class EventController {
         return service.getEvent(eventId);
     }
 
-    @GetMapping("/overlap/{categoryId}")
-    public List<OverlapEventDto> getOverlap(@PathVariable Integer categoryId){ return service.getOldEvent(categoryId);}
+    @GetMapping("/category/{categoryId}")
+    public List<ListAllEventDto> getOverlap(@PathVariable Integer categoryId){ return service.getOldEvent(categoryId);}
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)

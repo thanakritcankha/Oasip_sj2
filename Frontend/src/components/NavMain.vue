@@ -49,6 +49,13 @@ const goHome = () => {
         <li>
           <router-link
             class="md:p-4 py-2 block hover:text-purple-400 text-white"
+            :to="{ path: '/listcategory', name: 'ListCategory' }"
+            >List Event Category</router-link
+          >
+        </li>
+        <li>
+          <router-link
+            class="md:p-4 py-2 block hover:text-purple-400 text-white"
             :to="{ path: '/CreateEvent', name: 'CreateEvent' }"
             >Create Event</router-link
           >

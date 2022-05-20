@@ -4,6 +4,12 @@ class EventCategoryDataService{
     retrieveAllCategory(){
         return fetch(`${API_URL}/categories`)
     }
+    retrieveAllCategoryForCreate(){
+        return fetch(`${API_URL}/categories/create`)
+    }
+    retrieveAllCategoryForFilter(){
+        return fetch(`${API_URL}/categories/filter`)
+    }
     retrieveCategory(id){
         return fetch(`${API_URL}/categories/${id}`)
     }

@@ -1,8 +1,10 @@
 package oasip.backend.Service;
 
 import oasip.backend.DTOs.Create.CreateEventcategoryDto;
+import oasip.backend.DTOs.Create.ListEventcategoryDto;
 import oasip.backend.DTOs.EventcategoryDto;
 import oasip.backend.DTOs.ListAll.ListAllEventcategoryDto;
+import oasip.backend.DTOs.ListAll.ListEventcategoryForFilterDto;
 import oasip.backend.Enitities.Eventcategory;
 import oasip.backend.ListMapper;
 import oasip.backend.repositories.EventcategoryRepository;
@@ -24,6 +26,15 @@ public class EventCategoryService {
     public List<ListAllEventcategoryDto> getAllCategory() {
         List<Eventcategory> categoryList = repository.findAll();
         return listMapper.maplist(categoryList, ListAllEventcategoryDto.class, modelMapper);
+    }
+
+    public List<ListEventcategoryDto> getAllCategoryForCreate() {
+        List<Eventcategory> categoryList = repository.findAll();
+        return listMapper.maplist(categoryList, ListEventcategoryDto.class, modelMapper);
+    }
+    public List<ListEventcategoryForFilterDto> getAllCategoryForFilter() {
+        List<Eventcategory> categoryList = repository.findAll();
+        return listMapper.maplist(categoryList, ListEventcategoryForFilterDto.class, modelMapper);
     }
 
     public CreateEventcategoryDto getCategory(Integer categoryId){

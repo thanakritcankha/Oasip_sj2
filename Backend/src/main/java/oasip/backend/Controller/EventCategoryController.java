@@ -2,8 +2,10 @@ package oasip.backend.Controller;
 
 
 import oasip.backend.DTOs.Create.CreateEventcategoryDto;
+import oasip.backend.DTOs.Create.ListEventcategoryDto;
 import oasip.backend.DTOs.EventcategoryDto;
 import oasip.backend.DTOs.ListAll.ListAllEventcategoryDto;
+import oasip.backend.DTOs.ListAll.ListEventcategoryForFilterDto;
 import oasip.backend.Enitities.Eventcategory;
 import oasip.backend.Service.EventCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,15 @@ public class EventCategoryController {
     public List<ListAllEventcategoryDto> getAllCategory(){
         return service.getAllCategory();
     }
+    @GetMapping("/create")
+    public List<ListEventcategoryDto> getAllCategoryForCreate(){
+        return service.getAllCategoryForCreate();
+    }
+    @GetMapping("/filter")
+    public List<ListEventcategoryForFilterDto> getAllCategoryForFilter(){
+        return service.getAllCategoryForFilter();
+    }
+//    @GetMapping("/")
 
     @GetMapping("/{categoryId}")
     public CreateEventcategoryDto getCategory(@PathVariable Integer categoryId){
