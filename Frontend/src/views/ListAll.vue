@@ -40,8 +40,12 @@ const fade = ref(false);
 const categoryForFilter = async (id) => {
   console.log(id);
   if (id != 0) {
+    events.value = '';
     const res = await EventDataService.retreiveCategory(id);
     events.value = await res.json();
+  } else {
+    events.value = '';
+    await listEvents();
   }
 };
 </script>
@@ -75,6 +79,6 @@ const categoryForFilter = async (id) => {
 
 <style scoped>
 .h-120 {
-  height: 44rem;
+  height: 45rem;
 }
 </style>

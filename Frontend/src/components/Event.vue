@@ -1,6 +1,12 @@
 <script setup>
-import { ref } from 'vue';
+import { onBeforeMount, ref } from 'vue';
 import router from '../router';
+const slide = ref(false);
+onBeforeMount(() => {
+  setTimeout(() => {
+    slide.value = true;
+  }, 200);
+});
 defineEmits(['deleteEvent']);
 const prop = defineProps({
   mask: Object,
@@ -31,7 +37,6 @@ const getBgColor = (id) => {
   return bgCategory[id - 1];
 };
 
-const slide = ref(false);
 const formatTime = (datetime) => {
   var date = new Date(datetime).toLocaleString('th-TH');
   // console.log(date);
@@ -43,7 +48,7 @@ const formatDate = (datetime) => {
   return date;
 };
 const setDetail = () => {
-  slide.value = true;
+  console.log('dsakdjalsdkljak');
   setTimeout(() => {
     router.push({ name: 'Detail', params: { id: prop.mask.id } });
   }, 500);
@@ -54,7 +59,10 @@ const setDetail = () => {
   <div
     class="max-w-6xl h-60 md:h-20 shadow-lg rounded overflow-hidden m-4 sm:flex bg-white rounded-xl border-l-8 border-r-8 shadow-lg shadow-black/50 cursor-pointer scale-100 hover:scale-105 transition duration-700"
     :class="getBorder(prop.mask.eventCategoryId)"
-    v-bind:class="{ '-translate-x-32': slide }"
+    v-bind:class="{
+      'translate-x-0': slide,
+      'translate-x-full': !slide,
+    }"
     @click="setDetail()"
   >
     <div

@@ -19,6 +19,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.*;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,8 +31,6 @@ import java.util.Map;
 public class EventService {
     @Autowired
     private EventRepository repository;
-    @Autowired
-    private EventcategoryRepository eventcategoryRepository;
     @Autowired
     private ModelMapper modelMapper;
     @Autowired
@@ -48,6 +50,35 @@ public class EventService {
 
     public List<ListAllEventDto> getOldEvent(Integer categoryId){
         List<Event> events = repository.findByEventCategory_Id(categoryId);
+//        System.out.println(events);
+        return listMapper.maplist(events , ListAllEventDto.class , modelMapper);
+    }
+
+    public List<ListAllEventDto> getUpcoming(){
+        Date date = new Date();
+        List<Event> events = repository.findByEventStartTimeAfter(date , Sort.by("eventStartTime").ascending());
+//        System.out.println(events);
+        return listMapper.maplist(events , ListAllEventDto.class , modelMapper);
+    }
+
+    public List<ListAllEventDto> getPast(){
+        Date date = new Date();
+        List<Event> events = repository.findByEventStartTimeBefore(date , Sort.by("eventStartTime").descending());
+//        System.out.println(events);
+        return listMapper.maplist(events , ListAllEventDto.class , modelMapper);
+    }
+
+    public List<ListAllEventDto> getDay(){
+        Date date = new Date();
+        Instant inst = date.toInstant();
+        LocalDate localDate = inst.atZone(ZoneId.systemDefault()).toLocalDate();
+        Instant dayInst = localDate.atStartOfDay(ZoneId.systemDefault()).toInstant();
+        Date day = Date.from(dayInst);
+        Date end = new Date();
+        end.setTime(day.getTime() + 86400000);
+        System.out.println("start \n" + day);
+        System.out.println("end \n" + end);
+        List<Event> events = repository.findByEventStartTimeBetween(day , end , Sort.by("eventStartTime").ascending());
 //        System.out.println(events);
         return listMapper.maplist(events , ListAllEventDto.class , modelMapper);
     }
