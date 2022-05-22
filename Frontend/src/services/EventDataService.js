@@ -33,5 +33,32 @@ class EventDataService{
     retreiveCategory(id){
         return fetch(`${API_URL}/events/category/${id}`)
     }
+    retreiveAllEventUpcoming(event){
+        return fetch(`${API_URL}/events/upcoming` ,{
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(event)
+        })
+    }
+    retreiveAllEventPast(event){
+        return fetch(`${API_URL}/events/past` ,{
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(event)
+        })
+    }
+    retreiveAllEventFilter(filter){
+        return fetch(`${API_URL}/events/filter` ,{
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(filter)
+        })
+    }
 }
 export default new EventDataService()

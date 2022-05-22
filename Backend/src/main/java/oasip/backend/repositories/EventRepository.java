@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 public interface EventRepository extends JpaRepository<Event, Integer> {
-    List<Event> findByEventCategory_Id(Integer categoryId);
+    List<Event> findByEventCategory_Id(Integer categoryId, Sort sort);
     List<Event> findByEventStartTimeBefore(Date startTime , Sort sort);
     List<Event> findByEventStartTimeAfter(Date startTime , Sort sort);
     List<Event> findByEventStartTimeBetween(Date startTime , Date endTime , Sort sort);

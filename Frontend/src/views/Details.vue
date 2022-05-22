@@ -103,7 +103,7 @@ const save = async (id) => {
   };
   console.log(obj);
   const res = await EventDataService.updateEvent(id, obj);
-  await getDetailEvent(detail.dataId);
+  await getDetailEvent(params.id);
 };
 
 const editModeOff = () => {

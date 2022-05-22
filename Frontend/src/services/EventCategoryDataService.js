@@ -10,6 +10,15 @@ class EventCategoryDataService{
     retrieveAllCategoryForFilter(){
         return fetch(`${API_URL}/categories/filter`)
     }
+    updateEvent(id , update){
+        return fetch(`${API_URL}/categories/${id}`,{
+            method: 'PATCH',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(update)
+        })
+    }
     retrieveCategory(id){
         return fetch(`${API_URL}/categories/${id}`)
     }

@@ -1,6 +1,4 @@
 <script setup>
-import { ref } from 'vue';
-import { detail } from '../data/EventDetail';
 import router from '../router';
 const prop = defineProps({
   mask: Object,
@@ -30,10 +28,8 @@ const getBgColor = (id) => {
   return bgCategory[id - 1];
 };
 const setDetail = () => {
-  detail.setDataId(prop.mask.id);
-  slide.value = true;
   setTimeout(() => {
-    router.push({ path: '/detail', name: 'Detail' });
+    router.push({ name: 'CategoryDetail', params: { id: prop.mask.id } });
   }, 500);
 };
 </script>
@@ -42,6 +38,7 @@ const setDetail = () => {
   <div
     class="max-w-6xl h-60 md:h-28 shadow-lg rounded overflow-hidden m-4 sm:flex bg-white rounded-xl border-l-8 border-r-8 shadow-lg shadow-black/50 cursor-pointer scale-100 hover:scale-105 transition duration-700"
     :class="getBorder(prop.mask.id)"
+    @click="setDetail"
   >
     <div
       class="flex flex-col w-1/5 justify-center items-center border-r-2 border-gray-200 px-4"
@@ -54,10 +51,15 @@ const setDetail = () => {
     <div
       class="flex flex-col w-3/4 justify-center items-start border-r-2 border-gray-200 px-4"
     >
-      <div class="font-extrabold text-xl text-gray-900">
+      <div
+        class="font-extrabold text-xl text-gray-900"
+        v-if="prop.mask.eventCategoryDescription.length > 0"
+      >
         {{ prop.mask.eventCategoryDescription }}
       </div>
-      <div class="font-extrabold text-xl text-gray-900">No Descriptions</div>
+      <div class="font-extrabold text-xl text-gray-900" v-else>
+        No Descriptions
+      </div>
       <!-- <p class="text-sm text-gray-600">klatsch.duration</p> -->
     </div>
     <!-- name -->

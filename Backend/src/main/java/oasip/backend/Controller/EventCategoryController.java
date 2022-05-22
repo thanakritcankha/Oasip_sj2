@@ -3,6 +3,7 @@ package oasip.backend.Controller;
 
 import oasip.backend.DTOs.Create.CreateEventcategoryDto;
 import oasip.backend.DTOs.Create.ListEventcategoryDto;
+import oasip.backend.DTOs.Edits.EditEventcategoryDto;
 import oasip.backend.DTOs.EventcategoryDto;
 import oasip.backend.DTOs.ListAll.ListAllEventcategoryDto;
 import oasip.backend.DTOs.ListAll.ListEventcategoryForFilterDto;
@@ -51,9 +52,9 @@ public class EventCategoryController {
         service.deleteCategory(categoryId);
     }
 
-    @PutMapping("/{categoryId}")
-    public Eventcategory update(@PathVariable Integer categoryId , @RequestBody EventcategoryDto updateCategor){
-        return service.updateCategory(updateCategor , categoryId);
+    @PatchMapping("/{categoryId}")
+    public Eventcategory update(@PathVariable Integer categoryId , @RequestBody EditEventcategoryDto updateCategory){
+        return service.updateCategory(updateCategory , categoryId);
     }
 
 }

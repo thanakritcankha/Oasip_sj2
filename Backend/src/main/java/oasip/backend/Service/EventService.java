@@ -4,6 +4,7 @@ import oasip.backend.DTOs.Create.CreateEventDto;
 import oasip.backend.DTOs.Create.CreateEventcategoryDto;
 import oasip.backend.DTOs.Detail.DetailEventDto;
 import oasip.backend.DTOs.Edits.EditEventDto;
+import oasip.backend.DTOs.Filter.FilterDto;
 import oasip.backend.DTOs.ListAll.ListAllEventDto;
 import oasip.backend.DTOs.Overlap.OverlapEventDto;
 import oasip.backend.Enitities.Event;
@@ -22,10 +23,8 @@ import javax.validation.*;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class EventService {
@@ -48,37 +47,81 @@ public class EventService {
         return modelMapper.map(event , DetailEventDto.class);
     }
 
+    public List<ListAllEventDto> getFilter(FilterDto filter){
+        List<Event> events = null;
+        if (filter.getEventCategoryId() != 0){
+            events  = repository.findByEventCategory_Id(filter.getEventCategoryId(), Sort.by("eventStartTime").descending());
+        }else {
+            events = repository.findAll(Sort.by("eventStartTime").descending());
+        }
+        List<ListAllEventDto> newEvent = listMapper.maplist(events , ListAllEventDto.class , modelMapper);
+        List<ListAllEventDto> filteroption = null;
+        switch (filter.getOption()){
+            case 1: //Upcoming
+                filteroption = getUpcoming(newEvent);
+                break;
+            case 2: //Past
+                filteroption = getPast(newEvent);
+                break;
+            case 3: // Start Time
+                filteroption = getDay(newEvent , filter.getEventStartTime());
+                break;
+            default:
+                filteroption = newEvent;
+                break;
+        }
+
+        return  filteroption;
+    }
+
+
+
     public List<ListAllEventDto> getOldEvent(Integer categoryId){
-        List<Event> events = repository.findByEventCategory_Id(categoryId);
+        List<Event> events = repository.findByEventCategory_Id(categoryId , Sort.by("eventStartTime").descending());
 //        System.out.println(events);
         return listMapper.maplist(events , ListAllEventDto.class , modelMapper);
     }
 
-    public List<ListAllEventDto> getUpcoming(){
+    public List<ListAllEventDto> getUpcoming(List<ListAllEventDto> event){
+        List<ListAllEventDto> eventDtos = listMapper.maplist(event , ListAllEventDto.class , modelMapper);
         Date date = new Date();
-        List<Event> events = repository.findByEventStartTimeAfter(date , Sort.by("eventStartTime").ascending());
+        List<ListAllEventDto> events = eventDtos.stream().filter((value)->{
+            Date valueEnd = new Date();
+            valueEnd.setTime((value.getEventStartTime().getTime() + (value.getEventDuration() * 60000)));
+            System.out.println((value.getEventStartTime().compareTo(date) > 0) || (value.getEventStartTime().compareTo(valueEnd) > 0));
+            return  ((value.getEventStartTime().compareTo(date) > 0) || (value.getEventStartTime().compareTo(valueEnd) > 0));
+        }).collect(Collectors.toList());
+        Collections.reverse(events);
+        System.out.println(events);
+        return listMapper.maplist(events , ListAllEventDto.class , modelMapper);
+    }
+
+    public List<ListAllEventDto> getPast(List<ListAllEventDto> event){
+        Date date = new Date();
+        List<ListAllEventDto> events = event.stream().filter((value)->{
+            return  (value.getEventStartTime().compareTo(date) < 0);
+        }).collect(Collectors.toList());
+
 //        System.out.println(events);
         return listMapper.maplist(events , ListAllEventDto.class , modelMapper);
     }
 
-    public List<ListAllEventDto> getPast(){
+    public List<ListAllEventDto> getDay(List<ListAllEventDto> event,Date selectday){
         Date date = new Date();
-        List<Event> events = repository.findByEventStartTimeBefore(date , Sort.by("eventStartTime").descending());
-//        System.out.println(events);
-        return listMapper.maplist(events , ListAllEventDto.class , modelMapper);
-    }
-
-    public List<ListAllEventDto> getDay(){
-        Date date = new Date();
+        date.setTime(selectday.getTime());
         Instant inst = date.toInstant();
         LocalDate localDate = inst.atZone(ZoneId.systemDefault()).toLocalDate();
         Instant dayInst = localDate.atStartOfDay(ZoneId.systemDefault()).toInstant();
         Date day = Date.from(dayInst);
         Date end = new Date();
         end.setTime(day.getTime() + 86400000);
-        System.out.println("start \n" + day);
-        System.out.println("end \n" + end);
-        List<Event> events = repository.findByEventStartTimeBetween(day , end , Sort.by("eventStartTime").ascending());
+//        System.out.println("start \n" + day);
+//        System.out.println("end \n" + end);
+        List<ListAllEventDto> events = event.stream().filter((value)->{
+            System.out.println(((value.getEventStartTime().compareTo(day) > 0) && (value.getEventStartTime().compareTo(end) < 0)));
+            return  ((value.getEventStartTime().compareTo(day) > 0) && (value.getEventStartTime().compareTo(end) < 0));
+        }).collect(Collectors.toList());
+        Collections.reverse(events);
 //        System.out.println(events);
         return listMapper.maplist(events , ListAllEventDto.class , modelMapper);
     }

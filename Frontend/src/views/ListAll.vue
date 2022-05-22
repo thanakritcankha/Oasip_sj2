@@ -37,15 +37,12 @@ const confirmDelete = (id) => {
 // :class="{ 'translate-x-0': scalefade, 'translate-x-full': !scalefade }"
 const fade = ref(false);
 
-const categoryForFilter = async (id) => {
-  console.log(id);
-  if (id != 0) {
+const filterOption = async (filter) => {
+  console.log(filter);
+  if (filter != false) {
     events.value = '';
-    const res = await EventDataService.retreiveCategory(id);
+    const res = await EventDataService.retreiveAllEventFilter(filter);
     events.value = await res.json();
-  } else {
-    events.value = '';
-    await listEvents();
   }
 };
 </script>
@@ -54,7 +51,7 @@ const categoryForFilter = async (id) => {
     class="w-full transition ease-in-out duration-700"
     :class="{ 'opacity-0': !fade, 'opacity-100': fade }"
   >
-    <Filter @category="categoryForFilter($event)" />
+    <Filter @filter="filterOption($event)" />
     <div class="w-full flex justify-center">
       <div
         class="flex justify-center mt-4 px-10 w-3/4 h-120 bg-blue-300/70 border-4 border-blue-300 rounded-xl overflow-auto touch-none"
@@ -70,7 +67,12 @@ const categoryForFilter = async (id) => {
           <div v-for="event in events" v-if="events.length > 0" class>
             <Event :mask="event" @deleteEvent="confirmDelete($event)" />
           </div>
-          <div v-else>No Scheduled Events</div>
+          <div
+            v-else
+            class="grid place-content-center h-full text-white text-3xl"
+          >
+            No Scheduled Events
+          </div>
         </div>
       </div>
     </div>
