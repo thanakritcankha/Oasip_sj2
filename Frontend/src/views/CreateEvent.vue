@@ -29,7 +29,7 @@ const overlaps = ref();
 
 // ดึง Event Category ทั้งหมด
 const listOverlap = async (id) => {
-  console.log(id);
+  // console.log(id);
   const res = await EventDataService.retreiveCategory(id);
   const data = await res.json();
   overlaps.value = data;
@@ -90,9 +90,9 @@ const submitEvent = async () => {
       eventCategoryId: eventCategory.value.id,
       eventCategoryEventCategoryName: eventCategory.value.eventCategoryName,
     };
-    console.log(newEvent);
+    // console.log(newEvent);
     const res = await EventDataService.createEvent(newEvent);
-    if (res.status != 201) {
+    if (res.status != 200) {
       alert('Fail to create Event');
     }
     reset();
@@ -111,12 +111,12 @@ const reset = () => {
 };
 
 const durationCategory = () => {
-  console.log(eventCategoryName.value);
+  // console.log(eventCategoryName.value);
   if (eventCategoryName.value != '') {
     var x = categories.value.find(
       (value) => value.eventCategoryName == eventCategoryName.value
     );
-    console.log(x);
+    // console.log(x);
     eventCategory.value = x;
     duration.value = x.eventCategoryDuration;
   } else {

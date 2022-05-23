@@ -1,14 +1,14 @@
-const API_URL = '/sj2/api'
-// const API_URL = '/api'
+// const API_URL = '/sj2/api'
+const API_URL = '/api'
 class EventCategoryDataService{
     retrieveAllCategory(){
         return fetch(`${API_URL}/categories`)
     }
-    retrieveAllCategoryForCreate(){
-        return fetch(`${API_URL}/categories/create`)
+    retrieveAllCategoryForCreate(){ 
+        return fetch(`${API_URL}/categories/schedule`)
     }
-    retrieveAllCategoryForFilter(){
-        return fetch(`${API_URL}/categories/filter`)
+    retrieveAllCategoryForFilter(){ ////////////////////////
+        return fetch(`${API_URL}/categories/period`)
     }
     updateEvent(id , update){
         return fetch(`${API_URL}/categories/${id}`,{
@@ -21,11 +21,6 @@ class EventCategoryDataService{
     }
     retrieveCategory(id){
         return fetch(`${API_URL}/categories/${id}`)
-    }
-    deleteCategory(id){
-        return fetch(`${API_URL}/categories/${id}`,{
-            method: 'DELETE'
-        })
     }
 }
 export default new EventCategoryDataService

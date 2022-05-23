@@ -3,9 +3,8 @@ package oasip.backend.Service;
 import oasip.backend.DTOs.Create.CreateEventcategoryDto;
 import oasip.backend.DTOs.Create.ListEventcategoryDto;
 import oasip.backend.DTOs.Edits.EditEventcategoryDto;
-import oasip.backend.DTOs.EventcategoryDto;
 import oasip.backend.DTOs.ListAll.ListAllEventcategoryDto;
-import oasip.backend.DTOs.ListAll.ListEventcategoryForFilterDto;
+import oasip.backend.DTOs.ListAll.ListEventcategoryNameDto;
 import oasip.backend.Enitities.Eventcategory;
 import oasip.backend.ListMapper;
 import oasip.backend.Validation.Validations;
@@ -36,27 +35,20 @@ public class EventCategoryService {
         List<Eventcategory> categoryList = repository.findAll();
         return listMapper.maplist(categoryList, ListEventcategoryDto.class, modelMapper);
     }
-    public List<ListEventcategoryForFilterDto> getAllCategoryForFilter() {
+    public List<ListEventcategoryNameDto> getAllCategoryForFilter() {
         List<Eventcategory> categoryList = repository.findAll();
-        return listMapper.maplist(categoryList, ListEventcategoryForFilterDto.class, modelMapper);
+        return listMapper.maplist(categoryList, ListEventcategoryNameDto.class, modelMapper);
     }
 
     public CreateEventcategoryDto getCategory(Integer categoryId){
         Eventcategory category = repository.findById(categoryId).orElseThrow(
-                () -> new RuntimeException(categoryId + " Does not Exist !!!" ));
+                () -> new ResponseStatusException( HttpStatus.NOT_FOUND,categoryId + " Does not Exist !!!" ));
         return modelMapper.map(category , CreateEventcategoryDto.class);
     }
 
-    public EventcategoryDto createCategory(EventcategoryDto newCategory){
-        Eventcategory category = modelMapper.map(newCategory,Eventcategory.class);
-        //event category
-        System.out.println(category);
-        repository.saveAndFlush(category);
-        return newCategory;
-    }
     public void deleteCategory(Integer categoryId){
         repository.findById(categoryId).orElseThrow(
-                () -> new RuntimeException(categoryId + " Does not Exist !!!" ));
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND,categoryId + " Does not Exist !!!" ));
         repository.deleteById(categoryId);
     }
     public Eventcategory updateCategory(EditEventcategoryDto updateCategory , Integer categoryId){

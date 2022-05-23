@@ -5,7 +5,7 @@ import lombok.Data;
 import java.io.Serializable;
 
 @Data
-public class ListEventcategoryForFilterDto implements Serializable {
+public class ListEventcategoryNameDto implements Serializable {
     private Integer id;
     private String eventCategoryName;
 }

@@ -4,7 +4,7 @@ import EventCategoryDataService from '../services/EventCategoryDataService';
 import Categoires from '../components/Categories.vue';
 onBeforeMount(async () => {
   await listCategory();
-  console.log(categories.value);
+  // console.log(categories.value);
 });
 //Fetch
 const categories = ref([]);

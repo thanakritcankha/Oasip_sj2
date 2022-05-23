@@ -36,14 +36,12 @@ const goToCreateEvent = () => {
     class="grid grid-cols-2 place-items-center h-max text-white mt-40 transition ease-out duration-1000"
     :class="{ 'opacity-0': fadeout, 'opacity-100': !fadeout }"
   >
-    <div class="place-self-center px-20 py-10">
-      <h4 class="lg:text-2xl xl:text-4xl mb-4 text-center">
+    <div class="place-self-center px-10 py-10">
+      <p class="lg:text-2xl xl:text-4xl mb-4 text-center">
         INT221 INFORMATION TECHNOLOGY INTEGRATED PROJECT
-      </h4>
-      <p class="indent-8 text-center">
-        OASIP เป็น Platform ในการนัดคุยปัญหาของนักศึกษา
       </p>
-      <div class="flex justify-evenly">
+      <p class="text-center">OASIP เป็น Platform ในการนัดคุยปัญหาของนักศึกษา</p>
+      <div class="flex justify-evenly mt-10">
         <button
           class="rounded-full bg-indigo-500 px-5 py-2text-white transition ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 duration-300 shadow-lg shadow-black/30"
           @click="goToListEvent()"

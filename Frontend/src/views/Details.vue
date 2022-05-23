@@ -101,7 +101,7 @@ const save = async (id) => {
     eventStartTime: dateTime,
     eventNotes: editNote.value,
   };
-  console.log(obj);
+  // console.log(obj);
   const res = await EventDataService.updateEvent(id, obj);
   await getDetailEvent(params.id);
 };

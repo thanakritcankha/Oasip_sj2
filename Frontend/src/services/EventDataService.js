@@ -1,5 +1,5 @@
-const API_URL = '/sj2/api'
-// const API_URL = '/api'
+// const API_URL = '/sj2/api'
+const API_URL = '/api'
 class EventDataService{
     retrieveAllEvent(){
         return fetch(`${API_URL}/events`)
@@ -31,34 +31,14 @@ class EventDataService{
         })
     }
     retreiveCategory(id){
-        return fetch(`${API_URL}/events/category/${id}`)
+        return fetch(`${API_URL}/events/?categoryId=${id}`)
     }
-    retreiveAllEventUpcoming(event){
-        return fetch(`${API_URL}/events/upcoming` ,{
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify(event)
-        })
-    }
-    retreiveAllEventPast(event){
-        return fetch(`${API_URL}/events/past` ,{
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify(event)
-        })
-    }
-    retreiveAllEventFilter(filter){
-        return fetch(`${API_URL}/events/filter` ,{
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify(filter)
-        })
+    retreiveAllEventFilter(categoryId , option , time){
+        if(time == ""){
+            return fetch(`${API_URL}/events/?categoryId=${categoryId}&option=${option}`)
+        }else{
+            return fetch(`${API_URL}/events/?categoryId=${categoryId}&option=${option}&time=${time}`)
+        }
     }
 }
 export default new EventDataService()

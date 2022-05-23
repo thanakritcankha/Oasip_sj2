@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Data
-public class CreateEventDto implements Serializable {
+public class ValidationCreateEventDto implements Serializable {
 
     @NotNull(message = "BookingName must be not null")
     @Size(min = 1 , max = 100 , message = "BookingName size must be between 1 and 100")

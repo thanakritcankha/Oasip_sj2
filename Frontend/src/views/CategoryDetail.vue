@@ -53,7 +53,7 @@ const save = async (categpryid) => {
       editModeOff();
       await getDetailCategory(params.id);
     } else {
-      console.log('error update');
+      // console.log('error update');
       alert('error update' + res.statusText);
     }
   }

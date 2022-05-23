@@ -24,7 +24,7 @@ const deleteEvent = async (id) => {
   const res = await EventDataService.deleteEvent(id);
   res.status === 200
     ? (events.value = events.value.filter((value) => value.id !== id))
-    : console.log('Error to delete event');
+    : alert('Error to delete event');
 }; //DeleteEvent
 
 //Function
@@ -38,10 +38,14 @@ const confirmDelete = (id) => {
 const fade = ref(false);
 
 const filterOption = async (filter) => {
-  console.log(filter);
+  // console.log(filter);
   if (filter != false) {
     events.value = '';
-    const res = await EventDataService.retreiveAllEventFilter(filter);
+    const res = await EventDataService.retreiveAllEventFilter(
+      filter.eventCategoryId,
+      filter.option,
+      filter.eventStartTime
+    );
     events.value = await res.json();
   }
 };

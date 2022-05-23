@@ -1,14 +1,12 @@
 package oasip.backend.Controller;
 
-import oasip.backend.DTOs.Create.CreateEventDto;
+import oasip.backend.DTOs.Create.ValidationCreateEventDto;
 import oasip.backend.DTOs.Detail.DetailEventDto;
 import oasip.backend.DTOs.Edits.EditEventDto;
-import oasip.backend.DTOs.Filter.FilterDto;
 import oasip.backend.DTOs.ListAll.ListAllEventDto;
-import oasip.backend.DTOs.Overlap.OverlapEventDto;
 import oasip.backend.Service.EventService;
-import org.modelmapper.internal.Errors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,53 +22,40 @@ public class EventController {
     private EventService service;
 
     @GetMapping("")
-    public List<ListAllEventDto> getAllEvent() {
+    @ResponseStatus(HttpStatus.OK)
+    public List<ListAllEventDto> getAllEvents() {
         return service.getAllEvent();
     }
 
     @GetMapping("/{eventId}")
-    public DetailEventDto getEvent(@PathVariable Integer eventId) {
+    @ResponseStatus(HttpStatus.OK)
+    public DetailEventDto getEventDetail(@PathVariable Integer eventId) {
         return service.getEvent(eventId);
     }
 
-    @GetMapping("/category/{categoryId}")
-    public List<ListAllEventDto> getOverlap(@PathVariable Integer categoryId) {
-        return service.getOldEvent(categoryId);
+    @GetMapping("/")
+    @ResponseStatus(HttpStatus.OK)
+    public List<ListAllEventDto> filterEvents(@RequestParam(name = "categoryId") Integer id,
+                                           @RequestParam(name = "option", defaultValue = "0" , required = false) Integer optionId ,
+                                           @RequestParam(name = "time", defaultValue = "2022-10-02" , required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date time){
+        return service.filterEvents(id , optionId , time);
     }
 
-    @PostMapping("/filter")
-    public List<ListAllEventDto> getFilter(@RequestBody FilterDto filter){
-        return service.getFilter(filter);
-    }
-
-//    @PostMapping("/upcoming")
-//    public List<ListAllEventDto> getUpcomming(@RequestBody List<ListAllEventDto> event) {
-//        return service.getUpcoming(event);
-//    }
-//
-//    @PostMapping ("/past")
-//    public List<ListAllEventDto> getPast(@RequestBody List<ListAllEventDto> event) {
-//        return service.getPast(event);
-//    }
-//
-//    @PostMapping ("/day")
-//    public List<ListAllEventDto> getDay(List<ListAllEventDto> event ,Date selectday) {
-//        return service.getDay(event,selectday);
-//    }
-    
     @PostMapping("")
-    @ResponseStatus(HttpStatus.CREATED)
-    public CreateEventDto create(@Valid @RequestBody CreateEventDto newEvent) {
+    @ResponseStatus(HttpStatus.OK)
+    public ValidationCreateEventDto createEvent(@Valid @RequestBody ValidationCreateEventDto newEvent) {
         return service.createEvent(newEvent);
     }
 
     @DeleteMapping("/{eventId}")
-    public void delete(@PathVariable Integer eventId) {
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteEvent(@PathVariable Integer eventId) {
         service.deleteEvent(eventId);
     }
 
     @PatchMapping("/{eventId}")
-    public EditEventDto update(@PathVariable Integer eventId, @RequestBody EditEventDto updateEvent) {
+    @ResponseStatus(HttpStatus.OK)
+    public EditEventDto updateEvent(@PathVariable Integer eventId, @RequestBody EditEventDto updateEvent) {
         return service.updateEvent(updateEvent, eventId);
     }
 }
