@@ -57,8 +57,7 @@ public class EventController {
 //    public List<ListAllEventDto> getDay(List<ListAllEventDto> event ,Date selectday) {
 //        return service.getDay(event,selectday);
 //    }
-
-
+    
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
     public CreateEventDto create(@Valid @RequestBody CreateEventDto newEvent) {

@@ -34,19 +34,15 @@ public class EventCategoryController {
     public List<ListEventcategoryForFilterDto> getAllCategoryForFilter(){
         return service.getAllCategoryForFilter();
     }
-//    @GetMapping("/")
-
     @GetMapping("/{categoryId}")
     public CreateEventcategoryDto getCategory(@PathVariable Integer categoryId){
         return service.getCategory(categoryId);
     }
-
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
     public EventcategoryDto create(@RequestBody EventcategoryDto newCategory){
         return service.createCategory(newCategory);
     }
-
     @DeleteMapping("/{categoryId}")
     public void delete(@PathVariable Integer categoryId){
         service.deleteCategory(categoryId);

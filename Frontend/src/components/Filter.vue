@@ -14,11 +14,11 @@ const listCategory = async () => {
 
 const selectCategory = ref(0);
 const option = ref(0);
-const dateTime = ref(null);
+const dateTime = ref('');
 const listOption = ref({
   eventCategoryId: 0,
   option: 0,
-  eventStartTime: null,
+  eventStartTime: '',
 });
 const changeOption = () => {
   listOption.value = {
@@ -27,9 +27,10 @@ const changeOption = () => {
     eventStartTime: dateTime.value,
   };
   console.log(listOption.value);
-  if (parseInt(option.value) == 3 && dateTime.value == null) {
+  if (parseInt(option.value) == 3 && dateTime.value == '') {
     return false;
-  } else if (parseInt(option.value) != 3 && dateTime.value == null) {
+  } else if (parseInt(option.value) != 3) {
+    dateTime.value = '';
     return listOption.value;
   } else {
     return listOption.value;

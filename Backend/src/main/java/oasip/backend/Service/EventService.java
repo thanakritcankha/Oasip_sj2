@@ -108,18 +108,18 @@ public class EventService {
 
     public List<ListAllEventDto> getDay(List<ListAllEventDto> event,Date selectday){
         Date date = new Date();
-        date.setTime(selectday.getTime());
-        Instant inst = date.toInstant();
-        LocalDate localDate = inst.atZone(ZoneId.systemDefault()).toLocalDate();
-        Instant dayInst = localDate.atStartOfDay(ZoneId.systemDefault()).toInstant();
-        Date day = Date.from(dayInst);
+        date.setTime(selectday.getTime() );
+//        Instant inst = date.toInstant();
+//        LocalDate localDate = inst.atZone(ZoneId.systemDefault()).toLocalDate();
+//        Instant dayInst = localDate.atStartOfDay(ZoneId.systemDefault()).toInstant();
+//        Date day = Date.from(dayInst);
         Date end = new Date();
-        end.setTime(day.getTime() + 86400000);
-//        System.out.println("start \n" + day);
-//        System.out.println("end \n" + end);
+        end.setTime(date.getTime() + 86400000);
+        System.out.println("start \n" + date);
+        System.out.println("end \n" + end);
         List<ListAllEventDto> events = event.stream().filter((value)->{
-            System.out.println(((value.getEventStartTime().compareTo(day) > 0) && (value.getEventStartTime().compareTo(end) < 0)));
-            return  ((value.getEventStartTime().compareTo(day) > 0) && (value.getEventStartTime().compareTo(end) < 0));
+            System.out.println(((value.getEventStartTime().compareTo(date) > 0) && (value.getEventStartTime().compareTo(end) < 0)));
+            return  ((value.getEventStartTime().compareTo(date) > 0) && (value.getEventStartTime().compareTo(end) < 0));
         }).collect(Collectors.toList());
         Collections.reverse(events);
 //        System.out.println(events);
