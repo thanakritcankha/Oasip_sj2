@@ -68,7 +68,7 @@ const reset = () => {
             v-model="selectCategory"
             class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-orange-600"
           >
-            <option selected="selected" value="0">On Filter</option>
+            <option selected="selected" value="0">All Category</option>
             <option
               v-for="(category, index) in categories"
               :value="category.id"
@@ -81,7 +81,7 @@ const reset = () => {
           <label
             for="category"
             class="block text-gray-700 text-lg font-bold mb-2"
-            >Option :
+            >Event Option :
           </label>
           <select
             required
@@ -89,9 +89,9 @@ const reset = () => {
             id="category"
             @change="$emit('filter', changeOption())"
             v-model="option"
-            class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-orange-600"
+            class="shadow border rounded w-full py-2 px-3 w- text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-orange-600"
           >
-            <option selected="selected" value="0">No Option</option>
+            <option selected="selected" value="0">None</option>
             <option :value="1">Upcoming</option>
             <option :value="2">Past</option>
             <option :value="3">Select Day</option>

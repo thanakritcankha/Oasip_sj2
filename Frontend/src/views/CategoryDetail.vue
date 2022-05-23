@@ -3,6 +3,19 @@ import { onBeforeMount, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import router from '../router';
 import EventCategoryDataService from '../services/EventCategoryDataService';
+let { params } = useRoute();
+onBeforeMount(async () => {
+  await getDetailCategory(params.id);
+  await listCategory();
+  // console.log(categories.value);
+
+  setTimeout(() => {
+    fadein.value = true;
+  });
+});
+
+const fadein = ref();
+
 const editMode = ref(false);
 const editCategoryName = ref();
 const editCategoryDescription = ref();
@@ -18,10 +31,7 @@ const editModeOn = () => {
 const editModeOff = () => {
   editMode.value = false;
 };
-let { params } = useRoute();
-onBeforeMount(async () => {
-  await getDetailCategory(params.id);
-});
+
 const category = ref({});
 const getDetailCategory = async (id) => {
   const res = await EventCategoryDataService.retrieveCategory(id);
@@ -38,7 +48,12 @@ const checkduration = () => {
   else errorduration.value = 'duration must between 1 and 480.';
 };
 const save = async (categpryid) => {
-  if (editDuration.value > 0 && editDuration.value <= 480) {
+  if (
+    editDuration.value > 0 &&
+    editDuration.value <= 480 &&
+    editCategoryName.value != '' &&
+    checkName.value
+  ) {
     const category = {
       id: categpryid,
       eventCategoryName: editCategoryName.value,
@@ -58,11 +73,48 @@ const save = async (categpryid) => {
     }
   }
 };
+
+const errorName = ref();
+const categories = ref();
+const checkName = ref(true);
+const listCategory = async () => {
+  const res = await EventCategoryDataService.retrieveAllCategoryForFilter();
+  categories.value = await res.json();
+  categories.value = categories.value.filter((value) => {
+    return !(value.eventCategoryName == category.value.eventCategoryName);
+  });
+  // console.log(categories.value);
+}; //listAllEvent
+const checkCategoryName = async () => {
+  if (editCategoryName.value != '') {
+    editCategoryName.value = editCategoryName.value.replace(/^\s+|\s+$/gm, '');
+    // console.log(editCategoryName.value);
+    // console.log(categories.value);
+    var result = categories.value.filter((value) => {
+      console.log(value.eventCategoryName.toLowerCase());
+      return (
+        value.eventCategoryName.toLowerCase() ==
+        editCategoryName.value.toLowerCase()
+      );
+    });
+    if (result.length > 0) {
+      errorName.value = 'The eventCategoryName is NOT unique.';
+      checkName.value = false;
+    } else {
+      errorName.value = '';
+      checkName.value = true;
+    }
+  } else {
+    errorName.value = 'The eventCategoryName is not null';
+    checkName.value = false;
+  }
+};
 </script>
 
 <template>
   <div
     class="min-w-full flex justify-center pt-10 transition ease-out duration-1000"
+    :class="{ 'translate-x-0': fadein, 'translate-x-full': !fadein }"
   >
     <div class="px-6 py-6 bg-white rounded-xl">
       <div>
@@ -77,8 +129,11 @@ const save = async (categpryid) => {
           <input
             type="text"
             class="text-2xl text-center rounded w-full p-2 bg-slate-200 text-slate-500 border-slate-200 shadow"
+            @keyup="checkCategoryName()"
             v-model="editCategoryName"
           />
+          <br />
+          <span class="text-red-500 mt-2">{{ errorName }}</span>
         </div>
       </div>
       <div class="grid">

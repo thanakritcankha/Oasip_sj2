@@ -4,7 +4,7 @@ import EventCategoryDataService from '../services/EventCategoryDataService';
 import Categoires from '../components/Categories.vue';
 onBeforeMount(async () => {
   await listCategory();
-  // console.log(categories.value);
+  console.log(categories.value);
 });
 //Fetch
 const categories = ref([]);
@@ -19,14 +19,13 @@ const fade = ref(false);
 <template>
   <div class="w-full flex justify-center transition ease-in-out duration-700">
     <div class="mt-2">
-      <div
-        class="text-3xl text-white px-4 pt-4 pb-14 bg-slate-700 rounded-lg border-double border-2 border-white"
-      >
-        Categories Board
-      </div>
       <!-- card container -->
-      <div class="-mt-16">
-        <div v-for="category in categories" v-if="categories.length > 0" class>
+      <div class="container px-40">
+        <div
+          v-for="category in categories"
+          v-if="categories.length > 0"
+          class="item"
+        >
           <Categoires :mask="category" />
         </div>
         <div v-else>No Scheduled Events</div>
@@ -35,4 +34,24 @@ const fade = ref(false);
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.container {
+  column-count: 3;
+  column-gap: 20px;
+  column-fill: balance;
+  margin: 20px auto 0;
+  padding: 2rem;
+}
+.container .item {
+  display: inline-block;
+  margin: 0 0 20px;
+  -webkit-column-break-inside: avoid;
+  page-break-inside: avoid;
+  break-inside: avoid;
+  width: 100%;
+}
+.container .item {
+  width: 100%;
+  height: auto;
+}
+</style>

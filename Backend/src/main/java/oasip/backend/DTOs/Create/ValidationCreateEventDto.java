@@ -30,5 +30,4 @@ public class ValidationCreateEventDto implements Serializable {
     @NotNull(message = "EventCategoryId must be not null")
     private Integer eventCategoryId;
 
-
 }

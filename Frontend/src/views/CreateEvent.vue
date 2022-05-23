@@ -2,21 +2,17 @@
 import { onBeforeMount, ref } from 'vue';
 import EventCategoryDataService from '../services/EventCategoryDataService';
 import EventDataService from '../services/EventDataService';
-
 onBeforeMount(async () => {
   await getAllCategory();
   setTimeout(() => {
     fade.value = true;
   }, 400);
 });
-
 const categories = ref();
-
 const getAllCategory = async () => {
   const res = await EventCategoryDataService.retrieveAllCategoryForCreate();
   categories.value = await res.json();
 };
-
 const bookingName = ref();
 const bookingEmail = ref();
 const eventCategoryName = ref();
@@ -26,15 +22,13 @@ const bookingNote = ref();
 const eventDate = ref();
 const eventTime = ref();
 const overlaps = ref();
-
 // ดึง Event Category ทั้งหมด
 const listOverlap = async (id) => {
-  // console.log(id);
+  console.log(id);
   const res = await EventDataService.retreiveCategory(id);
   const data = await res.json();
   overlaps.value = data;
 };
-
 const getDateM = (date) => {
   var dd = String(date.getDate()).padStart(2, '0');
   var mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
@@ -42,7 +36,6 @@ const getDateM = (date) => {
   var myDate = yyyy + '-' + mm + '-' + dd;
   return myDate;
 };
-
 const submitEvent = async () => {
   let text = 'Please check your event data. Press OK for booking.';
   var dateTime = new Date(`${eventDate.value}T${eventTime.value}`);
@@ -90,16 +83,15 @@ const submitEvent = async () => {
       eventCategoryId: eventCategory.value.id,
       eventCategoryEventCategoryName: eventCategory.value.eventCategoryName,
     };
-    // console.log(newEvent);
+    console.log(newEvent);
     const res = await EventDataService.createEvent(newEvent);
-    if (res.status != 200) {
+    if (res.status != 201) {
       alert('Fail to create Event');
     }
     reset();
     return false;
   }
 };
-
 const reset = () => {
   bookingName.value = null;
   bookingEmail.value = null;
@@ -109,21 +101,19 @@ const reset = () => {
   eventDate.value = null;
   eventTime.value = null;
 };
-
 const durationCategory = () => {
-  // console.log(eventCategoryName.value);
+  console.log(eventCategoryName.value);
   if (eventCategoryName.value != '') {
     var x = categories.value.find(
       (value) => value.eventCategoryName == eventCategoryName.value
     );
-    // console.log(x);
+    console.log(x);
     eventCategory.value = x;
     duration.value = x.eventCategoryDuration;
   } else {
     duration.value = '';
   }
 };
-
 const checkDate = () => {
   if (eventDate.value != undefined && eventTime.value != undefined) {
     var selectedDate = new Date(`${eventDate.value}T${eventTime.value}`);
@@ -136,7 +126,6 @@ const checkDate = () => {
     }
   }
 };
-
 const minDate = () => {
   var today = new Date();
   return getDateM(today);
@@ -172,6 +161,7 @@ const fade = ref(false);
               name="bname"
               v-model="bookingName"
               maxlength="100"
+              placeholder="Enter your booking name . . ."
               class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-orange-600"
             />
           </div>
@@ -189,6 +179,7 @@ const fade = ref(false);
               maxlength="100"
               pattern="[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$"
               v-model="bookingEmail"
+              placeholder="username@example.com"
               class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-orange-600"
             />
           </div>
@@ -224,6 +215,7 @@ const fade = ref(false);
               id="duration"
               name="duration"
               v-model="duration"
+              placeholder="Your event duration"
               class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none"
               disabled
             />
@@ -237,6 +229,7 @@ const fade = ref(false);
             <textarea
               v-model="bookingNote"
               maxlength="500"
+              placeholder="Enter your description . . ."
               class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-gray-300 rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-orange-600 focus:outline-none"
             ></textarea>
           </div>

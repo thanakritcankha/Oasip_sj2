@@ -42,6 +42,9 @@ public class EventService {
     }
 
     public List<ListAllEventDto> filterEvents(Integer categoryId , Integer optionId , Date time) {
+        if (categoryId == null){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST , "categoryId is not null");
+        }
         List<Event> events = null;
         if (categoryId != 0) {
             events = repository.findByEventCategory_Id(categoryId, Sort.by("eventStartTime").descending());
@@ -93,12 +96,14 @@ public class EventService {
     }
 
     public List<ListAllEventDto> getDay(List<ListAllEventDto> event, Date selectday) {
+        if (selectday == null){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Date is not null ");
+        }
         Date date = new Date();
         date.setTime(selectday.getTime());
         Date end = new Date();
         end.setTime(date.getTime() + 86400000);
         List<ListAllEventDto> events = event.stream().filter((value) -> {
-            System.out.println(((value.getEventStartTime().compareTo(date) > 0) && (value.getEventStartTime().compareTo(end) < 0)));
             return ((value.getEventStartTime().compareTo(date) > 0) && (value.getEventStartTime().compareTo(end) < 0));
         }).collect(Collectors.toList());
         Collections.reverse(events);

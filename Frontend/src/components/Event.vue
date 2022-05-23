@@ -48,7 +48,6 @@ const formatDate = (datetime) => {
   return date;
 };
 const setDetail = () => {
-  console.log('dsakdjalsdkljak');
   setTimeout(() => {
     router.push({ name: 'Detail', params: { id: prop.mask.id } });
   }, 500);

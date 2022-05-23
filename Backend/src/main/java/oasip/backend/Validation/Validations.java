@@ -24,7 +24,7 @@ public class Validations {
     public void uniqueName(String newName , List<Eventcategory> eventcategoryList){
         if (newName != null){
             List<Eventcategory> newcategory = eventcategoryList.stream().filter((valus)-> {
-                return (valus.getEventCategoryName().toLowerCase() == newName.toLowerCase());
+                return (valus.getEventCategoryName().toLowerCase() == newName.trim().toLowerCase());
             }).collect(Collectors.toList());
             if (newcategory.size() > 0){
                 this.textError = this.textError + "The eventCategoryName is NOT unique.";

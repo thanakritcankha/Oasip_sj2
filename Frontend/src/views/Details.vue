@@ -43,7 +43,7 @@ const overlaps = ref();
 // ดึง Event Category ทั้งหมด
 const listOverlap = async (id) => {
   // console.log(id);
-  const res = await EventDataService.retreiveOverlap(id);
+  const res = await EventDataService.retreiveCategory(id);
   const data = await res.json();
   overlaps.value = data;
 };
@@ -60,6 +60,10 @@ const save = async (id) => {
   var dateTime = new Date(`${editDate.value}T${editTime.value}`);
   if (event.value.eventCategoryId != null) {
     await listOverlap(event.value.eventCategoryId);
+    overlaps.value = overlaps.value.filter((item) => {
+      return item.id != params.id;
+    });
+    // console.log(overlaps.value);
   }
   var result = overlaps.value.filter((item) => {
     let oldDateStart = new Date(item.eventStartTime);
@@ -89,6 +93,7 @@ const save = async (id) => {
   });
   // console.log(result);
   if (result.length != 0) {
+    // console.log(result);
     alert('This event is overlap.');
     eventTime.value = '';
     editModeOff();
@@ -111,7 +116,7 @@ const editModeOff = () => {
 };
 
 const eventNoteReturn = (notes) => {
-  if (notes != undefined) return notes;
+  if (notes != '') return notes;
   else return 'No message';
 };
 
