@@ -86,7 +86,7 @@ CREATE TABLE `users` (
   `userId` int NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `email` varchar(50) NOT NULL,
-  `role` varchar(45) NOT NULL,
+  `role` ENUM('admin', 'lecturer', 'student') NOT NULL,
   `createOn` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updateOn` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`userId`),
