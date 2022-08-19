@@ -1,16 +1,17 @@
-package oasip.backend.DTOs.Detail;
+package oasip.backend.DTOs.EventDTO;
 
 import lombok.Data;
+import oasip.backend.DTOs.CategoryDTO.CategoryDetailDto;
 
 import java.io.Serializable;
 import java.time.Instant;
 
 @Data
-public class DetailEventDto implements Serializable {
+public class EventDetailDto implements Serializable {
     private String bookingName;
     private String bookingEmail;
     private Instant eventStartTime;
     private Integer eventDuration;
     private String eventNotes;
-    private DetailEventcategoryDto eventCategory;
+    private CategoryDetailDto eventCategory;
 }
