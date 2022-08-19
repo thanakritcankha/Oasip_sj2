@@ -1,11 +1,11 @@
-package oasip.backend.DTOs.ListAll;
+package oasip.backend.DTOs.CategoryDTO;
 
 import lombok.Data;
 
 import java.io.Serializable;
 
 @Data
-public class ListAllEventcategoryDto implements Serializable {
+public class CategoryListAllDto implements Serializable {
 //    private Integer id;
     private String eventCategoryName;
 }
