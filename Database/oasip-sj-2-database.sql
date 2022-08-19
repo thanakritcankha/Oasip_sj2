@@ -37,14 +37,15 @@ DEFAULT CHARACTER SET = utf8mb3;
 -- Table `oasip`.`users`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `oasip`.`users` (
-  `userId` INT NOT NULL,
-  `name` VARCHAR(45) NOT NULL,
-  `email` VARCHAR(45) NOT NULL,
+  `userId` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(100) NOT NULL,
+  `email` VARCHAR(50) NOT NULL,
   `role` VARCHAR(45) NOT NULL,
   `createOn` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updateOn` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`userId`),
-  UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE)
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE,
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
