@@ -1,4 +1,4 @@
-package oasip.backend.Validation;
+package oasip.backend.Validation.User;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -7,13 +7,13 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target({ElementType.TYPE})
+@Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(
-        validatedBy = NonOverlabValidator.class
+        validatedBy = UserUniqueNameValidator.class
 )
-public @interface NonOverlab {
-    String message() default "Requested event overlapped with existing events;";
+public @interface UserUniqueName {
+    String message() default "The Name is not unique.";
 
     Class<?>[] groups() default {};
 

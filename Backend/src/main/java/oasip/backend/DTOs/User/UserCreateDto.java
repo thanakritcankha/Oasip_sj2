@@ -1,0 +1,42 @@
+package oasip.backend.DTOs.User;
+
+import lombok.Data;
+import oasip.backend.Enum.Role;
+import oasip.backend.Validation.User.UserCheckRole;
+import oasip.backend.Validation.User.UserUniqueEmail;
+import oasip.backend.Validation.User.UserUniqueName;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.io.Serializable;
+
+@Data
+public class UserCreateDto implements Serializable {
+
+    @UserUniqueName(message = "The Name is not unique.")
+    @NotNull(message = "Name must be not null")
+    @NotEmpty(message = "Name must be not Empty")
+    @Size(min = 1, max = 100, message = "Name size must be between 1 and 100")
+    private String name;
+
+    @UserUniqueEmail(message = "The Email is not unique.")
+    @NotNull(message = "Email must be not null")
+    @NotEmpty(message = "Email must be not Empty")
+    @Size(min = 1, max = 50, message = "Email size must be between 1 and 100")
+    @Email(message = "Email must be a well-formed email address",
+            regexp = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|" +
+                    "\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\" +
+                    "\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[" +
+                    "a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0" +
+                    "-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-" +
+                    "z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x" +
+                    "7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])")
+    private String email;
+
+    @NotNull(message = "Role must be not null")
+    @NotEmpty(message = "Role must be not empty")
+    @UserCheckRole
+    private Role role;
+}

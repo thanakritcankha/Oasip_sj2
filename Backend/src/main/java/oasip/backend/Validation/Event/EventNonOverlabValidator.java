@@ -1,12 +1,11 @@
-package oasip.backend.Validation;
+package oasip.backend.Validation.Event;
 
-import oasip.backend.DTOs.Create.CreateEventcategoryDto;
-import oasip.backend.DTOs.Create.ValidationCreateEventDto;
-import oasip.backend.DTOs.ListAll.ListAllEventDto;
-import oasip.backend.Enitities.Eventcategory;
+import oasip.backend.DTOs.Category.CategoryCreateDto;
+import oasip.backend.DTOs.Event.EventCreateDto;
+import oasip.backend.DTOs.Event.EventListAllDto;
 import oasip.backend.Service.EventCategoryService;
 import oasip.backend.Service.EventService;
-import oasip.backend.repositories.EventcategoryRepository;
+import oasip.backend.repositories.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.ConstraintValidator;
@@ -17,7 +16,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class NonOverlabValidator implements ConstraintValidator<NonOverlab, ValidationCreateEventDto> {
+public class EventNonOverlabValidator implements ConstraintValidator<EventNonOverlab, EventCreateDto> {
     @Autowired
     private EventCategoryService categoryService;
 
@@ -25,13 +24,13 @@ public class NonOverlabValidator implements ConstraintValidator<NonOverlab, Vali
     private EventService eventService;
 
     @Autowired
-    private EventcategoryRepository categoryRepository;
+    private CategoryRepository categoryRepository;
     @Override
-    public boolean isValid(ValidationCreateEventDto createEventDto, ConstraintValidatorContext constraintValidatorContext) {
+    public boolean isValid(EventCreateDto createEventDto, ConstraintValidatorContext constraintValidatorContext) {
         if(createEventDto.getEventDuration() == null){
             if(createEventDto.getEventCategoryId() != null){
 //                Eventcategory eventcategory = categoryRepository.findById(createEventDto.getEventCategoryId())
-                CreateEventcategoryDto eventcategory = categoryService.getCategory(createEventDto.getEventCategoryId());
+                CategoryCreateDto eventcategory = categoryService.getCategory(createEventDto.getEventCategoryId());
                 createEventDto.setEventDuration(eventcategory.getEventCategoryDuration());
                 return !(overlab(eventService.getEachEventCategories(createEventDto.getEventCategoryId()), createEventDto.getEventStartTime(), createEventDto.getEventDuration()));
             }
@@ -41,11 +40,11 @@ public class NonOverlabValidator implements ConstraintValidator<NonOverlab, Vali
         }
     }
 
-    public Boolean overlab(List<ListAllEventDto> overlap , Date startTime , Integer duration) {
+    public Boolean overlab(List<EventListAllDto> overlap , Date startTime , Integer duration) {
         if(startTime != null){
             Date newStartTime = new Date(startTime.getTime());
             Date newEndTime =  new Date(startTime.getTime() + (duration * 60000));
-            List<ListAllEventDto> result = overlap.stream().filter((old) -> {
+            List<EventListAllDto> result = overlap.stream().filter((old) -> {
                 Date oldDateTime = new Date(old.getEventStartTime().getTime());
                 Date oldEndTime = new Date(old.getEventStartTime().getTime() + (old.getEventDuration() * 60000));
 

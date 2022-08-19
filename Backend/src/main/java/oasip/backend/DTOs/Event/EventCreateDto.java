@@ -1,16 +1,15 @@
-package oasip.backend.DTOs.Create;
+package oasip.backend.DTOs.Event;
 
 import lombok.Data;
-import oasip.backend.Validation.NonOverlab;
-import oasip.backend.Validation.UniqueNameCategory;
+import oasip.backend.Validation.Event.EventNonOverlab;
 
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Date;
 
 @Data
-@NonOverlab(message = "Requested event overlapped with existing events;")
-public class ValidationCreateEventDto implements Serializable {
+@EventNonOverlab(message = "Requested event overlapped with existing events;")
+public class EventCreateDto implements Serializable {
 
     @NotNull(message = "BookingName must be not null")
     @Size(min = 1, max = 100, message = "BookingName size must be between 1 and 100")

@@ -1,4 +1,4 @@
-package oasip.backend.DTOs.Detail;
+package oasip.backend.DTOs.Event;
 
 import lombok.Data;
 
@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Data
-public class DetailEventDto implements Serializable {
+public class EventDetailDto implements Serializable {
     private Integer id;
     private String bookingName;
     private String bookingEmail;

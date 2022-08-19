@@ -1,11 +1,11 @@
 package oasip.backend.Controller;
 
 
-import oasip.backend.DTOs.Create.CreateEventcategoryDto;
-import oasip.backend.DTOs.Create.ListEventcategoryDto;
-import oasip.backend.DTOs.Edits.EditEventcategoryDto;
-import oasip.backend.DTOs.ListAll.ListAllEventcategoryDto;
-import oasip.backend.DTOs.ListAll.ListEventcategoryNameDto;
+import oasip.backend.DTOs.Category.CategoryCreateDto;
+import oasip.backend.DTOs.Category.CategoryListCreateDto;
+import oasip.backend.DTOs.Category.CategoryEditDto;
+import oasip.backend.DTOs.Category.CategoryListAllDto;
+import oasip.backend.DTOs.Category.CategoryListFilterDto;
 import oasip.backend.Enitities.Eventcategory;
 import oasip.backend.Service.EventCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,25 +24,25 @@ public class EventCategoryController {
 
     @GetMapping("")
     @ResponseStatus(HttpStatus.OK)
-    public List<ListAllEventcategoryDto> getAllCategory(){
+    public List<CategoryListAllDto> getAllCategory(){
         return service.getAllCategory();
     }
 
     @GetMapping("/schedule")
     @ResponseStatus(HttpStatus.OK)
-    public List<ListEventcategoryDto> getAllCategoryForCreate(){
+    public List<CategoryListCreateDto> getAllCategoryForCreate(){
         return service.getAllCategoryForCreate();
     }
 
     @GetMapping("/period")
     @ResponseStatus(HttpStatus.OK)
-    public List<ListEventcategoryNameDto> getAllCategoryForFilter(){
+    public List<CategoryListFilterDto> getAllCategoryForFilter(){
         return service.getAllCategoryForFilter();
     }
 
     @GetMapping("/{categoryId}")
     @ResponseStatus(HttpStatus.OK)
-    public CreateEventcategoryDto getCategoryDetails(@PathVariable Integer categoryId){
+    public CategoryCreateDto getCategoryDetails(@PathVariable Integer categoryId){
         return service.getCategory(categoryId);
     }
 
@@ -54,7 +54,7 @@ public class EventCategoryController {
 
     @PatchMapping("/{categoryId}")
     @ResponseStatus(HttpStatus.OK)
-    public Eventcategory update(@PathVariable Integer categoryId ,@Valid @RequestBody EditEventcategoryDto updateCategory){
+    public Eventcategory update(@PathVariable Integer categoryId ,@Valid @RequestBody CategoryEditDto updateCategory){
         return service.updateCategory(updateCategory , categoryId);
     }
 

@@ -1,19 +1,19 @@
-package oasip.backend.DTOs.Edits;
+package oasip.backend.DTOs.Category;
 
 import lombok.Data;
-import oasip.backend.Validation.UniqueNameCategory;
+import oasip.backend.Validation.Category.CategoryUniqueName;
 
 import javax.validation.constraints.*;
 import java.io.Serializable;
 
 @Data
-public class EditEventcategoryDto implements Serializable {
+public class CategoryEditDto implements Serializable {
 
     private Integer id;
     @NotEmpty(message = "EventCategoryName must be not empty")
     @NotNull(message = "EventCategoryName must be not null")
     @Size(max = 100, message = "EventCategoryName size must be between 1 and 100")
-    @UniqueNameCategory(message = "The eventCategoryName is NOT unique.")
+    @CategoryUniqueName(message = "The eventCategoryName is NOT unique.")
     private String eventCategoryName;
 
     @Size(max = 500, message = "EventCategoryDescription size must be between 0 and 500")

@@ -1,12 +1,11 @@
 package oasip.backend.Enitities;
 
-import com.sun.istack.NotNull;
 import lombok.*;
-import org.springframework.validation.annotation.Validated;
+import oasip.backend.Enitities.Eventcategory;
+import oasip.backend.Enitities.User;
 
 import javax.persistence.*;
 import java.time.Instant;
-import java.util.Date;
 
 @Entity
 @Table(name = "events")
@@ -28,7 +27,7 @@ public class Event {
     private String bookingEmail;
 
     @Column(name = "eventStartTime", nullable = false)
-    private Date eventStartTime;
+    private Instant eventStartTime;
 
     @Column(name = "eventDuration", nullable = false)
     private Integer eventDuration;
@@ -40,5 +39,10 @@ public class Event {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "EventCategory_id", nullable = false)
     private Eventcategory eventCategory;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_Id", nullable = false)
+    private User user;
+
 
 }

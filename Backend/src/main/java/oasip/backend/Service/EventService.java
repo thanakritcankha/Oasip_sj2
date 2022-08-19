@@ -1,13 +1,11 @@
 package oasip.backend.Service;
 
-import oasip.backend.DTOs.Create.ValidationCreateEventDto;
-import oasip.backend.DTOs.Create.CreateEventcategoryDto;
-import oasip.backend.DTOs.Detail.DetailEventDto;
-import oasip.backend.DTOs.Edits.EditEventDto;
-import oasip.backend.DTOs.ListAll.ListAllEventDto;
+import oasip.backend.DTOs.Event.EventCreateDto;
+import oasip.backend.DTOs.Event.EventDetailDto;
+import oasip.backend.DTOs.Event.EventEditDto;
+import oasip.backend.DTOs.Event.EventListAllDto;
 import oasip.backend.Enitities.Event;
 import oasip.backend.ListMapper;
-import oasip.backend.Validation.Validations;
 import oasip.backend.repositories.EventRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +20,7 @@ import java.util.stream.Collectors;
 @Service
 public class EventService {
     @Autowired
-    private EventRepository repository;
+    private EventRepository eventRepository;
     @Autowired
     private ModelMapper modelMapper;
     @Autowired
@@ -30,29 +28,29 @@ public class EventService {
     @Autowired
     private EventCategoryService categoryService;
 
-    public List<ListAllEventDto> getAllEvent() {
-        List<Event> events = repository.findAll(Sort.by("eventStartTime").descending());
-        return listMapper.maplist(events, ListAllEventDto.class, modelMapper);
+    public List<EventListAllDto> getAllEvent() {
+        List<Event> events = eventRepository.findAll(Sort.by("eventStartTime").descending());
+        return listMapper.maplist(events, EventListAllDto.class, modelMapper);
     }
 
-    public DetailEventDto getEvent(Integer eventId) {
-        Event event = repository.findById(eventId).orElseThrow(
+    public EventDetailDto getEvent(Integer eventId) {
+        Event event = eventRepository.findById(eventId).orElseThrow(
                 () -> new ResponseStatusException( HttpStatus.NOT_FOUND , eventId + " Does not Exist !!!"));
-        return modelMapper.map(event, DetailEventDto.class);
+        return modelMapper.map(event, EventDetailDto.class);
     }
 
-    public List<ListAllEventDto> filterEvents(Integer categoryId , Integer optionId , Date time) {
+    public List<EventListAllDto> filterEvents(Integer categoryId , Integer optionId , Date time) {
         if (categoryId == null){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST , "categoryId is not null");
         }
         List<Event> events = null;
         if (categoryId != 0) {
-            events = repository.findByEventCategory_Id(categoryId, Sort.by("eventStartTime").descending());
+            events = eventRepository.findByEventCategory_Id(categoryId, Sort.by("eventStartTime").descending());
         } else {
-            events = repository.findAll(Sort.by("eventStartTime").descending());
+            events = eventRepository.findAll(Sort.by("eventStartTime").descending());
         }
-        List<ListAllEventDto> newEvent = listMapper.maplist(events, ListAllEventDto.class, modelMapper);
-        List<ListAllEventDto> filteroption = null;
+        List<EventListAllDto> newEvent = listMapper.maplist(events, EventListAllDto.class, modelMapper);
+        List<EventListAllDto> filteroption = null;
         switch (optionId) {
             case 1: //Upcoming
                 filteroption = getUpcoming(newEvent);
@@ -70,32 +68,32 @@ public class EventService {
         return filteroption;
     }
 
-    public List<ListAllEventDto> getEachEventCategories(Integer categoryId) {
-        List<Event> events = repository.findByEventCategory_Id(categoryId, Sort.by("eventStartTime").descending());
-        return listMapper.maplist(events, ListAllEventDto.class, modelMapper);
+    public List<EventListAllDto> getEachEventCategories(Integer categoryId) {
+        List<Event> events = eventRepository.findByEventCategory_Id(categoryId, Sort.by("eventStartTime").descending());
+        return listMapper.maplist(events, EventListAllDto.class, modelMapper);
     }
 
-    public List<ListAllEventDto> getUpcoming(List<ListAllEventDto> event) {
-        List<ListAllEventDto> eventDtos = listMapper.maplist(event, ListAllEventDto.class, modelMapper);
+    public List<EventListAllDto> getUpcoming(List<EventListAllDto> event) {
+        List<EventListAllDto> eventDtos = listMapper.maplist(event, EventListAllDto.class, modelMapper);
         Date date = new Date();
-        List<ListAllEventDto> events = eventDtos.stream().filter((value) -> {
+        List<EventListAllDto> events = eventDtos.stream().filter((value) -> {
             Date valueEnd = new Date();
             valueEnd.setTime((value.getEventStartTime().getTime() + (value.getEventDuration() * 60000)));
             return ((value.getEventStartTime().compareTo(date) > 0) || (value.getEventStartTime().compareTo(valueEnd) > 0));
         }).collect(Collectors.toList());
         Collections.reverse(events);
-        return listMapper.maplist(events, ListAllEventDto.class, modelMapper);
+        return listMapper.maplist(events, EventListAllDto.class, modelMapper);
     }
 
-    public List<ListAllEventDto> getPast(List<ListAllEventDto> event) {
+    public List<EventListAllDto> getPast(List<EventListAllDto> event) {
         Date date = new Date();
-        List<ListAllEventDto> events = event.stream().filter((value) -> {
+        List<EventListAllDto> events = event.stream().filter((value) -> {
             return (value.getEventStartTime().compareTo(date) < 0);
         }).collect(Collectors.toList());
-        return listMapper.maplist(events, ListAllEventDto.class, modelMapper);
+        return listMapper.maplist(events, EventListAllDto.class, modelMapper);
     }
 
-    public List<ListAllEventDto> getDay(List<ListAllEventDto> event, Date selectday) {
+    public List<EventListAllDto> getDay(List<EventListAllDto> event, Date selectday) {
         if (selectday == null){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Date is not null ");
         }
@@ -103,14 +101,14 @@ public class EventService {
         date.setTime(selectday.getTime());
         Date end = new Date();
         end.setTime(date.getTime() + 86400000);
-        List<ListAllEventDto> events = event.stream().filter((value) -> {
+        List<EventListAllDto> events = event.stream().filter((value) -> {
             return ((value.getEventStartTime().compareTo(date) > 0) && (value.getEventStartTime().compareTo(end) < 0));
         }).collect(Collectors.toList());
         Collections.reverse(events);
-        return listMapper.maplist(events, ListAllEventDto.class, modelMapper);
+        return listMapper.maplist(events, EventListAllDto.class, modelMapper);
     }
 
-    public ValidationCreateEventDto createEvent(ValidationCreateEventDto newEvent) {
+    public EventCreateDto createEvent(EventCreateDto newEvent) {
 //        Validations validation = new Validations();
 //        if (newEvent.getEventDuration() == null) {
 //            if (newEvent.getEventCategoryId() != null) {
@@ -125,24 +123,24 @@ public class EventService {
 //            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, validation.getTextError());
 //        }
         Event event = modelMapper.map(newEvent, Event.class);
-        repository.saveAndFlush(event);
+        eventRepository.saveAndFlush(event);
         return newEvent;
     }
 
     public void deleteEvent(Integer eventId) {
-        repository.findById(eventId).orElseThrow(
+        eventRepository.findById(eventId).orElseThrow(
                 () -> new ResponseStatusException( HttpStatus.NOT_FOUND , eventId + " Does not Exist !!!"));
-        repository.deleteById(eventId);
+        eventRepository.deleteById(eventId);
     }
 
-    public EditEventDto updateEvent(EditEventDto updateEvent, Integer eventId) {
+    public EventEditDto updateEvent(EventEditDto updateEvent, Integer eventId) {
         Event newEvent = modelMapper.map(updateEvent, Event.class);
-        Event event = repository.findById(eventId).map(o -> mapEvent(o, newEvent)).orElseGet(() -> {
+        Event event = eventRepository.findById(eventId).map(o -> mapEvent(o, newEvent)).orElseGet(() -> {
             newEvent.setId(eventId);
             return newEvent;
         });
-        repository.saveAndFlush(event);
-        return modelMapper.map(event, EditEventDto.class);
+        eventRepository.saveAndFlush(event);
+        return modelMapper.map(event, EventEditDto.class);
     }
 
     private Event mapEvent(Event existingEvent, Event updateEvent) {
