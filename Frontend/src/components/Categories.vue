@@ -18,7 +18,7 @@ const bgCategory = [
   'bg-orange-400',
 ];
 const getBorder = (id) => {
-  console.log(id);
+  // console.log(id);
   // console.log(id);
   // console.log(borderCategory[id - 1]);
   return borderCategory[id - 1];
@@ -36,6 +36,53 @@ const setDetail = () => {
 
 <template>
   <div
+    class="max-w-6xl h-60 md:h-28 shadow-lg rounded overflow-hidden m-4 sm:flex bg-white rounded-xl border-l-8 border-r-8 shadow-lg shadow-black/50 cursor-pointer scale-100 hover:scale-105 transition duration-700"
+    :class="getBorder(prop.mask.id)"
+    @click="setDetail"
+  >
+    <div
+      class="flex flex-col w-1/5 justify-center items-center border-r-2 border-gray-200 px-4"
+    >
+      <p class="font-extrabold text-xl text-gray-900">
+        {{ prop.mask.eventCategoryName }}
+      </p>
+    </div>
+    <!-- category -->
+    <div
+      class="flex flex-col w-3/4 justify-center items-start border-r-2 border-gray-200 px-4"
+    >
+      <div
+        class="font-extrabold text-xl text-gray-900"
+        v-if="prop.mask.eventCategoryDescription.length > 0"
+      >
+        {{ prop.mask.eventCategoryDescription }}
+      </div>
+      <div class="font-extrabold text-xl text-gray-900" v-else>
+        No Descriptions
+      </div>
+      <!-- <p class="text-sm text-gray-600">klatsch.duration</p> -->
+    </div>
+    <!-- name -->
+    <div class="flex flex-col justify-center border-r-2 border-gray-200 px-4">
+      <p class="font-extrabold text-xl text-gray-900">
+        {{ prop.mask.eventCategoryDuration }}
+        Minutes
+      </p>
+    </div>
+    <!-- button -->
+    <div class="flex flex-col justify-center items-center px-4">
+      <div class="flex">
+        <button
+          type="button"
+          class="flex items-center justify-center px-2 py-2 rounded-full inline-block text-black hover:text-red-700"
+          @click.stop.prevent="setDetail()"
+        >
+          Detail
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- <div
     class="max-w-2xl px-8 py-4 mx-auto bg-white rounded-lg shadow-md transition hover:bg-gray-200 cursor-pointer border-8"
     @click="setDetail()"
     :class="getBorder(prop.mask.id)"
@@ -72,7 +119,7 @@ const setDetail = () => {
         >
       </div>
     </div>
-  </div>
+  </div> -->
 </template>
 
 <style scoped>

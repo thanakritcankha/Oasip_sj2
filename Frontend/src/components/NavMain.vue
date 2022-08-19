@@ -60,6 +60,13 @@ const goHome = () => {
             >Create Event</router-link
           >
         </li>
+        <li>
+          <router-link
+            class="md:p-4 py-2 block hover:text-purple-400 text-white"
+            :to="{ path: '/about', name: 'About' }"
+            >สมาชิกสภาแห่งเทพ</router-link
+          >
+        </li>
         <!-- <li>
           <a class="md:p-4 py-2 block hover:text-purple-400 text-white" href="#"
             >Customers</a

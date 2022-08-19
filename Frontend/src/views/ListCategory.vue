@@ -4,7 +4,7 @@ import EventCategoryDataService from '../services/EventCategoryDataService';
 import Categoires from '../components/Categories.vue';
 onBeforeMount(async () => {
   await listCategory();
-  console.log(categories.value);
+  // console.log(categories.value);
 });
 //Fetch
 const categories = ref([]);
@@ -20,12 +20,8 @@ const fade = ref(false);
   <div class="w-full flex justify-center transition ease-in-out duration-700">
     <div class="mt-2">
       <!-- card container -->
-      <div class="container px-40">
-        <div
-          v-for="category in categories"
-          v-if="categories.length > 0"
-          class="item"
-        >
+      <div class="mt-16">
+        <div v-for="category in categories" v-if="categories.length > 0" class>
           <Categoires :mask="category" />
         </div>
         <div v-else>No Scheduled Events</div>

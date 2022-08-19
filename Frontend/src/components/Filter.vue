@@ -26,7 +26,7 @@ const changeOption = () => {
     option: parseInt(option.value),
     eventStartTime: dateTime.value,
   };
-  console.log(listOption.value);
+  // console.log(listOption.value);
   if (parseInt(option.value) == 3 && dateTime.value == '') {
     return false;
   } else if (parseInt(option.value) != 3) {
@@ -92,16 +92,16 @@ const reset = () => {
             class="shadow border rounded w-full py-2 px-3 w- text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-orange-600"
           >
             <option selected="selected" value="0">None</option>
-            <option :value="1">Upcoming</option>
-            <option :value="2">Past</option>
-            <option :value="3">Select Day</option>
+            <option :value="1">Upcoming Events</option>
+            <option :value="2">Past Events</option>
+            <option :value="3">Select Day Events</option>
           </select>
         </div>
         <div class="ml-4">
           <label
             for="category"
             class="block text-gray-700 text-lg font-bold mb-2"
-            >Select Day
+            >Select Day Event :
           </label>
           <input
             @change="$emit('filter', changeOption())"

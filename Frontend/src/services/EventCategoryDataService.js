@@ -1,5 +1,5 @@
-// const API_URL = '/sj2/api'
-const API_URL = '/api'
+const API_URL = `${import.meta.env.VITE_BASE_URL}api`
+
 class EventCategoryDataService{
     retrieveAllCategory(){
         return fetch(`${API_URL}/categories`)

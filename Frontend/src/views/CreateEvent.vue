@@ -8,11 +8,13 @@ onBeforeMount(async () => {
     fade.value = true;
   }, 400);
 });
+
 const categories = ref();
 const getAllCategory = async () => {
   const res = await EventCategoryDataService.retrieveAllCategoryForCreate();
   categories.value = await res.json();
 };
+
 const bookingName = ref();
 const bookingEmail = ref();
 const eventCategoryName = ref();
@@ -24,18 +26,11 @@ const eventTime = ref();
 const overlaps = ref();
 // ดึง Event Category ทั้งหมด
 const listOverlap = async (id) => {
-  console.log(id);
   const res = await EventDataService.retreiveCategory(id);
   const data = await res.json();
   overlaps.value = data;
 };
-const getDateM = (date) => {
-  var dd = String(date.getDate()).padStart(2, '0');
-  var mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
-  var yyyy = date.getFullYear();
-  var myDate = yyyy + '-' + mm + '-' + dd;
-  return myDate;
-};
+
 const submitEvent = async () => {
   let text = 'Please check your event data. Press OK for booking.';
   var dateTime = new Date(`${eventDate.value}T${eventTime.value}`);
@@ -66,10 +61,8 @@ const submitEvent = async () => {
       }
     return false;
   });
-  // console.log(result);
   if (result.length != 0) {
     alert('This event is overlap.');
-    // eventDate.value = '';
     eventTime.value = '';
     return false;
   }
@@ -83,15 +76,24 @@ const submitEvent = async () => {
       eventCategoryId: eventCategory.value.id,
       eventCategoryEventCategoryName: eventCategory.value.eventCategoryName,
     };
-    console.log(newEvent);
-    const res = await EventDataService.createEvent(newEvent);
-    if (res.status != 201) {
+    // console.log(newEvent);
+    const res = await EventDataService.createEvent(newEvent).then();
+    if (res.status != 200) {
       alert('Fail to create Event');
     }
     reset();
     return false;
   }
 };
+
+const getDateM = (date) => {
+  var dd = String(date.getDate()).padStart(2, '0');
+  var mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var yyyy = date.getFullYear();
+  var myDate = yyyy + '-' + mm + '-' + dd;
+  return myDate;
+};
+
 const reset = () => {
   bookingName.value = null;
   bookingEmail.value = null;
@@ -102,12 +104,12 @@ const reset = () => {
   eventTime.value = null;
 };
 const durationCategory = () => {
-  console.log(eventCategoryName.value);
+  // console.log(eventCategoryName.value);
   if (eventCategoryName.value != '') {
     var x = categories.value.find(
       (value) => value.eventCategoryName == eventCategoryName.value
     );
-    console.log(x);
+    // console.log(x);
     eventCategory.value = x;
     duration.value = x.eventCategoryDuration;
   } else {

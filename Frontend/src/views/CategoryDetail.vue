@@ -29,6 +29,9 @@ const editModeOn = () => {
   //   console.log(editCategoryName.value);
 };
 const editModeOff = () => {
+  errorName.value = '';
+  errorduration.value = '';
+  checkName.value = true;
   editMode.value = false;
 };
 
@@ -54,22 +57,31 @@ const save = async (categpryid) => {
     editCategoryName.value != '' &&
     checkName.value
   ) {
-    const category = {
+    const categorys = {
       id: categpryid,
       eventCategoryName: editCategoryName.value,
       eventCategoryDescription: editCategoryDescription.value,
       eventCategoryDuration: editDuration.value,
     };
-    const res = await EventCategoryDataService.updateEvent(
-      categpryid,
-      category
-    );
-    if (res.status != 400) {
-      editModeOff();
-      await getDetailCategory(params.id);
+    if (
+      categorys.eventCategoryName != category.value.eventCategoryName ||
+      categorys.eventCategoryDescription !=
+        category.value.eventCategoryDescription ||
+      categorys.eventCategoryDuration != category.value.eventCategoryDuration
+    ) {
+      const res = await EventCategoryDataService.updateEvent(
+        categpryid,
+        categorys
+      );
+      if (res.status != 400) {
+        editModeOff();
+        await getDetailCategory(params.id);
+      } else {
+        // console.log('error update');
+        alert('error update' + res.statusText);
+      }
     } else {
-      // console.log('error update');
-      alert('error update' + res.statusText);
+      editModeOff();
     }
   }
 };
@@ -91,7 +103,7 @@ const checkCategoryName = async () => {
     // console.log(editCategoryName.value);
     // console.log(categories.value);
     var result = categories.value.filter((value) => {
-      console.log(value.eventCategoryName.toLowerCase());
+      // console.log(value.eventCategoryName.toLowerCase());
       return (
         value.eventCategoryName.toLowerCase() ==
         editCategoryName.value.toLowerCase()
@@ -129,6 +141,7 @@ const checkCategoryName = async () => {
           <input
             type="text"
             class="text-2xl text-center rounded w-full p-2 bg-slate-200 text-slate-500 border-slate-200 shadow"
+            maxlength="100"
             @keyup="checkCategoryName()"
             v-model="editCategoryName"
           />
@@ -152,6 +165,7 @@ const checkCategoryName = async () => {
               <textarea
                 rows="5"
                 class="text-lg rounded w-full p-2 bg-slate-200 text-slate-500 border-slate-200 shadow"
+                maxlength="500"
                 v-model="editCategoryDescription"
               ></textarea>
             </div>

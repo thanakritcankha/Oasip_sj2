@@ -111,21 +111,19 @@ public class EventService {
     }
 
     public ValidationCreateEventDto createEvent(ValidationCreateEventDto newEvent) {
-
-        Validations validation = new Validations();
-
-        if (newEvent.getEventDuration() == null) {
-            if (newEvent.getEventCategoryId() != null) {
-                CreateEventcategoryDto eventcategory = categoryService.getCategory(newEvent.getEventCategoryId());
-                newEvent.setEventDuration(eventcategory.getEventCategoryDuration());
-                validation.overlab(getEachEventCategories(newEvent.getEventCategoryId()), newEvent.getEventStartTime(), newEvent.getEventDuration());
-            }
-        } else {
-            validation.overlab(getEachEventCategories(newEvent.getEventCategoryId()), newEvent.getEventStartTime(), newEvent.getEventDuration());
-        }
-        if (validation.getTextError().length() > 0) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, validation.getTextError());
-        }
+//        Validations validation = new Validations();
+//        if (newEvent.getEventDuration() == null) {
+//            if (newEvent.getEventCategoryId() != null) {
+//                CreateEventcategoryDto eventcategory = categoryService.getCategory(newEvent.getEventCategoryId());
+//                newEvent.setEventDuration(eventcategory.getEventCategoryDuration());
+//                validation.overlab(getEachEventCategories(newEvent.getEventCategoryId()), newEvent.getEventStartTime(), newEvent.getEventDuration());
+//            }
+//        } else {
+//            validation.overlab(getEachEventCategories(newEvent.getEventCategoryId()), newEvent.getEventStartTime(), newEvent.getEventDuration());
+//        }
+//        if (validation.getTextError().length() > 0) {
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, validation.getTextError());
+//        }
         Event event = modelMapper.map(newEvent, Event.class);
         repository.saveAndFlush(event);
         return newEvent;

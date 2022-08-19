@@ -15,7 +15,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class EventCategoryService {
@@ -28,6 +30,7 @@ public class EventCategoryService {
 
     public List<ListAllEventcategoryDto> getAllCategory() {
         List<Eventcategory> categoryList = repository.findAll();
+        Collections.reverse(categoryList);
         return listMapper.maplist(categoryList, ListAllEventcategoryDto.class, modelMapper);
     }
 
@@ -52,13 +55,6 @@ public class EventCategoryService {
         repository.deleteById(categoryId);
     }
     public Eventcategory updateCategory(EditEventcategoryDto updateCategory , Integer categoryId){
-        List<Eventcategory> categoryList = repository.findAll();
-        Validations validations = new Validations();
-        validations.uniqueName(updateCategory.getEventCategoryName() , categoryList);
-        validations.duration(updateCategory.getEventCategoryDuration());
-        if (validations.getTextError().length() > 0){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,validations.getTextError());
-        }
         Eventcategory newCategory = modelMapper.map(updateCategory,Eventcategory.class);
         Eventcategory category = repository.findById(categoryId).map(o -> mapCategory(o,newCategory)).orElseGet(() -> {
             newCategory.setId(categoryId);
@@ -68,10 +64,10 @@ public class EventCategoryService {
     }
     private Eventcategory mapCategory(Eventcategory existingCategory, Eventcategory updateCategory) {
         if (updateCategory.getEventCategoryName() != null){
-            existingCategory.setEventCategoryName(updateCategory.getEventCategoryName());
+            existingCategory.setEventCategoryName(updateCategory.getEventCategoryName().trim());
         }
         if (updateCategory.getEventCategoryDescription() != null){
-            existingCategory.setEventCategoryDescription(updateCategory.getEventCategoryDescription());
+            existingCategory.setEventCategoryDescription(updateCategory.getEventCategoryDescription().trim());
         }
         if(updateCategory.getEventCategoryDuration() != null){
             existingCategory.setEventCategoryDuration(updateCategory.getEventCategoryDuration());

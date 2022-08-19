@@ -22,22 +22,20 @@ public class EventController {
     private EventService service;
 
     @GetMapping("")
-    @ResponseStatus(HttpStatus.OK)
     public List<ListAllEventDto> getAllEvents() {
         return service.getAllEvent();
     }
 
     @GetMapping("/{eventId}")
-    @ResponseStatus(HttpStatus.OK)
     public DetailEventDto getEventDetail(@PathVariable Integer eventId) {
         return service.getEvent(eventId);
     }
 
     @GetMapping("/")
-    @ResponseStatus(HttpStatus.OK)
     public List<ListAllEventDto> filterEvents(@RequestParam(name = "categoryId") Integer id,
                                            @RequestParam(name = "option", defaultValue = "0" , required = false) Integer optionId ,
-                                           @RequestParam(name = "time", defaultValue = "2022-10-02" , required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date time){
+                                           @RequestParam(name = "time", defaultValue = "2022-10-02" , required = false)
+                                                  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date time){
         return service.filterEvents(id , optionId , time);
     }
 
@@ -48,7 +46,6 @@ public class EventController {
     }
 
     @DeleteMapping("/{eventId}")
-    @ResponseStatus(HttpStatus.OK)
     public void deleteEvent(@PathVariable Integer eventId) {
         service.deleteEvent(eventId);
     }
