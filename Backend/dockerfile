@@ -3,15 +3,7 @@ WORKDIR /Backend
 COPY pom.xml .
 COPY src/ ./src
 RUN mvn package -Dmaven.test.skip=true
-# RUN mvn clean install -Dmaven.test.skip=true
 
-# CMD mvn spring-boot:run
-
-
-
-# FROM openjdk:11-jdk-alpine
-# COPY target/Backend-0.0.1-SNAPSHOT.jar Backend-0.0.1-SNAPSHOT.jar
-# ENTRYPOINT ["java","-jar","/Backend-0.0.1-SNAPSHOT.jar"]
 
 FROM openjdk:11.0-jdk
 VOLUME /tmp

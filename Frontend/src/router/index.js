@@ -4,13 +4,17 @@ import About from "../views/About.vue";
 import ListAll from "../views/ListAll.vue";
 import Detail from "../views/Details.vue"
 import CreateEvent from "../views/CreateEvent.vue";
+import ListAllCategory from "../views/ListCategory.vue"
+import CategoryDetail from "../views/CategoryDetail.vue"
 const history = createWebHistory('/sj2/');
 const routes = [
-  { path: "/Home", name: "Home", component: Home },
+  { path: "/", name: "Home", component: Home },
   { path: "/about", name: "About", component: About },
-  { path: "/", name: "ListEvent", component: ListAll },
-  { path: "/detail", name: "Detail", component: Detail },
+  { path: "/listevents", name: "ListEvent", component: ListAll },
+  { path: "/detail/:id", name: "Detail", component: Detail },
   { path: "/CreateEvent", name: "CreateEvent", component: CreateEvent },
+  {path: "/listcategory", name: "ListCategory", component: ListAllCategory },
+  {path: "/categorydetail/:id", name: "CategoryDetail", component: CategoryDetail },
 ];
 const router = createRouter({ history, routes });
 export default router;

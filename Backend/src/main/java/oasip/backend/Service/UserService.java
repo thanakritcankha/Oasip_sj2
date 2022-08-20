@@ -1,14 +1,33 @@
 package oasip.backend.Service;
 
+<<<<<<< HEAD
 import oasip.backend.DTOs.UserDTO.UserDetailDto;
 import oasip.backend.DTOs.UserDTO.UserListDto;
 import oasip.backend.Enitities.User;
+=======
+import oasip.backend.DTOs.Event.EventDetailDto;
+import oasip.backend.DTOs.Event.EventEditDto;
+import oasip.backend.DTOs.Event.EventListAllDto;
+import oasip.backend.DTOs.User.UserCreateDto;
+import oasip.backend.DTOs.User.UserDetailDto;
+import oasip.backend.DTOs.User.UserListAllDto;
+import oasip.backend.DTOs.User.UserUpdateDto;
+import oasip.backend.Enitities.Event;
+import oasip.backend.Enitities.User;
+import oasip.backend.Enum.UserRole;
+>>>>>>> dev044
 import oasip.backend.ListMapper;
 import oasip.backend.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+<<<<<<< HEAD
 import org.springframework.stereotype.Service;
+=======
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+>>>>>>> dev044
 
 import java.util.List;
 
@@ -21,6 +40,7 @@ public class UserService {
     @Autowired
     private ListMapper listMapper;
 
+<<<<<<< HEAD
     public List<UserListDto> getAllUser(){
         List<User> userList = userRepository.findAll(Sort.by("name").ascending());
         return listMapper.maplist(userList, UserListDto.class,modelMapper);
@@ -34,3 +54,59 @@ public class UserService {
 
 
 }
+=======
+    public List<UserListAllDto> getAllUser() {
+        List<User> userList = userRepository.findAll(Sort.by("name").ascending());
+        System.out.println(userList);
+        return listMapper.maplist(userList, UserListAllDto.class, modelMapper);
+    }
+
+    public UserDetailDto getUser(Integer userId) {
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new ResponseStatusException( HttpStatus.NOT_FOUND , userId + " Does not Exist !!!"));
+        return modelMapper.map(user, UserDetailDto.class);
+    }
+
+    public UserCreateDto createUser(UserCreateDto newUser) {
+        User user = modelMapper.map(newUser, User.class);
+        System.out.println(newUser);
+        System.out.println(user);
+        for(UserRole r : UserRole.values()){
+            if(newUser.getRole().equals(r.toString()))
+                user.setRole(r);;
+        }
+        userRepository.saveAndFlush(user);
+        return newUser;
+    }
+
+    public void deleteUser(Integer userId) {
+        userRepository.findById(userId).orElseThrow(
+                () -> new ResponseStatusException( HttpStatus.NOT_FOUND , userId + " Does not Exist !!!"));
+        userRepository.deleteById(userId);
+    }
+
+    public UserUpdateDto updateUser(UserUpdateDto updateUser, Integer userId) {
+        System.out.println(updateUser.getRole());
+        User newUser = modelMapper.map(updateUser,User.class);
+        User user = userRepository.findById(userId).map(o -> mapEvent(o, newUser)).orElseGet(() -> {
+            newUser.setId(userId);
+            return newUser;
+        });
+        userRepository.saveAndFlush(user);
+        return modelMapper.map(user, UserUpdateDto.class);
+    }
+    private User mapEvent(User existingUser, User updateUser) {
+        if (updateUser.getName() != null) {
+            existingUser.setName(updateUser.getName());
+        }
+        if (updateUser.getEmail() != null) {
+            existingUser.setEmail(updateUser.getEmail());
+        }
+        if (updateUser.getRole() != null) {
+            existingUser.setRole(updateUser.getRole());
+        }
+        return existingUser;
+    }
+}
+
+>>>>>>> dev044

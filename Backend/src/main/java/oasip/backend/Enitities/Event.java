@@ -1,6 +1,8 @@
 package oasip.backend.Enitities;
 
 import lombok.*;
+import oasip.backend.Enitities.Eventcategory;
+import oasip.backend.Enitities.User;
 
 import javax.persistence.*;
 import java.time.Instant;
@@ -37,5 +39,10 @@ public class Event {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "EventCategory_id", nullable = false)
     private Eventcategory eventCategory;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_Id", nullable = false)
+    private User user;
+
 
 }

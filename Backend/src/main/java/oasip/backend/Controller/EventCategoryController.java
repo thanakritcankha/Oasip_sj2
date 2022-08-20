@@ -1,14 +1,23 @@
 package oasip.backend.Controller;
 
 
+<<<<<<< HEAD
 import oasip.backend.DTOs.CategoryDTO.CategoryCreateDto;
 import oasip.backend.DTOs.EventcategoryDto;
+=======
+import oasip.backend.DTOs.Category.CategoryCreateDto;
+import oasip.backend.DTOs.Category.CategoryListCreateDto;
+import oasip.backend.DTOs.Category.CategoryEditDto;
+import oasip.backend.DTOs.Category.CategoryListAllDto;
+import oasip.backend.DTOs.Category.CategoryListFilterDto;
+>>>>>>> dev044
 import oasip.backend.Enitities.Eventcategory;
 import oasip.backend.Service.EventCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 //@CrossOrigin
@@ -19,29 +28,45 @@ public class EventCategoryController {
     private EventCategoryService service;
 
     @GetMapping("")
-    public List<EventcategoryDto> getAllCategory(){
+    @ResponseStatus(HttpStatus.OK)
+    public List<CategoryListAllDto> getAllCategory(){
         return service.getAllCategory();
     }
 
+<<<<<<< HEAD
     @GetMapping("/{categoryId}")
     public CategoryCreateDto getCategory(@PathVariable Integer categoryId){
         return service.getCategory(categoryId);
+=======
+    @GetMapping("/schedule")
+    @ResponseStatus(HttpStatus.OK)
+    public List<CategoryListCreateDto> getAllCategoryForCreate(){
+        return service.getAllCategoryForCreate();
     }
 
-    @PostMapping("")
-    @ResponseStatus(HttpStatus.CREATED)
-    public EventcategoryDto create(@RequestBody EventcategoryDto newCategory){
-        return service.createCategory(newCategory);
+    @GetMapping("/period")
+    @ResponseStatus(HttpStatus.OK)
+    public List<CategoryListFilterDto> getAllCategoryForFilter(){
+        return service.getAllCategoryForFilter();
+>>>>>>> dev044
+    }
+
+    @GetMapping("/{categoryId}")
+    @ResponseStatus(HttpStatus.OK)
+    public CategoryCreateDto getCategoryDetails(@PathVariable Integer categoryId){
+        return service.getCategory(categoryId);
     }
 
     @DeleteMapping("/{categoryId}")
+    @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable Integer categoryId){
         service.deleteCategory(categoryId);
     }
 
-    @PutMapping("/{categoryId}")
-    public Eventcategory update(@PathVariable Integer categoryId , @RequestBody EventcategoryDto updateCategor){
-        return service.updateCategory(updateCategor , categoryId);
+    @PatchMapping("/{categoryId}")
+    @ResponseStatus(HttpStatus.OK)
+    public Eventcategory update(@PathVariable Integer categoryId ,@Valid @RequestBody CategoryEditDto updateCategory){
+        return service.updateCategory(updateCategory , categoryId);
     }
 
 }
