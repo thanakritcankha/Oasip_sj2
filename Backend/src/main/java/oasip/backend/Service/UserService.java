@@ -63,6 +63,10 @@ public class UserService {
     public UserUpdateDto updateUser(UserUpdateDto updateUser, Integer userId) {
         System.out.println(updateUser.getRole());
         User newUser = modelMapper.map(updateUser,User.class);
+        for(UserRole r : UserRole.values()){
+            if(updateUser.getRole().equals(r.toString()))
+                newUser.setRole(r);
+        }
         User user = userRepository.findById(userId).map(o -> mapEvent(o, newUser)).orElseGet(() -> {
             newUser.setId(userId);
             return newUser;
