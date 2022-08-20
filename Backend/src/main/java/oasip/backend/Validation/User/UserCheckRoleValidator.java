@@ -1,20 +1,20 @@
 package oasip.backend.Validation.User;
 
-import oasip.backend.Enitities.User;
-import oasip.backend.Enum.Role;
-import oasip.backend.repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import oasip.backend.Enum.UserRole;
 
+import javax.management.relation.Role;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-public class UserCheckRoleValidator implements ConstraintValidator<UserUniqueEmail, Enum> {
+public class UserCheckRoleValidator implements ConstraintValidator<UserCheckRole, String> {
 
 
     @Override
-    public boolean isValid(Enum s, ConstraintValidatorContext constraintValidatorContext) {
-        for(Role r : Role.values()){
-            if(s.equals(r))return true;
+    public boolean isValid(String s, ConstraintValidatorContext constraintValidatorContext) {
+        System.out.println(s);
+        for(UserRole r : UserRole.values()){
+            if(s.equals(r.toString()))
+                return true;
         }
         return false;
     }

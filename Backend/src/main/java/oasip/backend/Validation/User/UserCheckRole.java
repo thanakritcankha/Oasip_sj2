@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
         validatedBy = UserCheckRoleValidator.class
 )
 public @interface UserCheckRole {
-    String message() default "The Email is not unique.";
+    String message() default "role must be admin, lecturer, or student.";
 
     Class<?>[] groups() default {};
 

@@ -1,7 +1,7 @@
 package oasip.backend.Enitities;
 
 import lombok.*;
-import oasip.backend.Enum.Role;
+import oasip.backend.Enum.UserRole;
 
 import javax.persistence.*;
 import java.time.Instant;
@@ -27,13 +27,14 @@ public class User {
     @Column(name = "email", nullable = false, length = 50)
     private String email;
 
-    @Column(name = "role", nullable = false, length = 45)
-    private Role role;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role", nullable = false)
+    private UserRole role;
 
-    @Column(name = "createOn", nullable = false)
+    @Column(name = "createOn", nullable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Instant createOn;
 
-    @Column(name = "updateOn", nullable = false)
+    @Column(name = "updateOn", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
     private Instant updateOn;
 
     @OneToMany(mappedBy = "user")

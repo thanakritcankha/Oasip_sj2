@@ -1,7 +1,7 @@
 package oasip.backend.DTOs.User;
 
 import lombok.Data;
-import oasip.backend.Enum.Role;
+import oasip.backend.Enum.UserRole;
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -11,7 +11,7 @@ public class UserDetailDto implements Serializable {
     private Integer id;
     private String name;
     private String email;
-    private Role role;
+    private UserRole role;
     private Instant createOn;
     private Instant updateOn;
 }

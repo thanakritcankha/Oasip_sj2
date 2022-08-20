@@ -6,6 +6,8 @@ import oasip.backend.Validation.User.UserCheckRole;
 import oasip.backend.Validation.User.UserUniqueEmail;
 import oasip.backend.Validation.User.UserUniqueName;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -13,7 +15,7 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @Data
-public class UserCreateDto implements Serializable {
+public class UserUpdateDto implements Serializable {
 
     @UserUniqueName(message = "The Name must be unique.")
     @NotNull(message = "Name must be not null.")
