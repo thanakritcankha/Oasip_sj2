@@ -9,9 +9,5 @@ import java.util.Date;
 import java.util.List;
 
 public interface EventRepository extends JpaRepository<Event, Integer> {
-<<<<<<< HEAD
-    
-=======
     List<Event> findByEventCategory_Id(Integer categoryId, Sort sort);
->>>>>>> dev044
 }

@@ -1,10 +1,5 @@
 package oasip.backend.Service;
 
-<<<<<<< HEAD
-import oasip.backend.DTOs.UserDTO.UserDetailDto;
-import oasip.backend.DTOs.UserDTO.UserListDto;
-import oasip.backend.Enitities.User;
-=======
 import oasip.backend.DTOs.Event.EventDetailDto;
 import oasip.backend.DTOs.Event.EventEditDto;
 import oasip.backend.DTOs.Event.EventListAllDto;
@@ -15,19 +10,14 @@ import oasip.backend.DTOs.User.UserUpdateDto;
 import oasip.backend.Enitities.Event;
 import oasip.backend.Enitities.User;
 import oasip.backend.Enum.UserRole;
->>>>>>> dev044
 import oasip.backend.ListMapper;
 import oasip.backend.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
-<<<<<<< HEAD
-import org.springframework.stereotype.Service;
-=======
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
->>>>>>> dev044
 
 import java.util.List;
 
@@ -40,21 +30,6 @@ public class UserService {
     @Autowired
     private ListMapper listMapper;
 
-<<<<<<< HEAD
-    public List<UserListDto> getAllUser(){
-        List<User> userList = userRepository.findAll(Sort.by("name").ascending());
-        return listMapper.maplist(userList, UserListDto.class,modelMapper);
-    }
-
-    public UserDetailDto getUser(Integer userId) {
-        User user =  userRepository.findById(userId).orElseThrow(
-                () -> new RuntimeException(userId + " Does not Exist !!!" ));
-        return modelMapper.map(user , UserDetailDto.class);
-    }
-
-
-}
-=======
     public List<UserListAllDto> getAllUser() {
         List<User> userList = userRepository.findAll(Sort.by("name").ascending());
         System.out.println(userList);
@@ -109,4 +84,3 @@ public class UserService {
     }
 }
 
->>>>>>> dev044

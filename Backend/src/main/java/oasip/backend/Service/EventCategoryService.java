@@ -1,15 +1,10 @@
 package oasip.backend.Service;
 
-<<<<<<< HEAD
-import oasip.backend.DTOs.CategoryDTO.CategoryCreateDto;
-import oasip.backend.DTOs.EventcategoryDto;
-=======
 import oasip.backend.DTOs.Category.CategoryCreateDto;
 import oasip.backend.DTOs.Category.CategoryListCreateDto;
 import oasip.backend.DTOs.Category.CategoryEditDto;
 import oasip.backend.DTOs.Category.CategoryListAllDto;
 import oasip.backend.DTOs.Category.CategoryListFilterDto;
->>>>>>> dev044
 import oasip.backend.Enitities.Eventcategory;
 import oasip.backend.ListMapper;
 import oasip.backend.repositories.CategoryRepository;
@@ -36,12 +31,6 @@ public class EventCategoryService {
         Collections.reverse(categoryList);
         return listMapper.maplist(categoryList, CategoryListAllDto.class, modelMapper);
     }
-<<<<<<< HEAD
-    public CategoryCreateDto getCategory(Integer categoryId){
-        Eventcategory category = repository.findById(categoryId).orElseThrow(
-                () -> new RuntimeException(categoryId + " Does not Exist !!!" ));
-        return modelMapper.map(category , CategoryCreateDto.class);
-=======
 
     public List<CategoryListCreateDto> getAllCategoryForCreate() {
         List<Eventcategory> categoryList = repository.findAll();
@@ -50,7 +39,6 @@ public class EventCategoryService {
     public List<CategoryListFilterDto> getAllCategoryForFilter() {
         List<Eventcategory> categoryList = repository.findAll();
         return listMapper.maplist(categoryList, CategoryListFilterDto.class, modelMapper);
->>>>>>> dev044
     }
 
     public CategoryCreateDto getCategory(Integer categoryId){

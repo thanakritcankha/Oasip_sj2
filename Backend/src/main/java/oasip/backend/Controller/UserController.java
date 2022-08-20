@@ -1,16 +1,5 @@
 package oasip.backend.Controller;
 
-<<<<<<< HEAD
-import oasip.backend.DTOs.UserDTO.UserDetailDto;
-import oasip.backend.DTOs.UserDTO.UserListDto;
-import oasip.backend.Service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-=======
 
 import oasip.backend.DTOs.Event.EventEditDto;
 import oasip.backend.DTOs.User.UserCreateDto;
@@ -23,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
->>>>>>> dev044
 import java.util.List;
 
 @RestController
@@ -33,15 +21,6 @@ public class UserController {
     UserService userService;
 
     @GetMapping("")
-<<<<<<< HEAD
-    public List<UserListDto> getAllUser(){
-        return userService.getAllUser();
-    }
-
-    @GetMapping("/{userId}")
-    public UserDetailDto getUser(@PathVariable Integer userId){
-        return userService.getUser(userId);
-=======
     public List<UserListAllDto> getAllUsers() { return userService.getAllUser(); }
 
     @GetMapping("/{userId}")
@@ -62,6 +41,5 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     public UserUpdateDto updateEvent(@PathVariable Integer userId, @Valid @RequestBody UserUpdateDto updateUser) {
         return userService.updateUser(updateUser, userId);
->>>>>>> dev044
     }
 }

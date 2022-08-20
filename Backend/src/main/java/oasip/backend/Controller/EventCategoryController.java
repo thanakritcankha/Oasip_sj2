@@ -1,16 +1,11 @@
 package oasip.backend.Controller;
 
 
-<<<<<<< HEAD
-import oasip.backend.DTOs.CategoryDTO.CategoryCreateDto;
-import oasip.backend.DTOs.EventcategoryDto;
-=======
 import oasip.backend.DTOs.Category.CategoryCreateDto;
 import oasip.backend.DTOs.Category.CategoryListCreateDto;
 import oasip.backend.DTOs.Category.CategoryEditDto;
 import oasip.backend.DTOs.Category.CategoryListAllDto;
 import oasip.backend.DTOs.Category.CategoryListFilterDto;
->>>>>>> dev044
 import oasip.backend.Enitities.Eventcategory;
 import oasip.backend.Service.EventCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,11 +28,6 @@ public class EventCategoryController {
         return service.getAllCategory();
     }
 
-<<<<<<< HEAD
-    @GetMapping("/{categoryId}")
-    public CategoryCreateDto getCategory(@PathVariable Integer categoryId){
-        return service.getCategory(categoryId);
-=======
     @GetMapping("/schedule")
     @ResponseStatus(HttpStatus.OK)
     public List<CategoryListCreateDto> getAllCategoryForCreate(){
@@ -48,7 +38,6 @@ public class EventCategoryController {
     @ResponseStatus(HttpStatus.OK)
     public List<CategoryListFilterDto> getAllCategoryForFilter(){
         return service.getAllCategoryForFilter();
->>>>>>> dev044
     }
 
     @GetMapping("/{categoryId}")

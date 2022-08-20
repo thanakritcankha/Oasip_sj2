@@ -1,15 +1,9 @@
 package oasip.backend.Service;
 
-<<<<<<< HEAD
-import oasip.backend.DTOs.EventDTO.EventCreateDto;
-import oasip.backend.DTOs.EventDTO.EventDetailDto;
-import oasip.backend.DTOs.EventDTO.EventListAllDto;
-=======
 import oasip.backend.DTOs.Event.EventCreateDto;
 import oasip.backend.DTOs.Event.EventDetailDto;
 import oasip.backend.DTOs.Event.EventEditDto;
 import oasip.backend.DTOs.Event.EventListAllDto;
->>>>>>> dev044
 import oasip.backend.Enitities.Event;
 import oasip.backend.ListMapper;
 import oasip.backend.repositories.EventRepository;
@@ -91,22 +85,6 @@ public class EventService {
         return listMapper.maplist(events, EventListAllDto.class, modelMapper);
     }
 
-<<<<<<< HEAD
-    public List<EventListAllDto> getAllEvent(){
-        List<Event> events = repository.findAll(Sort.by("eventStartTime").descending());
-        return listMapper.maplist(events, EventListAllDto.class,modelMapper);
-    }
-    public EventDetailDto getEvent(Integer eventId){
-        Event event = repository.findById(eventId).orElseThrow(
-                () -> new RuntimeException(eventId + " Does not Exist !!!" ));
-        return modelMapper.map(event , EventDetailDto.class);
-    }
-
-    public EventCreateDto createEvent(EventCreateDto newEvent){
-        Event event = modelMapper.map(newEvent,Event.class);
-        //event category
-        repository.saveAndFlush(event);
-=======
     public List<EventListAllDto> getPast(List<EventListAllDto> event) {
         Date date = new Date();
         List<EventListAllDto> events = event.stream().filter((value) -> {
@@ -146,7 +124,6 @@ public class EventService {
 //        }
         Event event = modelMapper.map(newEvent, Event.class);
         eventRepository.saveAndFlush(event);
->>>>>>> dev044
         return newEvent;
     }
 
@@ -155,16 +132,10 @@ public class EventService {
                 () -> new ResponseStatusException( HttpStatus.NOT_FOUND , eventId + " Does not Exist !!!"));
         eventRepository.deleteById(eventId);
     }
-<<<<<<< HEAD
-    public Event updateEvent(EventListAllDto updateEvent , Integer eventId){
-        Event newEvent = modelMapper.map(updateEvent,Event.class);
-        Event event = repository.findById(eventId).map(o -> mapEvent(o,newEvent)).orElseGet(() -> {
-=======
 
     public EventEditDto updateEvent(EventEditDto updateEvent, Integer eventId) {
         Event newEvent = modelMapper.map(updateEvent, Event.class);
         Event event = eventRepository.findById(eventId).map(o -> mapEvent(o, newEvent)).orElseGet(() -> {
->>>>>>> dev044
             newEvent.setId(eventId);
             return newEvent;
         });
