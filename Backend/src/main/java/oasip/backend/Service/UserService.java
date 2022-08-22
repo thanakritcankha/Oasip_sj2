@@ -49,10 +49,7 @@ public class UserService {
         User user = modelMapper.map(newUser, User.class);
 //        System.out.println(newUser);
 //        System.out.println(user);
-<<<<<<< HEAD
-=======
 
->>>>>>> dev044
         for(UserRole r : UserRole.values()){
             if(newUser.getRole().equals(r.toString()))
                 user.setRole(r);;
