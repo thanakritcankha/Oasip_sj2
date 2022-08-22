@@ -63,6 +63,20 @@ const goHome = () => {
         <li>
           <router-link
             class="md:p-4 py-2 block hover:text-purple-400 text-white"
+            :to="{ path: '/listusers', name: 'ListUsers' }"
+            >Users</router-link
+          >
+        </li>
+        <li>
+          <router-link
+            class="md:p-4 py-2 block hover:text-purple-400 text-white"
+            :to="{ path: '/signUp', name: 'SignUp' }"
+            >SignUp</router-link
+          >
+        </li>
+        <li>
+          <router-link
+            class="md:p-4 py-2 block hover:text-purple-400 text-white"
             :to="{ path: '/about', name: 'About' }"
             >สมาชิกสภาแห่งเทพ</router-link
           >
