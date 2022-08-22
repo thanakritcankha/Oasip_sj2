@@ -191,7 +191,7 @@ const fadein = ref(false);
           </div>
           <div>
             <label class="block text-xl font-medium text-gray-700"
-              >Cetagory</label
+              >Category</label
             >
             <div
               class="text-gray-400 text-lg rounded w-full p-2"

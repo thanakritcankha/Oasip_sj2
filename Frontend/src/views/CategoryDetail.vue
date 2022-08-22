@@ -3,7 +3,9 @@ import { onBeforeMount, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import router from '../router';
 import EventCategoryDataService from '../services/EventCategoryDataService';
+
 let { params } = useRoute();
+
 onBeforeMount(async () => {
   await getDetailCategory(params.id);
   await listCategory();

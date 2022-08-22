@@ -44,6 +44,7 @@ services:
   proxy_nginx_frontend:
     image: nginx:1.19.1
     env_file: ./.env
+    restart: unless-stopped
     volumes:
       - ./Frontend/config/nginx/Proxy.conf:/etc/nginx/conf.d/Proxy.conf:cached
       - ./Frontend/logs/nginx:/var/log/nginx:cached

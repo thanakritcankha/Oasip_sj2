@@ -43,9 +43,16 @@ public class UserService {
     }
 
     public UserCreateDto createUser(UserCreateDto newUser) {
+        if(newUser.getRole().length()==0){
+            newUser.setRole("student");
+        }
         User user = modelMapper.map(newUser, User.class);
 //        System.out.println(newUser);
 //        System.out.println(user);
+<<<<<<< HEAD
+=======
+
+>>>>>>> dev044
         for(UserRole r : UserRole.values()){
             if(newUser.getRole().equals(r.toString()))
                 user.setRole(r);;
@@ -62,6 +69,9 @@ public class UserService {
 
     public UserUpdateDto updateUser(UserUpdateDto updateUser, Integer userId) {
         System.out.println(updateUser.getRole());
+        if(updateUser.getRole().length() == 0){
+            updateUser.setRole("student");
+        }
         User newUser = modelMapper.map(updateUser,User.class);
         for(UserRole r : UserRole.values()){
             if(updateUser.getRole().equals(r.toString()))

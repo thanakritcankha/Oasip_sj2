@@ -38,4 +38,28 @@ public class UserCreateDto implements Serializable {
     @NotNull(message = "The Role must be admin, lecturer, or student.")
     @UserCheckRole(message = "The Role must be admin, lecturer, or student")
     private String role;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name.trim();
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email.trim();
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role.trim();
+    }
 }
