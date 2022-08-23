@@ -17,10 +17,40 @@ const detail = ref({});
 
 const getDetailUser = async (id) => {
   const res = await UserDataService.retrieveUser(id);
-  if (res.status == 200) detail.value = await res.json();
-  else {
+  if (res.status == 200) {
+    detail.value = await res.json();
+    // getDateM(detail.value.createOn);
+    // console.log(detail.value.createOn);
+  } else {
     alert('ขออภัยเกิดข้อผิดพลาดกรุณาลองอีกครั้ง');
     router.push({ name: 'Users' });
+  }
+};
+
+// const getDateM = (date) => {
+//   // console.log(date);
+//   var dd = String(date.getDate()).padStart(2, '0');
+//   var mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
+//   var yyyy = date.getFullYear();
+//   var myDate = yyyy + '-' + mm + '-' + dd;
+//   return myDate;
+// };
+
+const updateUser = async () => {
+  var newData = {
+    id: params.id,
+    name: editUserName.value.trim(),
+    email: editEmail.value.trim(),
+    role: editRole.value,
+  };
+  console.log(newData);
+  console.log(detail.value.id);
+  const res = await UserDataService.updateUser(detail.value.id, newData);
+  if (res.status == 400) {
+    alert('This name or email are already used.');
+  } else {
+    editMode.value = false;
+    await getDetailUser(params.id);
   }
 };
 
@@ -78,7 +108,7 @@ const editModeOff = () => {
               <input
                 type="text"
                 class="text-2xl text-center rounded w-full p-2 bg-slate-200 text-slate-500 border-slate-200 shadow"
-                maxlength="100"
+                maxlength="50"
                 v-model="editEmail"
               />
               <br />
@@ -87,8 +117,24 @@ const editModeOff = () => {
           </div>
           <div>
             <label class="block text-xl font-medium text-gray-700">Role </label>
-            <div class="text-gray-400 text-lg rounded w-full p-2">
+            <div
+              class="text-gray-400 text-lg rounded w-full p-2"
+              v-if="!editMode"
+            >
               {{ detail.role }}
+            </div>
+            <div v-else>
+              <select
+                name="role"
+                id="role"
+                v-model="editRole"
+                class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-orange-600"
+              >
+                <option disabled selected value>Select Role</option>
+                <option>student</option>
+                <option>admin</option>
+                <option>lecturer</option>
+              </select>
             </div>
           </div>
           <div>
@@ -152,7 +198,7 @@ const editModeOff = () => {
         <button
           class="flex items-center rounded-xl bg-green-500 px-2 text-white mr-10"
           v-else
-          @click="save(event.id)"
+          @click="updateUser()"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

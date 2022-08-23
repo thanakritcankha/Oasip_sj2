@@ -2,33 +2,46 @@
 import { onBeforeMount, ref } from 'vue';
 import UserDataService from '../services/UserDataService';
 onBeforeMount(async () => {
-  await getAllUser();
-  console.log(users.value);
+  // await getAllUser();
+  // console.log(users.value);
 });
 
 const users = ref();
-const getAllUser = async () => {
-  const res = await UserDataService.retrieveAllUser();
-  users.value = await res.json();
-};
+// const getAllUser = async () => {
+//   const res = await UserDataService.retrieveAllUser();
+//   users.value = await res.json();
+// };
 
-const userName = ref();
-const userEmail = ref();
-const userRole = ref();
+const userName = ref('');
+const userEmail = ref('');
+const userRole = ref('');
 
 const errorName = ref();
 const errorEmail = ref();
 
 const submitUser = async () => {
   var newUser = {
-    name: userName.value,
-    email: userEmail.value,
+    name: userName.value.trim(),
+    email: userEmail.value.trim(),
     role: userRole.value,
   };
+  console.log(newUser);
   const res = await UserDataService.createUser(newUser);
   if (res.status == 400) {
     alert('This name or email are already used.');
+  } else {
+    reset();
   }
+};
+
+const EmailTrim = () => {
+  userEmail.value = userEmail.value.trim();
+};
+
+const reset = () => {
+  userName.value = '';
+  userEmail.value = '';
+  userRole.value = '';
 };
 </script>
 
@@ -56,6 +69,7 @@ const submitUser = async () => {
           type="text"
           class="block border border-grey-light w-full p-3 rounded mb-4"
           name="email"
+          @change="EmailTrim()"
           pattern="[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$"
           maxlength="50"
           v-model="userEmail"
