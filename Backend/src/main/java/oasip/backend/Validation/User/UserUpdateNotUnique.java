@@ -10,13 +10,17 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target({ElementType.TYPE})
+@Target({ElementType.TYPE , ElementType.TYPE_USE})
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(
         validatedBy = UserUpdateNotUniqueValidator.class
 )
 public @interface UserUpdateNotUnique {
     String message() default "fdkfjkskjfljlkdjskfl";
+
+    String field();
+
+    String fieldMatch();
 
     Class<?>[] groups() default {};
 

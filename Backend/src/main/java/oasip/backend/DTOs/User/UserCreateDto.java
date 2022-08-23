@@ -21,7 +21,7 @@ public class UserCreateDto implements Serializable {
     @Size(min = 1, max = 100, message = "name size must be between 1 and 100.")
     private String name;
 
-    @UserUniqueEmail(message = "The Email must be unique.")
+    @UserUniqueEmail(fieldId = "0",message = "The Email must be unique.")
     @NotNull(message = "Email must be not null.")
     @NotEmpty(message = "Email must be not Empty.")
     @Size(min = 1, max = 50, message = "Email size must be between 1 and 50.")

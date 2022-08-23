@@ -15,6 +15,8 @@ import java.lang.annotation.Target;
 public @interface UserUniqueEmail {
     String message() default "The Email is not unique.";
 
+    String fieldId();
+
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};

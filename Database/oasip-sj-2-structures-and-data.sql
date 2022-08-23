@@ -120,7 +120,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'OASIP ADMIN','oasip.admin@kmutt.ac.th','admin','2022-07-31 17:00:00','2022-07-31 17:00:00'),(2,'Somchai Jaidee','somchai.jai@kmutt.ac.th','lecturer','2022-08-08 08:00:00','2022-08-08 08:00:00'),(3,'Komkrid Rakdee','komkrid.rak@mail.kmutt.ac.th','student','2022-08-08 08:00:01','2022-08-08 08:00:01'),(4,'สมเกียรติ ขยันเรียน','somkiat.kay@kmutt.ac.th','student','2022-08-16 02:00:00','2022-08-16 02:00:00');
+INSERT INTO `users` (userId,name,email,role) VALUES (1,'OASIP ADMIN','oasip.admin@kmutt.ac.th','admin'),(2,'Somchai Jaidee','somchai.jai@kmutt.ac.th','lecturer'),(3,'Komkrid Rakdee','komkrid.rak@mail.kmutt.ac.th','student'),(4,'สมเกียรติ ขยันเรียน','somkiat.kay@kmutt.ac.th','student');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

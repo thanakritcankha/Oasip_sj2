@@ -4,6 +4,7 @@ import lombok.*;
 import oasip.backend.Enum.UserRole;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -32,10 +33,10 @@ public class User {
     private UserRole role;
 
     @Column(name = "createOn", nullable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Instant createOn;
+    private Timestamp createOn;
 
     @Column(name = "updateOn", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
-    private Instant updateOn;
+    private Timestamp updateOn;
 
     @OneToMany(mappedBy = "user")
     private Set<Event> events = new LinkedHashSet<>();
