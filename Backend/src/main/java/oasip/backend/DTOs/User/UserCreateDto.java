@@ -35,6 +35,8 @@ public class UserCreateDto implements Serializable {
                     "7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])")
     private String email;
 
+    private String password;
+
     @NotNull(message = "The Role must be admin, lecturer, or student.")
     @UserCheckRole(message = "The Role must be admin, lecturer, or student")
     private String role;

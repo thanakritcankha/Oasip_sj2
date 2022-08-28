@@ -1,0 +1,24 @@
+{
+    "name": "OASIP ADMIN",
+    "email": "oasip.admin@kmutt.ac.th",
+    "password": "oasipadmin",
+    "role": "admin"
+}
+{
+    "name": "Somchai Jaidee",
+    "email": "somchai.jai@kmutt.ac.th",
+    "password": "somchaijai",
+    "role": "lecturer"
+}
+{
+    "name": "Komkrid Rakdee",
+    "email": "komkrid.rak@mail.kmutt.ac.th",
+    "password": "komkridrak",
+    "role": "student"
+}
+{
+    "name": "สมเกียรติ ขยันเรียน",
+    "email": "somkiat.kay@kmutt.ac.th",
+    "password": "somkiat.kay",
+    "role": "student"
+}

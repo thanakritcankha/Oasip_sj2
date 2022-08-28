@@ -11,5 +11,6 @@ public class UserListAllDto implements Serializable {
     private Integer id;
     private String name;
     private String email;
+    private String password;
     private UserRole role;
 }

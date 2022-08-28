@@ -11,8 +11,8 @@ public class UserCheckRoleValidator implements ConstraintValidator<UserCheckRole
 
     @Override
     public boolean isValid(String s, ConstraintValidatorContext constraintValidatorContext) {
-        System.out.println(constraintValidatorContext.getDefaultConstraintMessageTemplate().toString());
-        System.out.println(s.length());
+//        System.out.println(constraintValidatorContext.getDefaultConstraintMessageTemplate().toString());
+//        System.out.println(s.length());
         if(s.length()!=0){
             for(UserRole r : UserRole.values()){
                 if(s.equals(r.toString()))

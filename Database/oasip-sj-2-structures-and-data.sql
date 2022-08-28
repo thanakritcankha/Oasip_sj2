@@ -1,3 +1,5 @@
+
+
 -- MySQL dump 10.13  Distrib 8.0.29, for Win64 (x86_64)
 --
 -- Host: localhost    Database: oasip
@@ -105,7 +107,8 @@ CREATE TABLE `users` (
   `userId` int NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `email` varchar(50) NOT NULL,
-  `role` ENUM('admin', 'lecturer', 'student') NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `role` ENUM('admin', 'lecturer', 'student') NOT NULL DEFAULT 'student',
   `createOn` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updateOn` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`userId`),
@@ -120,7 +123,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` (userId,name,email,role) VALUES (1,'OASIP ADMIN','oasip.admin@kmutt.ac.th','admin'),(2,'Somchai Jaidee','somchai.jai@kmutt.ac.th','lecturer'),(3,'Komkrid Rakdee','komkrid.rak@mail.kmutt.ac.th','student'),(4,'สมเกียรติ ขยันเรียน','somkiat.kay@kmutt.ac.th','student');
+-- INSERT INTO `users` VALUES (1,'OASIP ADMIN','oasip.admin@kmutt.ac.th','123456','admin','2022-07-31 17:00:00','2022-07-31 17:00:00'),(2,'Somchai Jaidee','somchai.jai@kmutt.ac.th','123456','lecturer','2022-08-08 08:00:00','2022-08-08 08:00:00'),(3,'Komkrid Rakdee','komkrid.rak@mail.kmutt.ac.th','123456','student','2022-08-08 08:00:01','2022-08-08 08:00:01'),(4,'สมเกียรติ ขยันเรียน','somkiat.kay@kmutt.ac.th','123456','student','2022-08-16 02:00:00','2022-08-16 02:00:00');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

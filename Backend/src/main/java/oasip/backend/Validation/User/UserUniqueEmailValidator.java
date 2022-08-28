@@ -25,7 +25,7 @@ public class UserUniqueEmailValidator implements ConstraintValidator<UserUniqueE
     @Override
     public boolean isValid(String s, ConstraintValidatorContext constraintValidatorContext) {
         if(this.id.equals("0")){
-            System.out.println(id);
+//            System.out.println(id);
             User result = userRepository.findByEmail(s);
             return result == null;
         }else {
