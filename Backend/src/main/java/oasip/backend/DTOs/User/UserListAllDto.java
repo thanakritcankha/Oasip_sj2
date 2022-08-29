@@ -3,7 +3,6 @@ package oasip.backend.DTOs.User;
 import lombok.Data;
 import oasip.backend.Enum.UserRole;
 
-import javax.management.relation.Role;
 import java.io.Serializable;
 
 @Data

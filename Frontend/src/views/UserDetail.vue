@@ -14,13 +14,10 @@ onBeforeMount(async () => {
 });
 
 const detail = ref({});
-
 const getDetailUser = async (id) => {
   const res = await UserDataService.retrieveUser(id);
   if (res.status == 200) {
     detail.value = await res.json();
-    // getDateM(detail.value.createOn);
-    // console.log(detail.value.createOn);
   } else {
     alert('ขออภัยเกิดข้อผิดพลาดกรุณาลองอีกครั้ง');
     router.push({ name: 'Users' });
@@ -43,15 +40,25 @@ const updateUser = async () => {
     email: editEmail.value.trim(),
     role: editRole.value,
   };
-  console.log(newData);
-  console.log(detail.value.id);
-  const res = await UserDataService.updateUser(detail.value.id, newData);
-  if (res.status == 400) {
-    alert('This name or email are already used.');
-  } else {
-    editMode.value = false;
-    await getDetailUser(params.id);
+
+  if (
+    newData.name != detail.value.name ||
+    newData.email != detail.value.email ||
+    newData.role != detail.value.role
+  ) {
+    console.log('dsalkda');
+    const res = await UserDataService.updateUser(detail.value.id, newData);
+    if (res.status == 400) {
+      alert('This name or email are already used.');
+    } else {
+      await getDetailUser(params.id);
+    }
   }
+
+  // console.log(newData);
+  // console.log(detail.value);
+
+  editMode.value = false;
 };
 
 const editMode = ref(false);

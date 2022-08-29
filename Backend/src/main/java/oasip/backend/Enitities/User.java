@@ -5,7 +5,6 @@ import oasip.backend.Enum.UserRole;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.time.Instant;
 import java.util.LinkedHashSet;
 import java.util.Set;
 

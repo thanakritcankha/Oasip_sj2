@@ -5,7 +5,6 @@ import oasip.backend.Enum.UserRole;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.time.Instant;
 
 @Data
 public class UserDetailDto implements Serializable {

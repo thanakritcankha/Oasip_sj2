@@ -23,4 +23,4 @@ class EventCategoryDataService{
         return fetch(`${API_URL}/categories/${id}`)
     }
 }
-export default new EventCategoryDataService
+export default new EventCategoryDataService()

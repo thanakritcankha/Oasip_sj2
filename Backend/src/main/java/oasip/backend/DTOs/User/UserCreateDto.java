@@ -1,7 +1,6 @@
 package oasip.backend.DTOs.User;
 
 import lombok.Data;
-import oasip.backend.Enum.UserRole;
 import oasip.backend.Validation.User.UserCheckRole;
 import oasip.backend.Validation.User.UserUniqueEmail;
 import oasip.backend.Validation.User.UserUniqueName;
@@ -34,7 +33,7 @@ public class UserCreateDto implements Serializable {
                     "z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x" +
                     "7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])")
     private String email;
-
+    @Size(min = 8, max = 14, message = "Password size must be between 8 and 14.")
     private String password;
 
     @NotNull(message = "The Role must be admin, lecturer, or student.")
